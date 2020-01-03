@@ -32,7 +32,7 @@ func QuoteForTheDay() string {
 		"If you have to choose between being kind and being right choose being kind and you will always be right",
 		"Silence & Smile are two powerful tools.Smile is the way to solve many problems & Silence is the way to avoid many problems",
 		"Don't get upset with people and situations, because both are powerless without your reaction",
-		"Most of the people are in lack of knowledge.Don't hate people.Love people and understand people are under influence of ignorance. Always do righteously.",
+		"Most of the people are in lack of knowledge.Don't hate them.Love them and understand that they are under influence of ignorance. Always do righteously.",
 		"Every way and means that leads our mind to God is Devotion",
 		"The Only Purpose of Our Human Life is to Attain God",
 		"Meditation. Because some questions can't be answered by Google!",
