@@ -8,5 +8,7 @@ go run cmd/quote/main.go
 docker run -t nandeshwar/quote
 
 ### Push Image to docker container
+```
 docker build -t nandeshwar/quote .
 docker push nandeshwar/quote
+```
