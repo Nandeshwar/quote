@@ -3,6 +3,7 @@ module quote
 go 1.12
 
 require (
-	github.com/fatih/color v1.8.0 // indirect
 	github.com/gookit/color v1.2.1
+	golang.org/x/exp v0.0.0-20191227195350-da58074b4299
+	golang.org/x/image v0.0.0-20191214001246-9130b4cfad52
 )

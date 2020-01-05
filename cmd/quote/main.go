@@ -38,4 +38,6 @@ func main() {
 	}
 	fmt.Printf("\"")
 	fmt.Println("\n")
+
+	//image.DisplayImage("./pkg/image/competitionWithMySelf.jpg")
 }
