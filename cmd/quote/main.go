@@ -67,6 +67,7 @@ func main() {
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
 
+	fmt.Println("CTRL+C or CTRL +D to exit")
 	const httpPort int = 9797
 	apiServer := api.NewServer(httpPort)
 	apiServer.Run()
