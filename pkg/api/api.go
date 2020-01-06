@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	image2 "quote/pkg/image"
 	"quote/pkg/quote"
 	"strconv"
 	"sync"
@@ -24,9 +25,10 @@ type Server struct {
 
 func image(w http.ResponseWriter, r *http.Request) {
 	imagePath := quote.QuoteForTheDayImage()
+	width, height := image2.GetImageDimension(imagePath)
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:400px;height:500px;'>", imagePath))
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
 func NewServer(httpPort int) *Server {

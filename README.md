@@ -8,7 +8,7 @@ go run cmd/quote/main.go
 
 ## Run using docker container
 ```
-docker run -t nandeshwar/quote
+docker run -p 9797:9797 -t nandeshwar/quote
 ```
 
 ### Push Image to docker container
