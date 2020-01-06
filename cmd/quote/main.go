@@ -4,21 +4,22 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"quote/pkg/image"
+	"quote/pkg/api"
 	"strings"
 	"time"
 
 	"github.com/gookit/color"
+	"github.com/sirupsen/logrus"
 
-	"quote/pkg/env"
+	//"quote/pkg/env"
 	"quote/pkg/event"
 	"quote/pkg/quote"
 )
 
 func main() {
-	pic := env.GetBoolWithDefault("PIC", false)
-	img := env.GetBoolWithDefault("IMG", false)
-	img2 := env.GetBoolWithDefault("IMAGE", false)
+	//pic := env.GetBoolWithDefault("PIC", false)
+	//img := env.GetBoolWithDefault("IMG", false)
+	//img2 := env.GetBoolWithDefault("IMAGE", false)
 
 	quote := quote.QuoteForTheDay()
 
@@ -62,10 +63,19 @@ func main() {
 		event.DisplayEvent()
 	}
 
-	if pic || img || img2 {
-		listDir("/image")
-		image.DisplayImage("./image/competitionWithMySelf.jpg")
-	}
+	//if pic || img || img2 {
+	//	listDir("/image")
+	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
+	//}
+
+	const httpPort int = 9797
+	apiServer := api.NewServer(httpPort)
+	logrus.WithFields(logrus.Fields{
+		"port": httpPort,
+	}).Info("Starting HTTP server")
+
+	apiServer.Run()
+	defer apiServer.Close()
 }
 
 func listDir(dirName string) {
