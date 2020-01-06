@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/gookit/color"
-	"github.com/sirupsen/logrus"
 
 	//"quote/pkg/env"
 	"quote/pkg/event"
@@ -70,10 +69,6 @@ func main() {
 
 	const httpPort int = 9797
 	apiServer := api.NewServer(httpPort)
-	logrus.WithFields(logrus.Fields{
-		"port": httpPort,
-	}).Info("Starting HTTP server")
-
 	apiServer.Run()
 	defer apiServer.Close()
 }

@@ -57,3 +57,15 @@ func QuoteForTheDay() string {
 
 	return quotes[ind]
 }
+
+func QuoteForTheDayImage() string {
+	quotes := []string{
+		"image/competitionWithMySelf.jpg",
+	}
+
+	s := rand.NewSource(time.Now().Unix())
+	r := rand.New(s) // initialize local pseudorandom generator
+	ind := r.Intn(len(quotes))
+
+	return quotes[ind]
+}
