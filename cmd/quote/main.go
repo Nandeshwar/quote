@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"quote/pkg/event"
 	"strings"
+	"time"
 
 	"github.com/gookit/color"
 
@@ -21,8 +23,9 @@ func main() {
 	blue := color.FgBlue.Render
 	cyan := color.FgCyan.Render
 
-	fmt.Println("\n")
-	fmt.Printf("\"")
+	fmt.Println("Quote for the day")
+	fmt.Println("-----------------")
+	fmt.Printf("\t\"")
 	for i := 0; i < wordListLen; i++ {
 		if i%15 == 0 {
 			fmt.Printf("%s ", cyan(wordList[i]))
@@ -38,6 +41,18 @@ func main() {
 	}
 	fmt.Printf("\"")
 	fmt.Println("\n")
+
+	todayEvents := event.TodayEvents()
+	if len(todayEvents) > 0 {
+		today := time.Now()
+		todayDateStr := today.Format("Mon 2006-01-2")
+		fmt.Printf("\nToday %v is auspicious day\n", todayDateStr)
+		fmt.Println("-------------")
+	}
+
+	for _, event := range todayEvents {
+		event.DisplayEvent()
+	}
 
 	//image.DisplayImage("./pkg/image/competitionWithMySelf.jpg")
 }
