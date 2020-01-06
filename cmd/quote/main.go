@@ -49,6 +49,8 @@ func main() {
 	}
 	fmt.Printf("\"")
 	fmt.Println("\n")
+	fmt.Println("Link for the next quote")
+	fmt.Printf("\n%s", blue("http://localhost:9797/image"))
 
 	todayEvents := event.TodayEvents()
 	if len(todayEvents) > 0 {
