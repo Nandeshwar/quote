@@ -50,7 +50,7 @@ func main() {
 	fmt.Printf("\"")
 	fmt.Println("\n")
 	fmt.Println("Link for the next quote")
-	fmt.Printf("\n%s", blue("http://localhost:9797/image"))
+	fmt.Printf("%s", blue("http://localhost:9797/image\n"))
 
 	todayEvents := event.TodayEvents()
 	if len(todayEvents) > 0 {
@@ -69,7 +69,7 @@ func main() {
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
 
-	fmt.Println("CTRL+C or CTRL +D to exit")
+	fmt.Println("\nCTRL+C or CTRL +D to exit")
 	const httpPort int = 9797
 	apiServer := api.NewServer(httpPort)
 	apiServer.Run()

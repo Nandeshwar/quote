@@ -7,6 +7,7 @@ RUN CGO_ENABLED=0 go install -v ./...
 
 FROM alpine:3.8
 COPY --from=builder /go/bin/quote /quote
+COPY image /image
 
 EXPOSE 9797
 ENTRYPOINT ["/quote"]
