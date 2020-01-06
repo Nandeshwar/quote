@@ -2,16 +2,24 @@ package main
 
 import (
 	"fmt"
-	"quote/pkg/event"
+	"os"
+	"path/filepath"
+	"quote/pkg/image"
 	"strings"
 	"time"
 
 	"github.com/gookit/color"
 
+	"quote/pkg/env"
+	"quote/pkg/event"
 	"quote/pkg/quote"
 )
 
 func main() {
+	pic := env.GetBoolWithDefault("PIC", false)
+	img := env.GetBoolWithDefault("IMG", false)
+	img2 := env.GetBoolWithDefault("IMAGE", false)
+
 	quote := quote.QuoteForTheDay()
 
 	wordList := strings.Split(quote, " ")
@@ -54,5 +62,24 @@ func main() {
 		event.DisplayEvent()
 	}
 
-	//image.DisplayImage("./pkg/image/competitionWithMySelf.jpg")
+	if pic || img || img2 {
+		listDir("/image")
+		image.DisplayImage("./image/competitionWithMySelf.jpg")
+	}
+}
+
+func listDir(dirName string) {
+	var files []string
+
+	root := dirName
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		files = append(files, path)
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	for _, file := range files {
+		fmt.Println(file)
+	}
 }
