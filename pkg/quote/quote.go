@@ -20,7 +20,7 @@ func QuoteForTheDay() string {
 		"Love is the greatest power on earth",
 		"When you wish good for others, good things come back to you. This is the Law of Nature",
 		"If you can win over your mind, you can win over the whole world",
-		"Darkness cannot drive out darkness, only light can do that. Hate cannot drive out hate. only love cna do that",
+		"Darkness cannot drive out darkness, only light can do that. Hate cannot drive out hate. only love can do that",
 		"Silence says so mcuh. Just listen",
 		"The greatest gift human can give to himself and others are tolerance and forgiveness",
 		"The practice of devotion involves replacing desires for the world with the desires for God",
