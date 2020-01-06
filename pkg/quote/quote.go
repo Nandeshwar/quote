@@ -62,6 +62,8 @@ func QuoteForTheDayImage() string {
 	quotes := []string{
 		"image/competitionWithMySelf.jpg",
 		"image/pleasegod.jpg",
+		"image/alwaysdogood.jpg",
+		"image/becomegood.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
