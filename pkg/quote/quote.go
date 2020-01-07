@@ -64,6 +64,8 @@ func QuoteForTheDayImage() string {
 		"image/pleasegod.jpg",
 		"image/alwaysdogood.jpg",
 		"image/becomegood.jpg",
+		"image/gita11-55.jpg",
+		"image/ramayan-baalkand-sumundra-jaisa.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
