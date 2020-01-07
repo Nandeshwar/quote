@@ -52,7 +52,7 @@ func main() {
 	fmt.Printf("\"")
 	fmt.Println("\n")
 	fmt.Println("Link for the next quote")
-	fmt.Printf("%s", blue("http://localhost:9797/image\n"))
+	fmt.Printf("%s", blue("http://localhost:1922/image\n"))
 
 	todayEvents := event.TodayEvents()
 	if len(todayEvents) > 0 {
@@ -71,8 +71,8 @@ func main() {
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
 
-	fmt.Printf("\n\nQuote Server will be quit in %d minutes or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using docker ps and docker stop \n", serverRunTimeInMin)
-	const httpPort int = 9797
+	fmt.Printf("\n\nQuote Server will be quit in %d minutes or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n", serverRunTimeInMin)
+	const httpPort int = 1922
 	apiServer := api.NewServer(httpPort)
 	go func() {
 		apiServer.Run()

@@ -21,7 +21,7 @@ func QuoteForTheDay() string {
 		"When you wish good for others, good things come back to you. This is the Law of Nature",
 		"If you can win over your mind, you can win over the whole world",
 		"Darkness cannot drive out darkness, only light can do that. Hate cannot drive out hate. only love can do that",
-		"Silence says so mcuh. Just listen",
+		"Silence says so much. Just listen",
 		"The greatest gift human can give to himself and others are tolerance and forgiveness",
 		"The practice of devotion involves replacing desires for the world with the desires for God",
 		"The wealth of divine love is the only true wealth. Every other form of wealth simply enhances one's pride",
