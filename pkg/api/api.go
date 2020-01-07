@@ -26,6 +26,12 @@ type Server struct {
 func image(w http.ResponseWriter, r *http.Request) {
 	imagePath := quote.QuoteForTheDayImage()
 	width, height := image2.GetImageDimension(imagePath)
+
+	if width < 400 || height < 400 {
+		width += 100
+		height += 100
+	}
+
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
