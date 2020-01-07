@@ -3,6 +3,8 @@ package event
 import (
 	"fmt"
 	"time"
+
+	"github.com/gookit/color"
 )
 
 type EventDetail struct {
@@ -33,6 +35,22 @@ func allEvents() []EventDetail {
 		URL: "https://en.wikipedia.org/wiki/Kripalu_Maharaj",
 	}
 	allEvents = append(allEvents, kripaluJiJagadGurutam)
+
+	kripaluJiAppearance := EventDetail{
+		Day:   5,
+		Month: 10,
+		Year:  1922,
+		Title: "Kripalu Ji Maharaj - appearance day",
+		Info: `    Kripalu (Sanskrit: जगद्गुरु श्री कृपालु जी महाराज, IAST: Kṛpālu) (5 October 1922 – 15 November 2013) 
+    He was a Hindu spiritual leader  from Allahabad (Prayag) - Mangarh, Pratapgarh, India.
+    He was the founder of Jagadguru Kripalu Parishat (JKP), 
+    a worldwide Hindu non-profit organization with five main ashrams; four in India and one in the United States.
+    JKP Radha Madhav Dham is one of the largest Hindu Temple complexes in the Western Hemisphere, and the largest in North America.
+     `,
+		URL: "https://en.wikipedia.org/wiki/Kripalu_Maharaj",
+	}
+	allEvents = append(allEvents, kripaluJiAppearance)
+
 	return allEvents
 }
 
@@ -50,8 +68,10 @@ func TodayEvents() []EventDetail {
 }
 
 func (e EventDetail) DisplayEvent() {
+	blue := color.FgBlue.Render
 	fmt.Println(e.Title)
 	fmt.Println(e.Info)
 	fmt.Println(e.URL)
 	fmt.Printf("%d-%d-%d\n", e.Year, e.Month, e.Day)
+	fmt.Printf("\n%s\n ", blue(e.URL))
 }
