@@ -4,18 +4,20 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"quote/pkg/api"
 	"strings"
 	"time"
 
 	"github.com/gookit/color"
 
-	//"quote/pkg/env"
+	"quote/pkg/api"
+	"quote/pkg/env"
 	"quote/pkg/event"
 	"quote/pkg/quote"
 )
 
 func main() {
+	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_TIME_IN_MIN", 5)
+
 	//pic := env.GetBoolWithDefault("PIC", false)
 	//img := env.GetBoolWithDefault("IMG", false)
 	//img2 := env.GetBoolWithDefault("IMAGE", false)
@@ -69,11 +71,15 @@ func main() {
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
 
-	fmt.Println("\nCTRL+C or CTRL +D to exit")
+	fmt.Printf("\n\nQuote Server will be quit in %d minutes or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using docker ps and docker stop \n", serverRunTimeInMin)
 	const httpPort int = 9797
 	apiServer := api.NewServer(httpPort)
-	apiServer.Run()
-	defer apiServer.Close()
+	go func() {
+		apiServer.Run()
+	}()
+
+	time.Sleep(time.Duration(serverRunTimeInMin) * time.Minute)
+	apiServer.Close()
 }
 
 func listDir(dirName string) {
