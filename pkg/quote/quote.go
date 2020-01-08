@@ -113,6 +113,7 @@ func QuoteForTheDayImage() string {
 		"image/kripaluji-maharaj-radha-gun-gaiye.jpg",
 		"image/kripaluji-maharaj-ishwar-bhakti-bina.jpg",
 		"image/kripaluji-maharaj-hari-se-milade.jpg",
+		"image/kripaluji-maharaj-bhagwan-me-maan.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
