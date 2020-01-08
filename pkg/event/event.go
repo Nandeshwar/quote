@@ -20,6 +20,7 @@ type EventDetail struct {
 func allEvents() []*EventDetail {
 	var allEvents []*EventDetail
 	allEvents = append(allEvents, KripaluJiMaharajEvents()...)
+	allEvents = append(allEvents, PrabhuyEvents()...)
 	return allEvents
 }
 

@@ -45,10 +45,22 @@ func QuoteForTheDay() string {
 		"If you can establish your relationship with God, that ultimate satisfaction that you have been searching for since innumerable lifetimes, will eventually be attained",
 		"The Joy of the mind is the measure of its strength",
 		"When you come to a point where you have no need to impress anybody, your freedom will begin",
-		"Ritualistic worship, chanting and meditation are done with the body, voice and the mind: they excel each other in the ascending order",
+		"Ritualistic worship, chanting and meditation are done with the body, voice and the mind: they excel each other in the ascending order - Ramana Maharshi",
 		"Uttering the sacred word, either in a loud or low tone is preferable to chants in praise of the Supreme. Mental contemplation is superior to both",
 		"When one learns to turn the mind away from material allurements and renounces the desires of the senses, such a person comes in touch with the inner bliss of the soul",
 		"When we decide that God is ours and the whole world is His, then our consciousness transforms from seeking self-enjoyment to serving the Lord with everything that we have",
+		"If you want to change the world, go home and love your family - Mother Teresa",
+		"Every time you smile at someone, it is an action of love, a gift to that person, a beautiful thing. - Mother Teresa",
+		"No color, no religion, no nationality should come between us, we are all children of God. - Mother Teresa",
+		"In this life, we cannot always do great things. But we can do small things with great love. - Mother Teresa",
+		`    Lord, make an instrument of the peace,
+    Where there is hatred, let me show love;
+    Where there is injury, pardon;
+    Where there is doubt, faith;
+    Where there is despair, hope;
+    Where there is darkness, light;
+    Where there is sadness, Joy.
+`,
 	}
 
 	s := rand.NewSource(time.Now().Unix())
@@ -114,6 +126,27 @@ func QuoteForTheDayImage() string {
 		"image/kripaluji-maharaj-ishwar-bhakti-bina.jpg",
 		"image/kripaluji-maharaj-hari-se-milade.jpg",
 		"image/kripaluji-maharaj-bhagwan-me-maan.jpg",
+		"image/anyway-mother-teresa.jpeg",
+		"image/Mother-Teresa-love-family.jpg",
+		"image/Beautiful-Mother-Teresa-Quotes.jpg",
+		"image/Mother-Teresa-children-of-god.jpg",
+		"image/Mother-Teresa-with-love.jpg",
+		"image/Mother-Teresa-Quotes-on-Love.jpg",
+		"image/Mother-Teresa-Quote-on-Love-Life.jpg",
+		"image/Mother-teresa-love-people.jpg",
+		"image/Best-Mother-Teresa-with-love.jpg",
+		"image/Mother-Teresa-make-others-happy.jpg",
+		"image/jagadguru-shri-kripalu-ji-maharaj-balak-budhi.jpg",
+		"image/jagadguru-shri-kripalu-ji-maharaj-kripa.jpg",
+		"image/EngrossedinDevotion-KrishnaLove-KripaluWisdom.jpg",
+		"image/jagadguru-shri-kripalu-ji-maharaj-satsang.jpg",
+		"image/bhagwat-gita-greatest-soul.jpg",
+		"image/krishna-radha-sringar.jpg",
+		"image/krishna-radha-past-time.JPG",
+		"image/kripaluji-maharaj-never-pride-for-material.jpg",
+		"image/kripaluji-maharaj-shed-tears-guru-god.jpg",
+		"image/kripaluji-maharaj-establish-relationship-with-god.jpg",
+		"image/kripaluji-maharaj-desicde-krishna-is-ours.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
