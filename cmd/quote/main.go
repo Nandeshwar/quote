@@ -53,6 +53,7 @@ func main() {
 	fmt.Println("\n")
 	fmt.Println("Link for the next quote")
 	fmt.Printf("%s", blue("http://localhost:1922/image\n"))
+	fmt.Printf("%s", blue("http://localhost:1922/quotes-mix\n"))
 
 	todayEvents := event.TodayEvents()
 	if len(todayEvents) > 0 {

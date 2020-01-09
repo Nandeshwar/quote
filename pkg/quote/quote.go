@@ -53,7 +53,7 @@ func QuoteForTheDay() string {
 		"Every time you smile at someone, it is an action of love, a gift to that person, a beautiful thing. - Mother Teresa",
 		"No color, no religion, no nationality should come between us, we are all children of God. - Mother Teresa",
 		"In this life, we cannot always do great things. But we can do small things with great love. - Mother Teresa",
-		`    Lord, make an instrument of the peace,
+		`Lord, make an instrument of the peace,
     Where there is hatred, let me show love;
     Where there is injury, pardon;
     Where there is doubt, faith;

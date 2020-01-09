@@ -37,11 +37,28 @@ func image(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
+func quotesMix(w http.ResponseWriter, r *http.Request) {
+
+	imagePath := quote.QuoteMixImage()
+	width, height := image2.GetImageDimension(imagePath)
+
+	if width < 400 || height < 400 {
+		width += 100
+		height += 100
+	}
+
+	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
+	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
+	fmt.Fprintf(w, "<title>Quote</title>")
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+}
+
 func NewServer(httpPort int) *Server {
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.HandleFunc("/intro", intro)
 	router.HandleFunc("/image", image)
+	router.HandleFunc("/quotes-mix", quotesMix)
 
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),
