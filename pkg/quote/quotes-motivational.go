@@ -9,7 +9,6 @@ func QuoteMotivationalImage() string {
 	quotes := []string{
 		"image/competitionWithMySelf.jpg",
 		"image/becomegood.jpg",
-		"image/hope.jpg",
 		"image/thanks-to-obstacles.jpg",
 		"image/you-are-responsible.jpg",
 		"image/lift-up.jpg",

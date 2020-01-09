@@ -17,7 +17,7 @@ import (
 
 func main() {
 	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
-	serverRunTimeInHour := env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 0)
+	serverRunTimeInHour := env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
 
 	//pic := env.GetBoolWithDefault("PIC", false)
 	//img := env.GetBoolWithDefault("IMG", false)
@@ -73,7 +73,14 @@ func main() {
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
 
-	fmt.Printf("\n\nQuote Server will be quit in %d minutes or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n", serverRunTimeInMin)
+	currentTime := time.Now()
+	currentTime = currentTime.Add(time.Duration(serverRunTimeInHour) * time.Hour)
+	currentTime = currentTime.Add(time.Duration(serverRunTimeInMin) * time.Minute)
+
+	const layout = "Jan 2, 2006 at 3:04pm MST"
+
+	fmt.Printf("\n\nServer will be quit in %d hour and %d minutes at %v", serverRunTimeInHour, serverRunTimeInMin, currentTime.Format(layout))
+	fmt.Printf("\n or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n")
 	const httpPort int = 1922
 	apiServer := api.NewServer(httpPort)
 	go func() {

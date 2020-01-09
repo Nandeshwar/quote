@@ -10,7 +10,7 @@ go run cmd/quote/main.go
 ```
 docker run -p 1922:1922 -t nandeshwar/quote
 or
-docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 SERVER_RUN_DURATION_HOUR=10 -t nandeshwar/quote
+docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 -e SERVER_RUN_DURATION_HOUR=10 -t nandeshwar/quote
 ```
 
 ### Push Image to docker container
