@@ -23,7 +23,7 @@ type Server struct {
 	wg     sync.WaitGroup
 }
 
-func image(w http.ResponseWriter, r *http.Request) {
+func quotesAll(w http.ResponseWriter, r *http.Request) {
 	imagePath := quote.QuoteForTheDayImage()
 	width, height := image2.GetImageDimension(imagePath)
 
@@ -37,9 +37,9 @@ func image(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
-func quotesMix(w http.ResponseWriter, r *http.Request) {
+func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 
-	imagePath := quote.QuoteMixImage()
+	imagePath := quote.QuoteMotivationalImage()
 	width, height := image2.GetImageDimension(imagePath)
 
 	if width < 400 || height < 400 {
@@ -56,9 +56,10 @@ func quotesMix(w http.ResponseWriter, r *http.Request) {
 func NewServer(httpPort int) *Server {
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
+	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
 	router.HandleFunc("/intro", intro)
-	router.HandleFunc("/image", image)
-	router.HandleFunc("/quotes-mix", quotesMix)
+	router.HandleFunc("/quotes-all", quotesAll)
+	router.HandleFunc("/quotes-motivational", quotesMotivational)
 
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),
