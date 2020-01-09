@@ -16,7 +16,8 @@ import (
 )
 
 func main() {
-	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_TIME_IN_MIN", 5)
+	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
+	serverRunTimeInHour := env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 0)
 
 	//pic := env.GetBoolWithDefault("PIC", false)
 	//img := env.GetBoolWithDefault("IMG", false)
@@ -80,6 +81,7 @@ func main() {
 	}()
 
 	time.Sleep(time.Duration(serverRunTimeInMin) * time.Minute)
+	time.Sleep(time.Duration(serverRunTimeInHour) * time.Hour)
 	apiServer.Close()
 }
 
