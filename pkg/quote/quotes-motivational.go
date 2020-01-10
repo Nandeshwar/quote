@@ -26,6 +26,7 @@ func QuoteMotivationalImage() string {
 		"image/Mother-Teresa-make-others-happy.jpg",
 		"image/Einstein-strong-people.jpg",
 		"image/thankful-to-everything.jpg",
+		"image/meditationgoogle.jpg",
 		"image-motivational/mother-teresa-we-have-today.jpg",
 		"image-motivational/prakash-no-support-text.jpg",
 		"image-motivational/nick-we-can-try-text.jpg",

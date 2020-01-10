@@ -152,6 +152,7 @@ func QuoteForTheDayImage() string {
 		"image/krishna-radha-nice-pic.jpg",
 		"image/kripaluji-maharaj-sewa-means.jpg",
 		"image/thankful-to-everything.jpg",
+		"image/meditationgoogle.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
