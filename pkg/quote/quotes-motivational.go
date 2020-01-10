@@ -25,6 +25,8 @@ func QuoteMotivationalImage() string {
 		"image/Best-Mother-Teresa-with-love.jpg",
 		"image/Mother-Teresa-make-others-happy.jpg",
 		"image-motivational/mother-teresa-we-have-today.jpg",
+		"image-motivational/prakash-no-support-text.jpg",
+		"image-motivational/nick-we-can-try-text.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
