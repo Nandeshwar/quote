@@ -147,6 +147,11 @@ func QuoteForTheDayImage() string {
 		"image/kripaluji-maharaj-shed-tears-guru-god.jpg",
 		"image/kripaluji-maharaj-establish-relationship-with-god.jpg",
 		"image/kripaluji-maharaj-desicde-krishna-is-ours.jpg",
+		"image/Einstein-strong-people.jpg",
+		"image/kripaluji-maharaj-always-remember.jpg",
+		"image/krishna-radha-nice-pic.jpg",
+		"image/kripaluji-maharaj-sewa-means.jpg",
+		"image/thankful-to-everything.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
