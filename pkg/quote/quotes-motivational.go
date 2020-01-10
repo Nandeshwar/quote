@@ -31,6 +31,8 @@ func QuoteMotivationalImage() string {
 		"image-motivational/prakash-no-support-text.jpg",
 		"image-motivational/nick-we-can-try-text.jpg",
 		"image-motivational/rachna.jpeg",
+		"image-motivational/golang-quote.jpg",
+		"image-motivational/Nick-text-failure-requirement.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
