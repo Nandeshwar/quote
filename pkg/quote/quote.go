@@ -61,6 +61,7 @@ func QuoteForTheDay() string {
     Where there is darkness, light;
     Where there is sadness, Joy.
 `,
+		"A generous heart, kind speech, and a life of service and compassion are the things which renew humanity, Buddha",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
@@ -153,6 +154,8 @@ func QuoteForTheDayImage() string {
 		"image/kripaluji-maharaj-sewa-means.jpg",
 		"image/thankful-to-everything.jpg",
 		"image/meditationgoogle.jpg",
+		"image/my-thought-11-jan-2020.jpg",
+		"image/renew-humanity.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())

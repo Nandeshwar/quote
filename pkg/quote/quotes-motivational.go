@@ -27,6 +27,7 @@ func QuoteMotivationalImage() string {
 		"image/Einstein-strong-people.jpg",
 		"image/thankful-to-everything.jpg",
 		"image/meditationgoogle.jpg",
+		"image/renew-humanity.jpg",
 		"image-motivational/mother-teresa-we-have-today.jpg",
 		"image-motivational/prakash-no-support-text.jpg",
 		"image-motivational/nick-we-can-try-text.jpg",
@@ -34,7 +35,7 @@ func QuoteMotivationalImage() string {
 		"image-motivational/golang-quote.jpg",
 		"image-motivational/Nick-text-failure-requirement.jpg",
 		"image-motivational/mike-text.jpg",
-		"image-motivational/jeff-text.jpg",
+		"image-motivational/jeff-quote.jpg",
 	}
 
 	s := rand.NewSource(time.Now().Unix())
