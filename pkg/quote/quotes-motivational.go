@@ -38,6 +38,7 @@ func AllMotivationalImage() (int, []string) {
 	}
 	return len(quotes), quotes
 }
+
 func QuoteMotivationalImage() string {
 	_, quotes := AllMotivationalImage()
 

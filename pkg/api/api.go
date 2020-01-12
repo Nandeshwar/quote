@@ -25,13 +25,35 @@ type Server struct {
 }
 
 func quotesAll(w http.ResponseWriter, r *http.Request) {
-	imagePath := quote.QuoteForTheDayImage()
+	allImageLen, _ := quote.AllQuotesImage()
+
+	//imagePath := quote.QuoteForTheDayImage()
+
+	var imagePath string
+	for {
+		if len(quote.AllImageRead) == allImageLen {
+			quote.AllImageRead = nil
+			imagePath = quote.QuoteForTheDayImage()
+			break
+		}
+
+		imagePath = quote.QuoteForTheDayImage()
+		if !fp.ExistsStr(imagePath, quote.AllImageRead) {
+			quote.AllImageRead = append(quote.AllImageRead, imagePath)
+			break
+		}
+	}
+
 	width, height := image2.GetImageDimension(imagePath)
 
 	if width < 400 || height < 400 {
 		width += 100
 		height += 100
 	}
+
+	fmt.Println("Total number of image=", allImageLen)
+	fmt.Println("imageread len=", len(quote.AllImageRead))
+	fmt.Println("image path=", imagePath)
 
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")

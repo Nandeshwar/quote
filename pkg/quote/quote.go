@@ -71,7 +71,7 @@ func QuoteForTheDay() string {
 	return quotes[ind]
 }
 
-func QuoteForTheDayImage() string {
+func AllQuotesImage() (int, []string) {
 	quotes := []string{
 		"image/competitionWithMySelf.jpg",
 		"image/pleasegod.jpg",
@@ -157,10 +157,13 @@ func QuoteForTheDayImage() string {
 		"image/my-thought-11-jan-2020.jpg",
 		"image/renew-humanity.jpg",
 	}
+	return len(quotes), quotes
+}
 
-	s := rand.NewSource(time.Now().Unix())
-	r := rand.New(s) // initialize local pseudorandom generator
-	ind := r.Intn(len(quotes))
+func QuoteForTheDayImage() string {
+	_, quotes := AllQuotesImage()
+
+	ind := rand.Intn(len(quotes))
 
 	return quotes[ind]
 }
