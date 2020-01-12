@@ -157,6 +157,10 @@ func AllQuotesImage() (int, []string) {
 		"image/my-thought-11-jan-2020.jpg",
 		"image/renew-humanity.jpg",
 		"image/bhagwan-bhakta-ek.jpg",
+		"image/kripaluji-maharaj-bairagya-and-gyan-by-bhakti.jpg",
+		"image/kripaluji-maharaj-krishna-radha.jpg",
+		"image/krishna-radha-beautiful-image.jpg",
+		"image/krishna-radha-beautiful-image2.jpg",
 	}
 	return len(quotes), quotes
 }
