@@ -156,6 +156,7 @@ func AllQuotesImage() (int, []string) {
 		"image/meditationgoogle.jpg",
 		"image/my-thought-11-jan-2020.jpg",
 		"image/renew-humanity.jpg",
+		"image/bhagwan-bhakta-ek.jpg",
 	}
 	return len(quotes), quotes
 }
