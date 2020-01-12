@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/logic-building/functional-go/fp"
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,8 +39,23 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func quotesMotivational(w http.ResponseWriter, r *http.Request) {
+	allImageLen, _ := quote.AllMotivationalImage()
 
-	imagePath := quote.QuoteMotivationalImage()
+	var imagePath string
+	for {
+		if len(quote.MotivationalImageRead) == allImageLen {
+			quote.MotivationalImageRead = nil
+			imagePath = quote.QuoteMotivationalImage()
+			break
+		}
+
+		imagePath = quote.QuoteMotivationalImage()
+		if !fp.ExistsStr(imagePath, quote.MotivationalImageRead) {
+			quote.MotivationalImageRead = append(quote.MotivationalImageRead, imagePath)
+			break
+		}
+	}
+
 	width, height := image2.GetImageDimension(imagePath)
 
 	if width < 400 || height < 400 {

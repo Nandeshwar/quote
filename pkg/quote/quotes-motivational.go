@@ -2,10 +2,9 @@ package quote
 
 import (
 	"math/rand"
-	"time"
 )
 
-func QuoteMotivationalImage() string {
+func AllMotivationalImage() (int, []string) {
 	quotes := []string{
 		"image/competitionWithMySelf.jpg",
 		"image/becomegood.jpg",
@@ -37,10 +36,12 @@ func QuoteMotivationalImage() string {
 		"image-motivational/mike-text.jpg",
 		"image-motivational/jeff-quote.jpg",
 	}
+	return len(quotes), quotes
+}
+func QuoteMotivationalImage() string {
+	_, quotes := AllMotivationalImage()
 
-	s := rand.NewSource(time.Now().Unix())
-	r := rand.New(s) // initialize local pseudorandom generator
-	ind := r.Intn(len(quotes))
+	ind := rand.Intn(len(quotes))
 
 	return quotes[ind]
 }
