@@ -43,6 +43,7 @@ func QuoteMotivationalImage() string {
 	_, quotes := AllMotivationalImage()
 
 	ind := rand.Intn(len(quotes))
+	//fmt.Println("random number, ", ind)
 
 	return quotes[ind]
 }

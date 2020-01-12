@@ -27,8 +27,6 @@ type Server struct {
 func quotesAll(w http.ResponseWriter, r *http.Request) {
 	allImageLen, _ := quote.AllQuotesImage()
 
-	//imagePath := quote.QuoteForTheDayImage()
-
 	var imagePath string
 	for {
 		if len(quote.AllImageRead) == allImageLen {
