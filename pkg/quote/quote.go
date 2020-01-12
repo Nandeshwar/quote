@@ -163,7 +163,9 @@ func AllQuotesImage() (int, []string) {
 func QuoteForTheDayImage() string {
 	_, quotes := AllQuotesImage()
 
-	ind := rand.Intn(len(quotes))
+	s2 := rand.NewSource(int64(time.Now().Nanosecond()))
+	r2 := rand.New(s2)
+	ind := r2.Intn(len(quotes))
 
 	return quotes[ind]
 }

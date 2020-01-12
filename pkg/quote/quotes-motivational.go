@@ -2,6 +2,7 @@ package quote
 
 import (
 	"math/rand"
+	"time"
 )
 
 func AllMotivationalImage() (int, []string) {
@@ -42,8 +43,10 @@ func AllMotivationalImage() (int, []string) {
 func QuoteMotivationalImage() string {
 	_, quotes := AllMotivationalImage()
 
-	ind := rand.Intn(len(quotes))
-	//fmt.Println("random number, ", ind)
+	s2 := rand.NewSource(int64(time.Now().Nanosecond()))
+	r2 := rand.New(s2)
+
+	ind := r2.Intn(len(quotes))
 
 	return quotes[ind]
 }

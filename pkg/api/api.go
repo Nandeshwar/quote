@@ -49,10 +49,6 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 		height += 100
 	}
 
-	fmt.Println("Total number of image=", allImageLen)
-	fmt.Println("imageread len=", len(quote.AllImageRead))
-	fmt.Println("image path=", imagePath)
-
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
