@@ -54,8 +54,7 @@ func main() {
 	fmt.Println("\n")
 	fmt.Println("Link for the next quote")
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-all\n"))
-	fmt.Printf("%s", blue("http://localhost:1922/quotes-motivational"))
-	fmt.Printf(" <-This link will be refreshed automatically in every 5 minutes\n")
+	fmt.Printf("%s", blue("http://localhost:1922/quotes-motivational\n"))
 
 	todayEvents := event.TodayEvents()
 	if len(todayEvents) > 0 {
