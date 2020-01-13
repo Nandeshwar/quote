@@ -161,6 +161,9 @@ func AllQuotesImage() (int, []string) {
 		"image/kripaluji-maharaj-krishna-radha.jpg",
 		"image/krishna-radha-beautiful-image.jpg",
 		"image/krishna-radha-beautiful-image2.jpg",
+		"image/kripaluji-maharaj-manav-taan.jpg",
+		"image/krishna-radha-beautiful-image3.jpg",
+		"image/krishna-radha-beautiful-image3.jpg",
 	}
 	return len(quotes), quotes
 }
