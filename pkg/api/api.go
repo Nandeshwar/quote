@@ -29,7 +29,7 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 
 	var imagePath string
 	for {
-		if len(quote.AllImageRead) == allImageLen {
+		if len(quote.AllImageRead) >= allImageLen {
 			quote.AllImageRead = nil
 			imagePath = quote.QuoteForTheDayImage()
 			break
@@ -60,7 +60,7 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 
 	var imagePath string
 	for {
-		if len(quote.MotivationalImageRead) == allImageLen {
+		if len(quote.MotivationalImageRead) >= allImageLen {
 			quote.MotivationalImageRead = nil
 			imagePath = quote.QuoteMotivationalImage()
 			break
