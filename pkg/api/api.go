@@ -25,22 +25,10 @@ type Server struct {
 }
 
 func quotesAll(w http.ResponseWriter, r *http.Request) {
-	allImageLen, _ := quote.AllQuotesImage()
+	allImageLen, allImages := quote.AllQuotesImage()
 
-	var imagePath string
-	for {
-		if len(quote.AllImageRead) >= allImageLen {
-			quote.AllImageRead = nil
-			imagePath = quote.QuoteForTheDayImage()
-			break
-		}
-
-		imagePath = quote.QuoteForTheDayImage()
-		if !fp.ExistsStr(imagePath, quote.AllImageRead) {
-			quote.AllImageRead = append(quote.AllImageRead, imagePath)
-			break
-		}
-	}
+	imageReadList, imagePath := getNonReadImage(allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
+	quote.AllImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
 
@@ -56,9 +44,7 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func quotesMotivational(w http.ResponseWriter, r *http.Request) {
-
-	allImageLen, _ := quote.AllMotivationalImage()
-	_, allImages := quote.AllMotivationalImage()
+	allImageLen, allImages := quote.AllMotivationalImage()
 	imageReadList, imagePath := getNonReadImage(allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
 	quote.MotivationalImageRead = imageReadList
 
