@@ -41,13 +41,12 @@ func AllMotivationalImage() (int, []string) {
 	return len(quotes), quotes
 }
 
-func QuoteMotivationalImage() string {
-	_, quotes := AllMotivationalImage()
+func GetQuoteMotivationalImage(allImages []string) string {
 
 	s2 := rand.NewSource(int64(time.Now().Nanosecond()))
 	r2 := rand.New(s2)
 
-	ind := r2.Intn(len(quotes))
+	ind := r2.Intn(len(allImages))
 
-	return quotes[ind]
+	return allImages[ind]
 }
