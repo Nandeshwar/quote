@@ -58,9 +58,9 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 
 	allImageLen, _ := quote.AllMotivationalImage()
-	var imagePath string
 	_, allImages := quote.AllMotivationalImage()
-	quote.MotivationalImageRead, imagePath = getNonReadImage(allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
+	imageReadList, imagePath := getNonReadImage(allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
+	quote.MotivationalImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
 
