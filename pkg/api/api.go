@@ -56,22 +56,11 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func quotesMotivational(w http.ResponseWriter, r *http.Request) {
+
 	allImageLen, _ := quote.AllMotivationalImage()
-
-	var imagePath string
-	for {
-		if len(quote.MotivationalImageRead) >= allImageLen {
-			quote.MotivationalImageRead = nil
-			imagePath = quote.QuoteMotivationalImage()
-			break
-		}
-
-		imagePath = quote.QuoteMotivationalImage()
-		if !fp.ExistsStr(imagePath, quote.MotivationalImageRead) {
-			quote.MotivationalImageRead = append(quote.MotivationalImageRead, imagePath)
-			break
-		}
-	}
+	_, allImages := quote.AllMotivationalImage()
+	imageReadList, imagePath := getNonReadImage(allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
+	quote.MotivationalImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
 
@@ -84,6 +73,27 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+}
+
+func getNonReadImage(allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {
+
+	for {
+		if len(imageRead) >= allImageLen {
+			imageRead = nil
+			imagePath = f(allImages)
+			imageRead = append(imageRead, imagePath)
+			imageRead2 = append(imageRead2, imageRead...)
+			return imageRead2, imagePath
+		}
+
+		imagePath = f(allImages)
+		if !fp.ExistsStr(imagePath, imageRead) {
+			imageRead = append(imageRead, imagePath)
+			imageRead2 = append(imageRead2, imageRead...)
+			return imageRead2, imagePath
+		}
+
+	}
 }
 
 func NewServer(httpPort int) *Server {
@@ -127,7 +137,7 @@ func (s *Server) Close() {
 	if err := s.server.Shutdown(ctx); err != nil {
 		// Looks like we timed out on the graceful shutdown. Force close.
 		if err := s.server.Close(); err != nil {
-			logrus.Info("\nHttpServer : Service stopping : Error=%v\n", err)
+			logrus.Infof("\nHttpServer : Service stopping : Error=%v\n", err)
 		}
 	}
 	logrus.Info("\nHttpServer : Stopped\n")
