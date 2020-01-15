@@ -66,5 +66,22 @@ func KripaluJiMaharajEvents() []*EventDetail {
 		URL: "https://en.wikipedia.org/wiki/Kripalu_Maharaj;https://www.jkyog.org/;http://jkp.org.in/life-story-jagadguruttam/",
 	}
 	allEvents = append(allEvents, &kripaluJiDisAppearance)
+
+	premMandirInauguration := EventDetail{
+		Day:   15,
+		Month: 2,
+		Year:  2012,
+		Title: "Kripalu Ji Maharaj-Prem Mandir - Inauguration day",
+		Info: ` Prem Mandir is in Vrindavan, Mathura, India. The temple was opened to public on 17 February
+    The temple structure was established by the fifth Jagadguru, Kripalu Maharaj.
+    Figures of Shri Krishna and his followers depicting important events surrounding the Lord's existence cover the main temple.
+    The foundation stone was laid by Jagadguru Shri Kripalu Ji Maharaj in the presence of thousand devotees on 14 January 2001. 
+    It took approximately 1000 artists about 12 years to build the complex.
+   
+    `,
+		URL: "https://en.wikipedia.org/wiki/Prem_Mandir,_Vrindavan",
+	}
+	allEvents = append(allEvents, &premMandirInauguration)
+
 	return allEvents
 }
