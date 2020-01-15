@@ -25,7 +25,7 @@ func TestApi(t *testing.T) {
 				var imageRead []string
 
 				for i := 0; i < len(allImagesPath); i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, len(allImagesPath))
@@ -35,7 +35,7 @@ func TestApi(t *testing.T) {
 				}
 
 				for i := 1; i <= len(allImagesPath)*2; i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, len(allImagesPath))
@@ -46,35 +46,35 @@ func TestApi(t *testing.T) {
 
 				imageRead = nil
 				for i := 1; i <= len(allImagesPath)*2+1; i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, 1)
 
 				imageRead = nil
 				for i := 1; i <= len(allImagesPath)*2+2; i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, 2)
 
 				imageRead = nil
 				for i := 1; i <= len(allImagesPath)*2+3; i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, 3)
 
 				imageRead = nil
 				for i := 1; i <= len(allImagesPath)*2+4; i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, 4)
 
 				imageRead = nil
 				for i := 1; i <= len(allImagesPath)*2+5; i++ {
-					imageRead2, _ := getNonReadImage(len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
+					imageRead2, _ := getNonReadImage("test", len(allImagesPath), imageRead, quote.GetQuoteMotivationalImage, allImagesPath)
 					imageRead = imageRead2
 				}
 				So(len(imageRead), ShouldEqual, 5)

@@ -27,7 +27,7 @@ type Server struct {
 func quotesAll(w http.ResponseWriter, r *http.Request) {
 	allImageLen, allImages := quote.AllQuotesImage()
 
-	imageReadList, imagePath := getNonReadImage(allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
+	imageReadList, imagePath := getNonReadImage("All Image", allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
 	quote.AllImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
@@ -45,7 +45,7 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 
 func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 	allImageLen, allImages := quote.AllMotivationalImage()
-	imageReadList, imagePath := getNonReadImage(allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
+	imageReadList, imagePath := getNonReadImage("MotivationalImage", allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
 	quote.MotivationalImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
@@ -61,24 +61,24 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
-func getNonReadImage(allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {
+func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {
 
 	for {
 		imagePath = f(allImages)
 
 		if len(imageRead) >= allImageLen {
 			imageRead = nil
-			fmt.Println("Image Cycle End.")
+			fmt.Printf("\nImage Cycle End for api=%s", apiName)
 			imageRead = append(imageRead, imagePath)
-			fmt.Println("New Image Cycle Started")
-			fmt.Printf("\n%d. Image: %s", len(imageRead), imagePath)
+			fmt.Printf("New Image Cycle Started for api=%s", apiName)
+			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
 		}
 
 		if !fp.ExistsStr(imagePath, imageRead) {
 			imageRead = append(imageRead, imagePath)
-			fmt.Printf("\n%d. Image: %s", len(imageRead), imagePath)
+			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
 		}
