@@ -64,17 +64,21 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 func getNonReadImage(allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {
 
 	for {
+		imagePath = f(allImages)
+
 		if len(imageRead) >= allImageLen {
 			imageRead = nil
-			imagePath = f(allImages)
+			fmt.Println("Image Cycle End.")
 			imageRead = append(imageRead, imagePath)
+			fmt.Println("New Image Cycle Started")
+			fmt.Printf("\n%d. Image: %s", len(imageRead), imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
 		}
 
-		imagePath = f(allImages)
 		if !fp.ExistsStr(imagePath, imageRead) {
 			imageRead = append(imageRead, imagePath)
+			fmt.Printf("\n%d. Image: %s", len(imageRead), imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
 		}
