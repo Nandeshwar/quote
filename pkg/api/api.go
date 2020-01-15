@@ -55,7 +55,7 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 		height += 100
 	}
 
-	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
+	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='1' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
@@ -70,7 +70,7 @@ func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func
 			imageRead = nil
 			fmt.Printf("\nImage Cycle End for api=%s", apiName)
 			imageRead = append(imageRead, imagePath)
-			fmt.Printf("New Image Cycle Started for api=%s", apiName)
+			fmt.Printf("\nNew Image Cycle Started for api=%s", apiName)
 			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
