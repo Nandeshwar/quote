@@ -40,6 +40,7 @@ func AllMotivationalImage() (int, []string) {
 		"image-motivational/Rebekah.jpg",
 		"image-motivational/ryan-text.jpg",
 		"image-motivational/Humble-Terry.jpg",
+		"image-motivational/nick-test-in-prod.jpg",
 	}
 	return len(quotes), quotes
 }
