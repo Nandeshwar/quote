@@ -2,7 +2,11 @@ package quote
 
 import (
 	"math/rand"
+	"quote/pkg/fileutil"
 	"time"
+
+	"github.com/logic-building/functional-go/fp"
+	"github.com/sirupsen/logrus"
 )
 
 func AllMotivationalImage() (int, []string) {
@@ -29,19 +33,24 @@ func AllMotivationalImage() (int, []string) {
 		"image/meditationgoogle.jpg",
 		"image/renew-humanity.jpg",
 		"image/nandeshwar-meditation.jpg",
-		"image-motivational/mother-teresa-we-have-today.jpg",
-		"image-motivational/prakash-no-support-text.jpg",
-		"image-motivational/nick-we-can-try-text.jpg",
-		"image-motivational/rachna.jpeg",
-		"image-motivational/golang-quote.jpg",
-		"image-motivational/Nick-text-failure-requirement.jpg",
-		"image-motivational/mike-text.jpg",
-		"image-motivational/jeff-quote.jpg",
-		"image-motivational/Rebekah.jpg",
-		"image-motivational/ryan-text.jpg",
-		"image-motivational/Humble-Terry.jpg",
-		"image-motivational/nick-test-in-prod.jpg",
 	}
+
+	imagesUnderDir1, err := fileutil.ListDir("./image-motivational")
+	if err != nil {
+		logrus.Errorf("Unable to read files from ./image-motivational=%v", err)
+	}
+
+	imagesUnderDir2, err := fileutil.ListDir("/image-motivational")
+	if err != nil {
+		logrus.Errorf("Unable to read files from /image-motivational=%v", err)
+	}
+
+	onlyJPGImages := fp.FilterStr(validJPG, imagesUnderDir1)
+	quotes = append(quotes, onlyJPGImages...)
+
+	onlyJPGImages = fp.FilterStr(validJPG, imagesUnderDir2)
+	quotes = append(quotes, onlyJPGImages...)
+
 	return len(quotes), quotes
 }
 

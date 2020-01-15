@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -90,20 +88,4 @@ func main() {
 	time.Sleep(time.Duration(serverRunTimeInMin) * time.Minute)
 	time.Sleep(time.Duration(serverRunTimeInHour) * time.Hour)
 	apiServer.Close()
-}
-
-func listDir(dirName string) {
-	var files []string
-
-	root := dirName
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		files = append(files, path)
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-	for _, file := range files {
-		fmt.Println(file)
-	}
 }

@@ -2,7 +2,11 @@ package quote
 
 import (
 	"math/rand"
+	"quote/pkg/fileutil"
 	"time"
+
+	"github.com/logic-building/functional-go/fp"
+	"github.com/sirupsen/logrus"
 )
 
 func QuoteForTheDay() string {
@@ -73,99 +77,24 @@ func QuoteForTheDay() string {
 
 func AllQuotesImage() (int, []string) {
 	quotes := []string{
-		"image/competitionWithMySelf.jpg",
-		"image/pleasegod.jpg",
-		"image/alwaysdogood.jpg",
-		"image/becomegood.jpg",
-		"image/gita11-55.jpg",
-		"image/ramayan-baalkand-sumundra-jaisa.jpg",
-		"image/muskurahat-na-khhona.jpg",
-		"image/sahas-budhhi.jpg",
-		"image/bairagya-muskan.jpg",
-		"image/hope.jpg",
-		"image/biswas.jpg",
-		"image/love-magic.jpg",
-		"image/jimewari.jpg",
-		"image/thanks-to-obstacles.jpg",
-		"image/khhali-hathh-aye-thhe.jpg",
-		"image/utsah.jpg",
-		"image/you-are-responsible.jpg",
-		"image/love-is-uniting.jpg",
-		"image/lift-up.jpg",
-		"image/muskan.jpg",
-		"image/prem-do.jpg",
-		"image/bhay-se-mukta-hona.jpg",
-		"image/be-peaceful.jpg",
-		"image/forgive.jpg",
-		"image/jiwan-me-dharm.jpg",
-		"image/care-about-others.jpg",
-		"image/wish-good-for-others.jpg",
-		"image/be-others-happy.jpg",
-		"image/happy-moment-real-moment.jpg",
-		"image/apana-banana-sikhho.jpg",
-		"image/welcome-criticism.jpg",
-		"image/universe-will-take-care.jpg",
-		"image/do-not-loose-hope.jpg",
-		"image/kripaluji-maharaj-sadhna-gupta.jpg",
-		"image/kripaluji-maharaj-aparadh-against-guru.jpg",
-		"image/kripaluji-maharaj-family.jpg",
-		"image/kripaluji-maharaj-with-mom.jpg",
-		"image/kripaluji-maharaj-kusang-se-bachna.jpg",
-		"image/kripalu-ji-maharaj-sab-me-bhagwan-ko.jpg",
-		"image/kripalu-ji-maharaj-ichha-tyag.jpg",
-		"image/kripaluji-maharaj-gande-ko-sudhh.jpg",
-		"image/kripaluji-maharaj-another-form-krishna.jpg",
-		"image/kripaluji-maharaj-krishna-always-with-me.jpg",
-		"image/kripaluji-maharaj-remember-god.jpg",
-		"image/kripaluji-maharaj-radha-krishna.jpg",
-		"image/kripaluji-maharaj-image.jpg",
-		"image/kripaluji-maharaj-bhakti-only-way.jpg",
-		"image/kripaluji-maharaj-radha-krishna-mehdi.jpg",
-		"image/kripaluji-maharaj-astha-sakhhi.jpg",
-		"image/kripaluji-maharaj-burai-na-karna.jpg",
-		"image/kripaluji-maharaj-radha-gun-gaiye.jpg",
-		"image/kripaluji-maharaj-ishwar-bhakti-bina.jpg",
-		"image/kripaluji-maharaj-hari-se-milade.jpg",
-		"image/kripaluji-maharaj-bhagwan-me-maan.jpg",
-		"image/anyway-mother-teresa.jpeg",
-		"image/Mother-Teresa-love-family.jpg",
-		"image/Beautiful-Mother-Teresa-Quotes.jpg",
-		"image/Mother-Teresa-children-of-god.jpg",
-		"image/Mother-Teresa-with-love.jpg",
-		"image/Mother-Teresa-Quotes-on-Love.jpg",
-		"image/Mother-Teresa-Quote-on-Love-Life.jpg",
-		"image/Mother-teresa-love-people.jpg",
-		"image/Best-Mother-Teresa-with-love.jpg",
-		"image/Mother-Teresa-make-others-happy.jpg",
-		"image/jagadguru-shri-kripalu-ji-maharaj-balak-budhi.jpg",
-		"image/jagadguru-shri-kripalu-ji-maharaj-kripa.jpg",
-		"image/EngrossedinDevotion-KrishnaLove-KripaluWisdom.jpg",
-		"image/jagadguru-shri-kripalu-ji-maharaj-satsang.jpg",
-		"image/bhagwat-gita-greatest-soul.jpg",
-		"image/krishna-radha-sringar.jpg",
-		"image/krishna-radha-past-time.JPG",
-		"image/kripaluji-maharaj-never-pride-for-material.jpg",
-		"image/kripaluji-maharaj-shed-tears-guru-god.jpg",
-		"image/kripaluji-maharaj-establish-relationship-with-god.jpg",
-		"image/kripaluji-maharaj-desicde-krishna-is-ours.jpg",
-		"image/Einstein-strong-people.jpg",
-		"image/kripaluji-maharaj-always-remember.jpg",
-		"image/krishna-radha-nice-pic.jpg",
-		"image/kripaluji-maharaj-sewa-means.jpg",
-		"image/thankful-to-everything.jpg",
-		"image/meditationgoogle.jpg",
-		"image/my-thought-11-jan-2020.jpg",
-		"image/renew-humanity.jpg",
-		"image/bhagwan-bhakta-ek.jpg",
-		"image/kripaluji-maharaj-bairagya-and-gyan-by-bhakti.jpg",
-		"image/kripaluji-maharaj-krishna-radha.jpg",
-		"image/krishna-radha-beautiful-image.jpg",
-		"image/krishna-radha-beautiful-image2.jpg",
-		"image/kripaluji-maharaj-manav-taan.jpg",
-		"image/krishna-radha-beautiful-image3.jpg",
-		"image/krishna-radha-beautiful-image3.jpg",
-		"image/nandeshwar-meditation.jpg",
+		"image-motivational/mother-teresa-we-have-today.jpg",
 	}
+
+	imagesUnderDir1, err := fileutil.ListDir("./image")
+	if err != nil {
+		logrus.Errorf("Unable to read files from ./image=%v", err)
+	}
+
+	imagesUnderDir2, err := fileutil.ListDir("/image")
+	if err != nil {
+		logrus.Errorf("Unable to read files from /image=%v", err)
+	}
+
+	onlyJPGImages := fp.FilterStr(validJPG, imagesUnderDir1)
+	quotes = append(quotes, onlyJPGImages...)
+
+	onlyJPGImages = fp.FilterStr(validJPG, imagesUnderDir2)
+	quotes = append(quotes, onlyJPGImages...)
 	return len(quotes), quotes
 }
 
