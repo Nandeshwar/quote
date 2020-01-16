@@ -18,7 +18,6 @@ func AllMotivationalImage() (int, []string) {
 		"image/lift-up.jpg",
 		"image/forgive.jpg",
 		"image/wish-good-for-others.jpg",
-		"image/anyway-mother-teresa.jpeg",
 		"image/Mother-Teresa-love-family.jpg",
 		"image/Beautiful-Mother-Teresa-Quotes.jpg",
 		"image/Mother-Teresa-children-of-god.jpg",
