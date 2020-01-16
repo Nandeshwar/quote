@@ -10,5 +10,8 @@ COPY --from=builder /go/bin/quote /quote
 COPY image /image
 COPY image-motivational /image-motivational
 
+RUN apk add --no-cache tzdata
+ENV TZ=America/Denver
+
 EXPOSE 1922
 ENTRYPOINT ["/quote"]

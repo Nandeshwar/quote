@@ -83,5 +83,21 @@ func KripaluJiMaharajEvents() []*EventDetail {
 	}
 	allEvents = append(allEvents, &premMandirInauguration)
 
+	bhaktiMandirInauguration := EventDetail{
+		Day:   1,
+		Month: 11,
+		Year:  2005,
+		Title: "Kripalu Ji Maharaj-Bhakti Mandir - Inauguration day",
+		Info: ` The foundation stone of Bhakti Mandir was laid on 26 October 1996, and was inaugurated in November 2005.
+    Note: I did not find exact day in November.
+    Bhakti Mandir is a Hindu Temple located in Kunda, India. 
+    This divine temple was established by the world's fifth original Jagadguru in November 2005. 
+    It is maintained by Jagadguru Kripalu Parishat, a non-profit, charitable, educational and spiritual organisation.
+   
+    `,
+		URL: "https://en.wikipedia.org/wiki/Bhakti_Mandir_Mangarh",
+	}
+	allEvents = append(allEvents, &bhaktiMandirInauguration)
+
 	return allEvents
 }

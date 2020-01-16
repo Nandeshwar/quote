@@ -13,6 +13,11 @@ or
 docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 -e SERVER_RUN_DURATION_HOUR=10 -t nandeshwar/quote
 ```
 
+### Default time zone is set to America/Denver, can be changed with env variable  TZ=America/Denver
+```
+docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 -e SERVER_RUN_DURATION_HOUR=10 -e TZ=America/Denver -t nandeshwar/quote
+```
+
 ### Push Image to docker container
 ```
 docker build -t nandeshwar/quote .
