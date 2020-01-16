@@ -91,6 +91,7 @@ func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func
 			fmt.Printf("\nNew Image Cycle Started for api=%s", apiName)
 			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
+			imageRead2 = fp.DistinctStr(imageRead2)
 			return imageRead2, imagePath
 		}
 
@@ -98,6 +99,7 @@ func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func
 			imageRead = append(imageRead, imagePath)
 			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
+			imageRead2 = fp.DistinctStr(imageRead2)
 			return imageRead2, imagePath
 		}
 
