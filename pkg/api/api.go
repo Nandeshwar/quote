@@ -55,6 +55,24 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 		height += 100
 	}
 
+	for {
+		if width > 2800 {
+			width -= 100
+			height -= 100
+		} else {
+			break
+		}
+	}
+
+	for {
+		if height > 1700 {
+			width -= 100
+			height -= 100
+		} else {
+			break
+		}
+	}
+
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
