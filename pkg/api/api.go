@@ -37,6 +37,9 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 		height += 100
 	}
 
+	width, height = increaseImageSize(width, height, 700, 700, 100)
+	width, height = reduceImageSize(width, height, 2800, 1700, 100)
+
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
@@ -50,33 +53,35 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	if width < 400 || height < 400 {
-		width += 100
-		height += 100
-	}
-
-	for {
-		if width > 2800 {
-			width -= 100
-			height -= 100
-		} else {
-			break
-		}
-	}
-
-	for {
-		if height > 1700 {
-			width -= 100
-			height -= 100
-		} else {
-			break
-		}
-	}
+	width, height = increaseImageSize(width, height, 700, 700, 100)
+	width, height = reduceImageSize(width, height, 2800, 1700, 100)
 
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+}
+
+func reduceImageSize(width, height, maxAllowedWidth, maxAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
+	for {
+		if width > maxAllowedWidth || height > maxAllowedHeight {
+			width -= reduceFactor
+			height -= reduceFactor
+		} else {
+			return width, height
+		}
+	}
+}
+
+func increaseImageSize(width, height, minAllowedWidth, minAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
+	for {
+		if width < minAllowedWidth || height < minAllowedHeight {
+			width += reduceFactor
+			height += reduceFactor
+		} else {
+			return width, height
+		}
+	}
 }
 
 func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {
@@ -89,14 +94,14 @@ func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func
 			fmt.Printf("\nImage Cycle End for api=%s", apiName)
 			imageRead = append(imageRead, imagePath)
 			fmt.Printf("\nNew Image Cycle Started for api=%s", apiName)
-			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
+			fmt.Printf("\n%d/%d. Image for api %s: %s", len(imageRead), allImageLen, apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
 		}
 
 		if !fp.ExistsStr(imagePath, imageRead) {
 			imageRead = append(imageRead, imagePath)
-			fmt.Printf("\n%d. Image for api %s: %s", len(imageRead), apiName, imagePath)
+			fmt.Printf("\n%d/%d. Image for api %s: %s", len(imageRead), allImageLen, apiName, imagePath)
 			imageRead2 = append(imageRead2, imageRead...)
 			return imageRead2, imagePath
 		}
