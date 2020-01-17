@@ -85,16 +85,9 @@ func AllQuotesImage() (int, []string) {
 		logrus.Errorf("Unable to read files from ./image=%v", err)
 	}
 
-	imagesUnderDir2, err := fileutil.ListDir("/image")
-	if err != nil {
-		logrus.Errorf("Unable to read files from /image=%v", err)
-	}
-
 	onlyJPGImages := fp.FilterStr(validJPG, imagesUnderDir1)
 	quotes = append(quotes, onlyJPGImages...)
 
-	onlyJPGImages = fp.FilterStr(validJPG, imagesUnderDir2)
-	quotes = append(quotes, onlyJPGImages...)
 	return len(quotes), quotes
 }
 
