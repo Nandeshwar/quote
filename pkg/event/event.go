@@ -21,6 +21,7 @@ func allEvents() []*EventDetail {
 	var allEvents []*EventDetail
 	allEvents = append(allEvents, KripaluJiMaharajEvents()...)
 	allEvents = append(allEvents, PrabhuyEvents()...)
+	allEvents = append(allEvents, MixEvents()...)
 	return allEvents
 }
 
