@@ -99,5 +99,24 @@ func KripaluJiMaharajEvents() []*EventDetail {
 	}
 	allEvents = append(allEvents, &bhaktiMandirInauguration)
 
+	mukundanandJiAppearance := EventDetail{
+		Day:   19,
+		Month: 12,
+		Year:  1960,
+		Title: "Kripalu Ji Maharaj Senior disciple - appearance day",
+		Info: ` As a child, Swami Mukundananda spent long hours in meditation and contemplation.
+    He graduated from the Indian Institute of Technology, Delhi with a degree in engineering and received a postgraduate degree from the Indian Institute of Management Calcutta.
+
+    After that, he worked for some time with one of the India's most topmost industrial houses. 
+    He left a career in business to join the order of Sannyas, dedicating his time to devotional pursuits and travelled throughout India as a Sanyasi.
+    Under the guidance of guru Jagadguru Shree Kripaluji Maharaj who is lovingly called "Maharajji" by his devotees,
+    Mukundananda studied the Vedic scriptures,Indian and Western philosophy, and Bhakti Yog. 
+    Kripaluji Maharaj entrusted him with the key task of spreading Vedic knowledge around the globe
+   
+    `,
+		URL: "https://en.wikipedia.org/wiki/Mukundananda",
+	}
+	allEvents = append(allEvents, &mukundanandJiAppearance)
+
 	return allEvents
 }
