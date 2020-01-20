@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"quote/pkg/event"
 	image2 "quote/pkg/image"
 	"quote/pkg/quote"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -62,6 +64,70 @@ func quotesMotivational(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
+func events(w http.ResponseWriter, r *http.Request) {
+	searchText := mux.Vars(r)["searchText"]
+
+	allEvents := event.AllEvents()
+	var allEventsWithoutPointer []event.EventDetail
+
+	for _, ev := range allEvents {
+		e := event.EventDetail{
+			Title: ev.Title,
+			Info:  ev.Info,
+			URL:   ev.URL,
+			Day:   ev.Day,
+			Month: ev.Month,
+			Year:  ev.Month,
+		}
+		allEventsWithoutPointer = append(allEventsWithoutPointer, e)
+	}
+
+	var filteredEvents []event.EventDetail
+
+	filterBySearch := func(event event.EventDetail) bool {
+
+		if strings.Contains(strings.ToLower(event.Info), searchText) ||
+			strings.Contains(strings.ToLower(event.Title), searchText) ||
+			strings.Contains(strings.ToLower(event.URL), searchText) {
+			return true
+		}
+		return false
+	}
+
+	if searchText != "" {
+		searchText = strings.ToLower(searchText)
+		filteredEvents = event.FilterEventDetail(filterBySearch, allEventsWithoutPointer)
+	} else {
+		filteredEvents = allEventsWithoutPointer
+	}
+
+	fmt.Fprintf(w, "<title>Events</title>")
+
+	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
+	for i, event := range filteredEvents {
+		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", event.Title))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", event.Info))
+
+		// Display URL in different table under td
+		fmt.Fprintf(w, fmt.Sprintf("<td>"))
+		fmt.Fprintf(w, fmt.Sprintf("<table>"))
+		for i, url := range strings.Split(event.URL, ";") {
+			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d </a></td></tr>", url, i+1))
+		}
+		fmt.Fprintf(w, fmt.Sprintf("</td>"))
+		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+
+		fmt.Fprintf(w, fmt.Sprintf("<td>%d-%d-%d</td>", event.Year, event.Month, event.Day))
+
+		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
+		fmt.Fprintf(w, fmt.Sprintf("</br>"))
+
+	}
+	fmt.Fprintf(w, fmt.Sprintf("</table>"))
+}
+
 func reduceImageSize(width, height, maxAllowedWidth, maxAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
 	for {
 		if width > maxAllowedWidth || height > maxAllowedHeight {
@@ -114,8 +180,10 @@ func NewServer(httpPort int) *Server {
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
 	router.HandleFunc("/intro", intro)
-	router.HandleFunc("/quotes-all", quotesAll)
+	router.HandleFunc("/quotes-devotional", quotesAll)
 	router.HandleFunc("/quotes-motivational", quotesMotivational)
+	router.HandleFunc("/events", events)
+	router.HandleFunc("/events/{searchText}", events)
 
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),

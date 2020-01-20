@@ -8,6 +8,7 @@ import (
 	"github.com/gookit/color"
 )
 
+//go:generate gofp -destination fp.go -pkg event -type "EventDetail"
 type EventDetail struct {
 	Day   int
 	Month int
@@ -17,7 +18,7 @@ type EventDetail struct {
 	URL   string
 }
 
-func allEvents() []*EventDetail {
+func AllEvents() []*EventDetail {
 	var allEvents []*EventDetail
 	allEvents = append(allEvents, KripaluJiMaharajEvents()...)
 	allEvents = append(allEvents, PrabhuyEvents()...)
@@ -30,7 +31,7 @@ func TodayEvents() []*EventDetail {
 
 	var todayEvents []*EventDetail
 
-	for _, event := range allEvents() {
+	for _, event := range AllEvents() {
 		if event.Month == int(month) && event.Day == day {
 			todayEvents = append(todayEvents, event)
 		}
