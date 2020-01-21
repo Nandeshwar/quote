@@ -103,7 +103,7 @@ func KripaluJiMaharajEvents() []*EventDetail {
 		Day:   19,
 		Month: 12,
 		Year:  1960,
-		Title: "Kripalu Ji Maharaj Senior disciple - appearance day",
+		Title: "Kripalu Ji Maharaj Senior disciple Mukundanand Ji - appearance day",
 		Info: ` As a child, Swami Mukundananda spent long hours in meditation and contemplation.
     He graduated from the Indian Institute of Technology, Delhi with a degree in engineering and received a postgraduate degree from the Indian Institute of Management Calcutta.
 

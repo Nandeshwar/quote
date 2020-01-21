@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"quote/pkg/event"
 	image2 "quote/pkg/image"
+	info2 "quote/pkg/info"
 	"quote/pkg/quote"
 	"strconv"
 	"strings"
@@ -115,6 +116,54 @@ func events(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, fmt.Sprintf("</table>"))
 }
 
+func info(w http.ResponseWriter, r *http.Request) {
+	searchText := mux.Vars(r)["searchText"]
+
+	allInfo := info2.GetAllInfo()
+
+	var filteredInfo []info2.Info
+
+	filterBySearch := func(info info2.Info) bool {
+
+		if strings.Contains(strings.ToLower(info.Info), searchText) ||
+			strings.Contains(strings.ToLower(info.Title), searchText) {
+			return true
+		}
+		return false
+	}
+
+	if searchText != "" {
+		searchText = strings.ToLower(searchText)
+		filteredInfo = info2.Filter(filterBySearch, allInfo)
+	} else {
+		filteredInfo = allInfo
+	}
+
+	fmt.Fprintf(w, "<title>Info</title>")
+
+	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
+	for i, info := range filteredInfo {
+		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Title))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Info))
+
+		// Display URL in different table under td
+		fmt.Fprintf(w, fmt.Sprintf("<td>"))
+		fmt.Fprintf(w, fmt.Sprintf("<table>"))
+		for i, url := range info.Link {
+			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d </a></td></tr>", url, i+1))
+		}
+		fmt.Fprintf(w, fmt.Sprintf("</td>"))
+		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+
+		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
+		fmt.Fprintf(w, fmt.Sprintf("</br>"))
+
+	}
+	fmt.Fprintf(w, fmt.Sprintf("</table>"))
+}
+
 func reduceImageSize(width, height, maxAllowedWidth, maxAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
 	for {
 		if width > maxAllowedWidth || height > maxAllowedHeight {
@@ -171,6 +220,8 @@ func NewServer(httpPort int) *Server {
 	router.HandleFunc("/quotes-motivational", quotesMotivational)
 	router.HandleFunc("/events", events)
 	router.HandleFunc("/events/{searchText}", events)
+	router.HandleFunc("/info", info)
+	router.HandleFunc("/info/{searchText}", info)
 
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),
