@@ -26,6 +26,19 @@ func FilterEventDetail(f func(EventDetail) bool, list []EventDetail) []EventDeta
 	return newList
 }
 
+func FilterPtrEventDetail(f func(*EventDetail) bool, list []*EventDetail) []*EventDetail {
+	if f == nil {
+		return []*EventDetail{}
+	}
+	var newList []*EventDetail
+	for _, v := range list {
+		if f(v) {
+			newList = append(newList, v)
+		}
+	}
+	return newList
+}
+
 func RemoveEventDetail(f func(EventDetail) bool, list []EventDetail) []EventDetail {
 	if f == nil {
 		return []EventDetail{}

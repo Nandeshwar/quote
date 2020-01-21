@@ -68,23 +68,10 @@ func events(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 
 	allEvents := event.AllEvents()
-	var allEventsWithoutPointer []event.EventDetail
 
-	for _, ev := range allEvents {
-		e := event.EventDetail{
-			Title: ev.Title,
-			Info:  ev.Info,
-			URL:   ev.URL,
-			Day:   ev.Day,
-			Month: ev.Month,
-			Year:  ev.Month,
-		}
-		allEventsWithoutPointer = append(allEventsWithoutPointer, e)
-	}
+	var filteredEvents []*event.EventDetail
 
-	var filteredEvents []event.EventDetail
-
-	filterBySearch := func(event event.EventDetail) bool {
+	filterBySearch := func(event *event.EventDetail) bool {
 
 		if strings.Contains(strings.ToLower(event.Info), searchText) ||
 			strings.Contains(strings.ToLower(event.Title), searchText) ||
@@ -96,9 +83,9 @@ func events(w http.ResponseWriter, r *http.Request) {
 
 	if searchText != "" {
 		searchText = strings.ToLower(searchText)
-		filteredEvents = event.FilterEventDetail(filterBySearch, allEventsWithoutPointer)
+		filteredEvents = event.FilterPtrEventDetail(filterBySearch, allEvents)
 	} else {
-		filteredEvents = allEventsWithoutPointer
+		filteredEvents = allEvents
 	}
 
 	fmt.Fprintf(w, "<title>Events</title>")
