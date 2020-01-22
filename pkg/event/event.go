@@ -8,7 +8,7 @@ import (
 	"github.com/gookit/color"
 )
 
-//go:generate gofp -destination fp.go -pkg event -type "EventDetail"
+//go:generate gofp -destination fp.go -pkg event -type "EventDetail" -map-function "true"
 type EventDetail struct {
 	Day   int
 	Month int

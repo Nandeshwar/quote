@@ -10,5 +10,6 @@ type Info struct {
 func GetAllInfo() []Info {
 	var allInfo []Info
 	allInfo = append(allInfo, getMiscInfo()...)
+	allInfo = append(allInfo, getKripaluJiMaharajInfo()...)
 	return allInfo
 }

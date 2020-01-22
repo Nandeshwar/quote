@@ -84,7 +84,7 @@ func events(w http.ResponseWriter, r *http.Request) {
 
 	if searchText != "" {
 		searchText = strings.ToLower(searchText)
-		filteredEvents = event.FilterPtrEventDetail(filterBySearch, allEvents)
+		filteredEvents = event.FilterEventDetailPtr(filterBySearch, allEvents)
 	} else {
 		filteredEvents = allEvents
 	}

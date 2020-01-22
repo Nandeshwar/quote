@@ -26,7 +26,7 @@ func FilterEventDetail(f func(EventDetail) bool, list []EventDetail) []EventDeta
 	return newList
 }
 
-func FilterPtrEventDetail(f func(*EventDetail) bool, list []*EventDetail) []*EventDetail {
+func FilterEventDetailPtr(f func(*EventDetail) bool, list []*EventDetail) []*EventDetail {
 	if f == nil {
 		return []*EventDetail{}
 	}
