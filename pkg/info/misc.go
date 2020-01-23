@@ -17,6 +17,33 @@ Sri Kripalu ji Maharaj ( 1922 - 2013)
 				"https://en.wikipedia.org/wiki/Kripalu_Maharaj",
 			},
 		},
+
+		{
+			Title: "4 Vedas",
+			Info: `
+1. Rigveda: The Rigveda (Sanskrit: ऋग्वेद ṛgveda, from ṛc "praise" and veda "knowledge") is an ancient Indian collection of Vedic Sanskrit hymns. 
+It is one of the four sacred canonical texts (śruti) of Hinduism known as the Vedas.
+
+2. Yajurveda: The Yajurveda (Sanskrit: यजुर्वेद, yajurveda, from yajus meaning "worship",and veda meaning "knowledge") is the Veda primarily of prose mantras for worship rituals.
+An ancient Vedic Sanskrit text, it is a compilation of ritual offering formulas that were said by a priest while an individual performed ritual actions such as those before the yajna fire.
+Yajurveda is one of the four Vedas, and one of the scriptures of Hinduism. The exact century of Yajurveda's composition is unknown, 
+and estimated by scholars to be around 1200 to 1000 BCE, contemporaneous with Samaveda and Atharvaveda.
+
+3. Samaveda: The Samaveda (Sanskrit: सामवेद, sāmaveda, from sāman "song" and veda "knowledge"), is the Veda of melodies and chants.
+It is an ancient Vedic Sanskrit text, and part of the scriptures of Hinduism. One of the four Vedas, it is a liturgical text which consists of 1,549 verses. 
+All but 75 verses have been taken from the Rigveda. Three recensions of the Samaveda have survived, and variant manuscripts of the Veda have been found in various parts of India.[3][4]
+
+4. Atharvaveda: The Atharva Veda (Sanskrit: अथर्ववेद, Atharvaveda from atharvāṇas and veda, meaning "knowledge") is the "knowledge storehouse of atharvāṇas, 
+the procedures for everyday life". The text is the fourth Veda, but has been a late addition to the Vedic scriptures of Hinduism.
+`,
+			Link: []string{
+				"https://en.wikipedia.org/wiki/Vedas",
+				"https://en.wikipedia.org/wiki/Rigveda",
+				"https://en.wikipedia.org/wiki/Yajurveda",
+				"https://en.wikipedia.org/wiki/Samaveda",
+				"https://en.wikipedia.org/wiki/Atharvaveda",
+			},
+		},
 	}
 	return infoList
 }
