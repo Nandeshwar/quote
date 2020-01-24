@@ -44,6 +44,17 @@ the procedures for everyday life". The text is the fourth Veda, but has been a l
 				"https://en.wikipedia.org/wiki/Atharvaveda",
 			},
 		},
+
+		{
+			Title: "Wife of Guru Vashishtha - Arundhati",
+			Info: ` Arundhati
+In Rigvedic hymn 7.33.9, Vashishtha (Guru of Ram) is described as a scholar who moved across the Indus river to establish his school. 
+He was married to Arundhati, and therefore he was also called Arundhati Nath, meaning the husband of Arundhati.
+`,
+			Link: []string{
+				"https://en.wikipedia.org/wiki/Vasishtha",
+			},
+		},
 	}
 	return infoList
 }

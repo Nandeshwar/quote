@@ -35,6 +35,16 @@ The youtube link has nice story about Jaganath Mishra told by Kripalu Ji Maharaj
 				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=21",
 			},
 		},
+		// Info3
+		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 22",
+			Info: `
+Nice explanation about Ananya bhakti of Krishna.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Q7lFz7q9DS0&list=PLJQeuSbWtx9yifpHEAishnWhP-Wy1aBpm&index=22",
+			},
+		},
 	}
 	return infoList
 }
