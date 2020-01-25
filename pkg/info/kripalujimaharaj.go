@@ -45,6 +45,17 @@ Nice explanation about Ananya bhakti of Krishna.
 				"https://www.youtube.com/watch?v=Q7lFz7q9DS0&list=PLJQeuSbWtx9yifpHEAishnWhP-Wy1aBpm&index=22",
 			},
 		},
+
+		{
+			Title: "Radha Tatva",
+			Info: ` Nice explanation of Radha Tatva by Kripalu ji maharaj. Durga ji personal expansion of Radha ji,
+Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are one
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=afbE-kMEwTI",
+				"https://www.youtube.com/watch?v=TWM1ze_GrWw",
+			},
+		},
 	}
 	return infoList
 }
