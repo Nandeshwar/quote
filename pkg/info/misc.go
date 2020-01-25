@@ -2,6 +2,7 @@ package info
 
 func getMiscInfo() []Info {
 	infoList := []Info{
+		// info1
 		{
 			Title: "All Jagad guru",
 			Info: `
@@ -18,6 +19,7 @@ Sri Kripalu ji Maharaj ( 1922 - 2013)
 			},
 		},
 
+		// info 2
 		{
 			Title: "4 Vedas",
 			Info: `
@@ -45,6 +47,7 @@ the procedures for everyday life". The text is the fourth Veda, but has been a l
 			},
 		},
 
+		// info 3
 		{
 			Title: "Wife of Guru Vashishtha - Arundhati",
 			Info: ` Arundhati
@@ -53,6 +56,128 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 `,
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Vasishtha",
+			},
+		},
+
+		// info 4
+		{
+			Title: "Gita in 12 minutes",
+			Info: `Nice explanation of Bhagwat gita in 12 minutes. 
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=jnifjBM9dpM",
+			},
+		},
+
+		// info 5
+		{
+			Title: "Hanuman Mahima 1 hour video songs",
+			Info: `Hanumnan ji bhakti towards Ram and Krishna. A beautiful song.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=N-RSr4ecs9M&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=9",
+			},
+		},
+
+		// info 6
+		{
+			Title: "Garud puran in 56 min",
+			Info: `A beautiful song - Garud puran
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Vb8-7DLSJuE&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=35",
+			},
+		},
+
+		// info 7
+		{
+			Title: "Bhajan - Govind Chale aao, Gopal chale aao",
+			Info: `A beautiful bhajan of Krishna. Heart touching song.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=AEpGYCwutcc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=49",
+			},
+		},
+
+		// info 8
+		{
+			Title: "Bharat prem towards Ram",
+			Info: `Ramayan - A beautiful video about Bharat Ji Prem towards Shree Ram Ji.
+Very emotional video. True love. God is bound by love.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Rc8v5SfXP5g&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=56",
+			},
+		},
+
+		// info 9
+		{
+			Title: "Bhajan: Meri vinti hai radha rani",
+			Info: `A beautiful bhajan of Radha Rani.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=3mmMm45rJpA&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=58",
+			},
+		},
+
+		// info 10
+		{
+			Title: "Bhagwan Naam ki Mahatav- 12 years - Ayush Krishna Nayan Ji",
+			Info: ` A beautiful story of Sushila, sudama told by 12 years old child. Speech given by this young kid is high level
+of spiritual knowledge.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=jYkdBsUFMKs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=101",
+			},
+		},
+
+		// info 11
+		{
+			Title: "Bhajan: Itni Sakti dena hame",
+			Info: ` Beautiful bhajan : Itni Sakti hame dena bhagwan
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=3EnLaJKhO2A&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=107",
+			},
+		},
+
+		// info 12
+		{
+			Title: "Bhajan: Jahe vidhi rakhhe ram",
+			Info: ` Heart touching bhajan : Sita ram, Sita ram kahiye - Jahe vidhi rakkhe ram
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=GnvQH8PH8sg&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=118",
+			},
+		},
+
+		// info 13
+		{
+			Title: "Bhajan: Jai Radha Madhav",
+			Info: ` A beautiful Bhajan, Jai Radha Madhav, Jai Kunj Bihari
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=cPTqAyqBAfc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=119",
+			},
+		},
+
+		// info 14
+		{
+			Title: "Bhajan: Ae ri Sakhhi Mangal gao ri: Rishi Nitya Nand",
+			Info: ` A nice dance and bhajan - Ae ri Sakkhi Mangal gao ri
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Ju4DR1A_vPY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=120",
+			},
+		},
+
+		// info 15
+		{
+			Title: "Mission Genius mind - Soul after death",
+			Info: ` 
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=nPRKafjtGGs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=127",
 			},
 		},
 	}
