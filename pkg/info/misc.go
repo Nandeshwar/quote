@@ -174,10 +174,40 @@ of spiritual knowledge.
 		// info 15
 		{
 			Title: "Mission Genius mind - Soul after death",
-			Info: ` 
+			Info: ` A story about girl's spirit
 `,
 			Link: []string{
 				"https://www.youtube.com/watch?v=nPRKafjtGGs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=127",
+			},
+		},
+
+		// info 16
+		{
+			Title: "Bhajan: hum van ke bashi",
+			Info: ` Nice bhajan from Ramanand Sagar Ramayan
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=wOkFqjRwQYY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=134",
+			},
+		},
+
+		// info 17
+		{
+			Title: "Bhajan: Radha ke maan me bas gaye",
+			Info: ` Nice bhajan by Mridul krishna Sastri
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=OtjFIe84d0E",
+			},
+		},
+
+		// info 17
+		{
+			Title: "Bhajan: O Kanha ab to murli ke madhur suna do taan",
+			Info: ` Heart touching bhajan
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=XP9rlhzJoxc",
 			},
 		},
 	}

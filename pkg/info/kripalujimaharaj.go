@@ -108,6 +108,36 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 				"https://www.youtube.com/watch?v=Db1hLvVuig8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=115",
 			},
 		},
+
+		// info10
+		{
+			Title: "Bhajan: Jo hari naam naa gaaya",
+			Info: ` Beautiful bhajan by Kripalu Ji maharaj's son - Ghanshyam
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=jj2xoGQPYl8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=145",
+			},
+		},
+
+		// info11
+		{
+			Title: "Bhajan: Aap ki Najro ne samjhha",
+			Info: ` Beautiful bhajan for Kripalu Ji maharaj
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=D8TCdXpNDZM&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=140",
+			},
+		},
+
+		// info11
+		{
+			Title: "Bhajan: Tujhhme Rab Dikhhta hai",
+			Info: ` Beautiful bhajan for Kripalu Ji maharaj
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=ew4ly-D-pCw&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=139",
+			},
+		},
 	}
 	return infoList
 }
