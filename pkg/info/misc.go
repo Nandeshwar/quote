@@ -203,7 +203,7 @@ of spiritual knowledge.
 
 		// info 17
 		{
-			Title: "Bhajan: O Kanha ab to murli ke madhur suna do taan",
+			Title: "Bhajan: O Kanha ab to murli ki madhur suna do taan",
 			Info: ` Heart touching bhajan
 `,
 			Link: []string{

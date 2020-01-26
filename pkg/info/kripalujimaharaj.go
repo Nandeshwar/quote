@@ -138,6 +138,39 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 				"https://www.youtube.com/watch?v=ew4ly-D-pCw&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=139",
 			},
 		},
+
+		// info12
+		{
+			Title: "God is always with us - Kripalu ji Maharaj",
+			Info: `Mai Kaun mera kaun 66 - by Kripalu ji Maharaj. 
+1. Krishna is always with us 
+2. Kripalu ji Maharaj visits to Ayodhya. 
+3. Ram & Krishna is one.
+4. Everything written in Ved has some purpose
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=V6lBKUNbqT8&list=PLA3B03C8320853BC2&index=66",
+			},
+		},
+
+		// info13
+		{
+			Title: "Daughters of Kripalu ji Maharaj",
+			Info: `
+H.H.Dr Vishakha Tripathi
+President – Bhakti Dham, Mangarh
+
+H.H.Dr Krishna Tripathi
+President – Rangeeli Mahal, Barsana
+
+H.H.Dr Shyama Tripathi
+President – Shyama Shyam Dham, Vrindavan
+
+`,
+			Link: []string{
+				"http://jkp.org.in/about-us/",
+			},
+		},
 	}
 	return infoList
 }
