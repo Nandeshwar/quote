@@ -1,5 +1,7 @@
 package event
 
+import "time"
+
 func MixEvents() []*EventDetail {
 	var allEvents []*EventDetail
 
@@ -13,7 +15,8 @@ func MixEvents() []*EventDetail {
     Parents: Durga Prasad Sharma
     Children: Aneg Singh Sharma, Girija Bhatele, Dharma Narayan Sharma
 `,
-		URL: "https://en.wikipedia.org/wiki/Neem_Karoli_Baba",
+		URL:          "https://en.wikipedia.org/wiki/Neem_Karoli_Baba",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, NeemKaroliBabaDisAppearance)
 

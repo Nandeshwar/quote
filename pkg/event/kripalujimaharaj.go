@@ -1,5 +1,7 @@
 package event
 
+import "time"
+
 func KripaluJiMaharajEvents() []*EventDetail {
 	var allEvents []*EventDetail
 	kripaluJiJagadGurutam := &EventDetail{
@@ -20,7 +22,8 @@ func KripaluJiMaharajEvents() []*EventDetail {
     His mother, Bhagvati Devi, and father, Lalita Prasad, named Him Ram Kripalu at birth. 
     From the very first day, He delighted the hearts of everyone around Him with His sweet smile and serene look
 `,
-		URL: "https://en.wikipedia.org/wiki/Kripalu_Maharaj",
+		URL:          "https://en.wikipedia.org/wiki/Kripalu_Maharaj",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, kripaluJiJagadGurutam)
 
@@ -39,7 +42,8 @@ func KripaluJiMaharajEvents() []*EventDetail {
     His mother, Bhagvati Devi, and father, Lalita Prasad, named Him Ram Kripalu at birth. 
     From the very first day, He delighted the hearts of everyone around Him with His sweet smile and serene look
      `,
-		URL: "https://en.wikipedia.org/wiki/Kripalu_Maharaj",
+		URL:          "https://en.wikipedia.org/wiki/Kripalu_Maharaj",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, kripaluJiAppearance)
 
@@ -63,7 +67,8 @@ func KripaluJiMaharajEvents() []*EventDetail {
     His mother, Bhagvati Devi, and father, Lalita Prasad, named Him Ram Kripalu at birth. 
     From the very first day, He delighted the hearts of everyone around Him with His sweet smile and serene look
     `,
-		URL: "https://en.wikipedia.org/wiki/Kripalu_Maharaj;https://www.jkyog.org/;http://jkp.org.in/life-story-jagadguruttam/",
+		URL:          "https://en.wikipedia.org/wiki/Kripalu_Maharaj;https://www.jkyog.org/;http://jkp.org.in/life-story-jagadguruttam/",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, &kripaluJiDisAppearance)
 
@@ -79,7 +84,8 @@ func KripaluJiMaharajEvents() []*EventDetail {
     It took approximately 1000 artists about 12 years to build the complex.
    
     `,
-		URL: "https://en.wikipedia.org/wiki/Prem_Mandir,_Vrindavan",
+		URL:          "https://en.wikipedia.org/wiki/Prem_Mandir,_Vrindavan",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, &premMandirInauguration)
 
@@ -95,7 +101,8 @@ func KripaluJiMaharajEvents() []*EventDetail {
     It is maintained by Jagadguru Kripalu Parishat, a non-profit, charitable, educational and spiritual organisation.
    
     `,
-		URL: "https://en.wikipedia.org/wiki/Bhakti_Mandir_Mangarh",
+		URL:          "https://en.wikipedia.org/wiki/Bhakti_Mandir_Mangarh",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, &bhaktiMandirInauguration)
 
@@ -114,7 +121,8 @@ func KripaluJiMaharajEvents() []*EventDetail {
     Kripaluji Maharaj entrusted him with the key task of spreading Vedic knowledge around the globe
    
     `,
-		URL: "https://en.wikipedia.org/wiki/Mukundananda",
+		URL:          "https://en.wikipedia.org/wiki/Mukundananda",
+		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, &mukundanandJiAppearance)
 

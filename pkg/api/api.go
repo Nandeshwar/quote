@@ -92,6 +92,15 @@ func events(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<title>Events</title>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
+
+	fmt.Fprintf(w, fmt.Sprintf("<tr>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Title</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Info</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Link</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Date</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Creattion Date</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("</tr>"))
 	for i, event := range filteredEvents {
 		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
@@ -108,6 +117,7 @@ func events(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))
 
 		fmt.Fprintf(w, fmt.Sprintf("<td>%d-%d-%d</td>", event.Year, event.Month, event.Day))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", event.CreationDate))
 
 		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
 		fmt.Fprintf(w, fmt.Sprintf("</br>"))
@@ -142,6 +152,14 @@ func info(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<title>Info</title>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
+
+	fmt.Fprintf(w, fmt.Sprintf("<tr>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Title</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Info</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Link</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Info Added</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("</tr>"))
 	for i, info := range filteredInfo {
 		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
@@ -157,6 +175,7 @@ func info(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))
 
+		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", info.CreationDate))
 		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
 		fmt.Fprintf(w, fmt.Sprintf("</br>"))
 

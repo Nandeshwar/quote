@@ -10,12 +10,13 @@ import (
 
 //go:generate gofp -destination fp.go -pkg event -type "EventDetail" -map-function "true"
 type EventDetail struct {
-	Day   int
-	Month int
-	Year  int
-	Title string
-	Info  string
-	URL   string
+	Day          int
+	Month        int
+	Year         int
+	Title        string
+	Info         string
+	URL          string
+	CreationDate time.Time
 }
 
 func AllEvents() []*EventDetail {

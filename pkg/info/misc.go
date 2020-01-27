@@ -1,5 +1,7 @@
 package info
 
+import "time"
+
 func getMiscInfo() []Info {
 	infoList := []Info{
 		// info1
@@ -17,6 +19,7 @@ Sri Kripalu ji Maharaj ( 1922 - 2013)
 				"https://en.wikipedia.org/wiki/Jagadguru",
 				"https://en.wikipedia.org/wiki/Kripalu_Maharaj",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 2
@@ -45,6 +48,7 @@ the procedures for everyday life". The text is the fourth Veda, but has been a l
 				"https://en.wikipedia.org/wiki/Samaveda",
 				"https://en.wikipedia.org/wiki/Atharvaveda",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 3
@@ -57,6 +61,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Vasishtha",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 4
@@ -67,6 +72,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=jnifjBM9dpM",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 5
@@ -77,6 +83,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=N-RSr4ecs9M&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=9",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 6
@@ -87,6 +94,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=Vb8-7DLSJuE&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=35",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 7
@@ -97,6 +105,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=AEpGYCwutcc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=49",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 8
@@ -108,6 +117,7 @@ Very emotional video. True love. God is bound by love.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Rc8v5SfXP5g&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=56",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 9
@@ -118,6 +128,7 @@ Very emotional video. True love. God is bound by love.
 			Link: []string{
 				"https://www.youtube.com/watch?v=3mmMm45rJpA&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=58",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 10
@@ -129,6 +140,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=jYkdBsUFMKs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=101",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 11
@@ -139,6 +151,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=3EnLaJKhO2A&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=107",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 12
@@ -149,6 +162,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=GnvQH8PH8sg&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=118",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 13
@@ -159,6 +173,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=cPTqAyqBAfc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=119",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 14
@@ -169,6 +184,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Ju4DR1A_vPY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=120",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 15
@@ -179,6 +195,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=nPRKafjtGGs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=127",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 16
@@ -189,6 +206,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=wOkFqjRwQYY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=134",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 17
@@ -199,6 +217,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=OtjFIe84d0E",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 17
@@ -209,6 +228,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=XP9rlhzJoxc",
 			},
+			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -223,6 +243,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Panchakanya",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -235,6 +256,7 @@ Son: Vidura, Shuka (Shuka Dev or Shukdev), Pandu, Dhritarashtra
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Vyasa",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 	}
 	return infoList

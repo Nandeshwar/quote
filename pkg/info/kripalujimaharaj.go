@@ -1,5 +1,7 @@
 package info
 
+import "time"
+
 func getKripaluJiMaharajInfo() []Info {
 	infoList := []Info{
 		// Info1
@@ -23,6 +25,7 @@ Son: Ghanshyam Tripathi
 			Link: []string{
 				"https://www.google.com/search?q=kripalu+ji+maharaj+family&rlz=1C5GCEA_enUS869US869&oq=kripalu+ji&aqs=chrome.0.69i59l2j69i57j69i59j0j69i60l3.2695j0j4&sourceid=chrome&ie=UTF-8",
 			},
+			CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -34,6 +37,7 @@ The youtube link has nice story about Jaganath Mishra told by Kripalu Ji Maharaj
 			Link: []string{
 				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=21",
 			},
+			CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -44,6 +48,7 @@ Nice explanation about Ananya bhakti of Krishna.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Q7lFz7q9DS0&list=PLJQeuSbWtx9yifpHEAishnWhP-Wy1aBpm&index=22",
 			},
+			CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -57,6 +62,7 @@ Respect every God and do bhakti of Krishna only.
 			Link: []string{
 				"https://www.youtube.com/watch?v=C3eoNzw52oI&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=23",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -68,6 +74,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 				"https://www.youtube.com/watch?v=afbE-kMEwTI",
 				"https://www.youtube.com/watch?v=TWM1ze_GrWw",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -78,6 +85,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 				"https://www.youtube.com/watch?v=F9iGSuWellg",
 				"https://www.youtube.com/watch?v=9CT7Oj-3nfI&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=102",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -87,6 +95,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=9CT7Oj-3nfI&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=102",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -96,6 +105,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=9CT7Oj-3nfI&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=102",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -105,6 +115,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=8LM5q6gbTaA&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=114",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -114,6 +125,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=Db1hLvVuig8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=115",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -123,6 +135,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=jj2xoGQPYl8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=145",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -132,6 +145,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=D8TCdXpNDZM&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=140",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -141,6 +155,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=ew4ly-D-pCw&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=139",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -154,6 +169,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=V6lBKUNbqT8&list=PLA3B03C8320853BC2&index=66",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -172,6 +188,7 @@ President – Shyama Shyam Dham, Vrindavan
 			Link: []string{
 				"http://jkp.org.in/about-us/",
 			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 	}
 	return infoList
