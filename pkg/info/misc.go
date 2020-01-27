@@ -224,6 +224,18 @@ of spiritual knowledge.
 				"https://en.wikipedia.org/wiki/Panchakanya",
 			},
 		},
+
+		{
+			Title: "Ved vyas :  Who is his Father and who are his sons",
+			Info: ` 
+Father: Parashara. He is son of Shaki Maharishi and Shakti Maharishi is son of Vasisthha - Guru of Ram
+Son: Vidura, Shuka (Shuka Dev or Shukdev), Pandu, Dhritarashtra
+
+`,
+			Link: []string{
+				"https://en.wikipedia.org/wiki/Vyasa",
+			},
+		},
 	}
 	return infoList
 }
