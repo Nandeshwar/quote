@@ -210,6 +210,20 @@ of spiritual knowledge.
 				"https://www.youtube.com/watch?v=XP9rlhzJoxc",
 			},
 		},
+
+		{
+			Title: "Pancha Kanya",
+			Info: ` 
+1. Ahilya - Wife of Gautam Rishi in Ramayan
+2. Tara - Wife of Banar Raj Baali in Ramayan
+3. Mandodari - Wife of Ravan in Ramayan
+4. Kunti - Monther of pandav in Mahabharat
+5. Dropati - Wife of Pandav
+`,
+			Link: []string{
+				"https://en.wikipedia.org/wiki/Panchakanya",
+			},
+		},
 	}
 	return infoList
 }

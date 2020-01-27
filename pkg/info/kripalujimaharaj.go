@@ -24,7 +24,7 @@ Son: Ghanshyam Tripathi
 				"https://www.google.com/search?q=kripalu+ji+maharaj+family&rlz=1C5GCEA_enUS869US869&oq=kripalu+ji&aqs=chrome.0.69i59l2j69i57j69i59j0j69i60l3.2695j0j4&sourceid=chrome&ie=UTF-8",
 			},
 		},
-		// Info2
+
 		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 21",
 			Info: `
@@ -35,7 +35,7 @@ The youtube link has nice story about Jaganath Mishra told by Kripalu Ji Maharaj
 				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=21",
 			},
 		},
-		// Info3
+
 		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 22",
 			Info: `
@@ -46,7 +46,19 @@ Nice explanation about Ananya bhakti of Krishna.
 			},
 		},
 
-		// info4
+		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 23",
+			Info: `
+Nice explanation about Ananya bhakti of Krishna.
+Complete Surrender to Krishna.
+Dropati Story. Story of Upmanyu a devotee of Shankar ji.
+Respect every God and do bhakti of Krishna only.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=C3eoNzw52oI&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=23",
+			},
+		},
+
 		{
 			Title: "Radha Tatva",
 			Info: ` Nice explanation of Radha Tatva by Kripalu ji maharaj. Durga ji personal expansion of Radha ji,
@@ -58,7 +70,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info5
 		{
 			Title: "Kripaluji maharaj: difference between gyan & bhakti",
 			Info: ` God can be attained only by grace of God and bhakti is only the way by which we get grace of God to know him.
@@ -69,7 +80,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info6
 		{
 			Title: "Kripaluji maharaj: Bhakti marg ki pehli sart",
 			Info: ` Very nice explanation of Bhakti marg
@@ -79,7 +89,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info7
 		{
 			Title: "Bhajan: Guru charan kamal balihar",
 			Info: ` A beautiful bhajan for Kripalu ji maharaj
@@ -89,7 +98,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info8
 		{
 			Title: "Bhajan: Hare Ram by Kripalu ji maharaj",
 			Info: ` Hare Ram Hare Krishna bhajan by Kripalu ji Maharaj
@@ -99,7 +107,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info9
 		{
 			Title: "Bhakti bhav ke Lakshan",
 			Info: ` Bhakti bhav ke Lakshan by Kripalu Ji Maharaj
@@ -109,7 +116,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info10
 		{
 			Title: "Bhajan: Jo hari naam naa gaaya",
 			Info: ` Beautiful bhajan by Kripalu Ji maharaj's son - Ghanshyam
@@ -119,7 +125,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info11
 		{
 			Title: "Bhajan: Aap ki Najro ne samjhha",
 			Info: ` Beautiful bhajan for Kripalu Ji maharaj
@@ -129,7 +134,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info11
 		{
 			Title: "Bhajan: Tujhhme Rab Dikhhta hai",
 			Info: ` Beautiful bhajan for Kripalu Ji maharaj
@@ -139,7 +143,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info12
 		{
 			Title: "God is always with us - Kripalu ji Maharaj",
 			Info: `Mai Kaun mera kaun 66 - by Kripalu ji Maharaj. 
@@ -153,7 +156,6 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			},
 		},
 
-		// info13
 		{
 			Title: "Daughters of Kripalu ji Maharaj",
 			Info: `
