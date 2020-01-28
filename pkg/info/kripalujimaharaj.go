@@ -66,6 +66,20 @@ Respect every God and do bhakti of Krishna only.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 24",
+			Info: `
+Nice explanation about Ananya bhakti of Krishna.
+Complete Surrender to Krishna.
+Story of Gopi who worshiped katyani ma to get krishna as husband.
+Story of Kripalu ji Maharaj when he was child and fell down from tree.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=XlS_xy05kFI&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=24",
+			},
+			CreationDate: time.Date(2019, 1, 28, 0, 0, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Radha Tatva",
 			Info: ` Nice explanation of Radha Tatva by Kripalu ji maharaj. Durga ji personal expansion of Radha ji,
 Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are one

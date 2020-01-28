@@ -258,6 +258,57 @@ Son: Vidura, Shuka (Shuka Dev or Shukdev), Pandu, Dhritarashtra
 			},
 			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Navada Bhakti: Sabri",
+			Info: ` 
+Father: Parashara. 1. प्रथम भगति संतन्ह कर संगा। 
+
+The first step to devotion (Bhakti) is to keep company of the saints (Satsang).
+
+2. दुसरि रति मम कथा प्रसंगा॥
+
+The second step is to enjoy listening to legends/discourses pertaining to the Lord.
+
+3. गुरु पद पंकज सेवा तीसरि भगति अमान।
+
+Selfless service to the Guru’s lotus feet without any pride is the third step.
+
+4. चौथि भगति मम गुन गन करइ कपट तजि गान॥
+
+The fourth step is to earnestly sing praises of the Lord’s virtues with a heart clear of guile, deceit or hypocrisy.
+
+5. मंत्र जाप मम दृढ़ बिस्वासा। पंचम भजन सो बेद प्रकासा॥
+
+Chanting My Name with steadfast faith is the fifth step as the Vedas reveal.
+
+6. छठ दम सील बिरति बहु करमा। निरत निरंतर सज्जन धरमा॥
+
+The sixth, is to practice self-control, good character, detachment from manifold activities and always follow the duties as good religious person.
+
+7. सातवँ सम मोहि मय जग देखा। मोतें संत अधिक करि लेखा॥
+
+The seventh step is to perceive the world as God Himself and regard the saints higher than the Lord.
+
+8. आठवँ जथालाभ संतोषा। सपनेहुं नहिं देखइ परदोषा॥
+
+The eighth, is a state (which one arrives at when one travels the first seven steps) where there is no desire left, but the gift of perfect peace and contentment with whatever one has. (In this state) one does not see fault in others, even in a dream.
+
+9. नवम सरल सब सन छलहीना। मम भरोस हिय हरष न दीना॥
+
+In this state, one has full faith in the Lord, and becomes (child-like) simple with no hypocrisy or deceit. The devotee has strong faith in the Lord with neither exaltation or depression in any life circumstance (but becomes equanimous).
+
+नव महुं एकउ जिन्ह कें होई। नारि पुरूष सचराचर कोई॥
+सोइ अतिसय प्रिय भामिनी मोरें। सकल प्रकार भगति दृढ़ तोरें॥
+
+Shri Ram adds that Shabri’s Bhakti is perfectly complete. Yet if anyone were to have taken even one step towards devotion, out of all nine, he/she would be very dear to the Lord.
+
+`,
+			Link: []string{
+				"https://www.speakingtree.in/allslides/navadha-bhakti---the-nine-steps-of-bhakti-devotion/267393",
+			},
+			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

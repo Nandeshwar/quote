@@ -121,10 +121,23 @@ func KripaluJiMaharajEvents() []*EventDetail {
     Kripaluji Maharaj entrusted him with the key task of spreading Vedic knowledge around the globe
    
     `,
-		URL:          "https://en.wikipedia.org/wiki/Mukundananda",
+		URL:          "https://www.jkyog.org/blog/ms-vishakha-tripathi-badi-didi-president-jkp-education-trust-conferred-doctorate-malaysia",
 		CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
 	}
 	allEvents = append(allEvents, &mukundanandJiAppearance)
+
+	VisakhhaDidiAppearance := EventDetail{
+		Day:   16,
+		Month: 02,
+		Year:  1949,
+		Title: "Kripalu Ji Maharaj elder daughter Visakhha - appearance day",
+		Info: ` Today is birthday of Visakhha badi didi ji. Vishaka Tripathi Didi ji is president of Bhakti Dham, Mangarh
+   
+    `,
+		URL:          "https://en.wikipedia.org/wiki/Jagadguru_Kripalu_Parishat",
+		CreationDate: time.Date(2019, 1, 28, 0, 0, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, &VisakhhaDidiAppearance)
 
 	return allEvents
 }
