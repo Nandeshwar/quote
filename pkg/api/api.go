@@ -105,7 +105,17 @@ func events(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", event.Title))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", event.Info))
+
+		// Split info by .
+		fmt.Fprintf(w, fmt.Sprintf("<td>"))
+		fmt.Fprintf(w, fmt.Sprintf("<table>"))
+		for _, info := range strings.Split(event.Info, ".") {
+			fmt.Fprintf(w, fmt.Sprintf("<tr>"))
+			fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info))
+			fmt.Fprintf(w, fmt.Sprintf("</tr>"))
+		}
+		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 
 		// Display URL in different table under td
 		fmt.Fprintf(w, fmt.Sprintf("<td>"))
@@ -164,7 +174,17 @@ func info(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Title))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Info))
+
+		// Split info by .
+		fmt.Fprintf(w, fmt.Sprintf("<td>"))
+		fmt.Fprintf(w, fmt.Sprintf("<table>"))
+		for _, info := range strings.Split(info.Info, ".") {
+			fmt.Fprintf(w, fmt.Sprintf("<tr>"))
+			fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info))
+			fmt.Fprintf(w, fmt.Sprintf("</tr>"))
+		}
+		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 
 		// Display URL in different table under td
 		fmt.Fprintf(w, fmt.Sprintf("<td>"))
