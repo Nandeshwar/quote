@@ -80,6 +80,24 @@ Story of Kripalu ji Maharaj when he was child and fell down from tree.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 25",
+			Info: `
+Follow only those things of Ved which help in bhakti-devotion.
+Ved is various thing but we have to take only those things which help in devotion.
+Do required work such as office work but don't waste time by talking to others about worldly stuff.
+Limited Vedic work, Limited friends.
+Remember Ram that is sandhya vandana which cleanse inside and outside.
+Nice explanation about Ram & Krishna one. Krishna changed himself to Ram and Ram changed himself to Krishna.
+Nice songs at end. Radha Radha ...
+Bhagwan ke birodhi padarth se udasin rehna.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=28XLxBSFbzg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=25",
+			},
+			CreationDate: time.Date(2019, 1, 29, 0, 0, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Radha Tatva",
 			Info: ` Nice explanation of Radha Tatva by Kripalu ji maharaj. Durga ji personal expansion of Radha ji,
 Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are one
