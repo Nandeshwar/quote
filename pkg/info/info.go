@@ -14,5 +14,6 @@ func GetAllInfo() []Info {
 	var allInfo []Info
 	allInfo = append(allInfo, getMiscInfo()...)
 	allInfo = append(allInfo, getKripaluJiMaharajInfo()...)
+	allInfo = append(allInfo, getMyMeditaionInfo()...)
 	return allInfo
 }
