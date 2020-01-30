@@ -222,6 +222,28 @@ President – Shyama Shyam Dham, Vrindavan
 			},
 			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Bhakti ki Prakar, roop dhyan by  Kripalu ji Maharaj",
+			Info: `
+Nice explanation about different types of bhakti.
+Kripalu ji maharaj says: 3 most important way to do bhakti.
+a. Listen.
+b. chant.
+c. Roop dhyan.
+
+He says Roop dhyan is most important than others two.
+He says always do roop dhyan before chanting, while listening, while prayer ...
+
+He told that he would come to Kathmandu.
+He talks about bring people towards god by being humble.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=nx4ZEPfaBBk",
+			},
+			CreationDate: time.Date(2019, 1, 30, 9, 23, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
