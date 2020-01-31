@@ -98,6 +98,18 @@ Bhagwan ke birodhi padarth se udasin rehna.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 26",
+			Info: `
+Do Vedic karma only after getting Bhakti.
+Krishna & Amrish Story: Ananya bhakti of Krishna.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=tjXrq4CAS5c&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=26",
+			},
+			CreationDate: time.Date(2019, 1, 31, 8, 33, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Radha Tatva",
 			Info: ` Nice explanation of Radha Tatva by Kripalu ji maharaj. Durga ji personal expansion of Radha ji,
 Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are one
