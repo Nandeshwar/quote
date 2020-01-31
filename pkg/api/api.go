@@ -23,11 +23,20 @@ func intro(w http.ResponseWriter, req *http.Request) {
 }
 
 type Server struct {
-	server *http.Server
-	wg     sync.WaitGroup
+	server                   *http.Server
+	wg                       sync.WaitGroup
+	devotionalImageMaxWidth  int
+	devotionalImageMaxHeight int
+	devotionalImageMinWidth  int
+	devotionalImageMinHeight int
+
+	motivationalImageMaxWidth  int
+	motivationalImageMaxHeight int
+	motivationalImageMinWidth  int
+	motivationalImageMinHeight int
 }
 
-func quotesAll(w http.ResponseWriter, r *http.Request) {
+func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
 	allImageLen, allImages := quote.AllQuotesImage()
 
 	imageReadList, imagePath := getNonReadImage("All Image", allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
@@ -35,28 +44,23 @@ func quotesAll(w http.ResponseWriter, r *http.Request) {
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	if width < 400 || height < 400 {
-		width += 100
-		height += 100
-	}
-
-	width, height = increaseImageSize(width, height, 700, 700, 100)
-	width, height = reduceImageSize(width, height, 2800, 1700, 100)
+	width, height = increaseImageSize(width, height, s.devotionalImageMinWidth, s.devotionalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.devotionalImageMaxWidth, s.devotionalImageMaxHeight, 100)
 
 	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
-func quotesMotivational(w http.ResponseWriter, r *http.Request) {
+func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
 	allImageLen, allImages := quote.AllMotivationalImage()
 	imageReadList, imagePath := getNonReadImage("MotivationalImage", allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
 	quote.MotivationalImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	width, height = increaseImageSize(width, height, 700, 700, 100)
-	width, height = reduceImageSize(width, height, 2800, 1700, 100)
+	width, height = increaseImageSize(width, height, s.motivationalImageMinWidth, s.motivationalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.motivationalImageMaxWidth, s.motivationalImageMaxHeight, 100)
 
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
@@ -249,17 +253,10 @@ func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func
 	}
 }
 
-func NewServer(httpPort int) *Server {
+func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devotionalImageMinWidth, devotionalImageMinHeight, motivationalImageMaxWidth, motivationalImageMaxHeight, motivationalImageMinWidth, motivationalImageMinHeight int) *Server {
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
-	router.HandleFunc("/intro", intro)
-	router.HandleFunc("/quotes-devotional", quotesAll)
-	router.HandleFunc("/quotes-motivational", quotesMotivational)
-	router.HandleFunc("/events", events)
-	router.HandleFunc("/events/{searchText}", events)
-	router.HandleFunc("/info", info)
-	router.HandleFunc("/info/{searchText}", info)
 
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),
@@ -268,7 +265,25 @@ func NewServer(httpPort int) *Server {
 		WriteTimeout:   15 * time.Second,
 		MaxHeaderBytes: 1000000,
 	}
-	s := &Server{server: server}
+	s := &Server{
+		server:                     server,
+		devotionalImageMaxWidth:    devotionalImageMaxWidth,
+		devotionalImageMaxHeight:   devotionalImageMaxHeight,
+		devotionalImageMinWidth:    devotionalImageMinWidth,
+		devotionalImageMinHeight:   devotionalImageMinHeight,
+		motivationalImageMaxWidth:  motivationalImageMaxWidth,
+		motivationalImageMaxHeight: motivationalImageMaxHeight,
+		motivationalImageMinWidth:  motivationalImageMinWidth,
+		motivationalImageMinHeight: motivationalImageMinHeight,
+	}
+
+	router.HandleFunc("/intro", intro)
+	router.HandleFunc("/quotes-devotional", s.quotesAll)
+	router.HandleFunc("/quotes-motivational", s.quotesMotivational)
+	router.HandleFunc("/events", events)
+	router.HandleFunc("/events/{searchText}", events)
+	router.HandleFunc("/info", info)
+	router.HandleFunc("/info/{searchText}", info)
 	return s
 }
 

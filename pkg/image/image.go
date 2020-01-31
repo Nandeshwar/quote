@@ -1,16 +1,5 @@
 package image
 
-// Copyright 2016 The Go Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-// +build example
-//
-// This build tag means that "go install golang.org/x/exp/shiny/..." doesn't
-// install this example program. Use "go run main.go" to run it or "go install
-// -tags=example" to install it.
-// Imageview is a basic image viewer. Supported image formats include BMP, GIF,
-// JPEG, PNG, TIFF and WEBP.
-
 import (
 	"fmt"
 	"image"

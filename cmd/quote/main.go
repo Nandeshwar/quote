@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -16,6 +18,35 @@ import (
 func main() {
 	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
 	serverRunTimeInHour := env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
+
+	devotionalImageMaxSize := env.GetStringWithDefault("DEVOTIONAL_IMAGE_MAX_SIZE", "2400:1700")
+	devotionalImageMinSize := env.GetStringWithDefault("DEVOTIONAL_IMAGE_MIN_SIZE", "700:700")
+	motivationalImageMaxSize := env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MAX_SIZE", "2800:1700")
+	motivationalImageMinSize := env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
+
+	devotionalImageMaxWidth, devotionalImageMaxHeight, err := getImageSize(devotionalImageMaxSize, "DEVOTIONAL_IMAGE_MAX_SIZE")
+	if err != nil {
+		fmt.Errorf(err.Error())
+		os.Exit(1)
+	}
+
+	devotionalImageMinWidth, devotionalImageMinHeight, err := getImageSize(devotionalImageMinSize, "DEVOTIONAL_IMAGE_MIN_SIZE")
+	if err != nil {
+		fmt.Errorf(err.Error())
+		os.Exit(1)
+	}
+
+	motivationalImageMaxWidth, motivationalImageMaxHeight, err := getImageSize(motivationalImageMaxSize, "MOTIVATIONAL_IMAGE_MAX_SIZE")
+	if err != nil {
+		fmt.Errorf(err.Error())
+		os.Exit(1)
+	}
+
+	motivationalImageMinWidth, motivationalImageMinHeight, err := getImageSize(motivationalImageMinSize, "MOTIVATIONAL_IMAGE_MIN_SIZE")
+	if err != nil {
+		fmt.Errorf(err.Error())
+		os.Exit(1)
+	}
 
 	//pic := env.GetBoolWithDefault("PIC", false)
 	//img := env.GetBoolWithDefault("IMG", false)
@@ -80,7 +111,7 @@ func main() {
 	fmt.Printf("\n\nServer will be quit in %d hour and %d minutes at %v", serverRunTimeInHour, serverRunTimeInMin, currentTime.Format(layout))
 	fmt.Printf("\n or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n")
 	const httpPort int = 1922
-	apiServer := api.NewServer(httpPort)
+	apiServer := api.NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devotionalImageMinWidth, devotionalImageMinHeight, motivationalImageMaxWidth, motivationalImageMaxHeight, motivationalImageMinWidth, motivationalImageMinHeight)
 	go func() {
 		apiServer.Run()
 	}()
@@ -88,4 +119,27 @@ func main() {
 	time.Sleep(time.Duration(serverRunTimeInMin) * time.Minute)
 	time.Sleep(time.Duration(serverRunTimeInHour) * time.Hour)
 	apiServer.Close()
+}
+
+func getImageSize(imageSize, envVarName string) (width, height int, err error) {
+	if !strings.Contains(imageSize, ":") {
+		return 0, 0, fmt.Errorf("wrong format of %s=%s. width and height must be separated by cololn(:)", envVarName, imageSize)
+	}
+	imageSizes := strings.Split(imageSize, ":")
+
+	if len(imageSizes) == 1 {
+		return 0, 0, fmt.Errorf("wrong format of %s=%s. only only value is provided. Provide width and height separate by colon(:)", envVarName, imageSize)
+	} else if len(imageSizes) > 2 {
+		return 0, 0, fmt.Errorf("wrong format of %s=%s. extra value is provided. Provide width and height separate by colon(:)", envVarName, imageSize)
+	}
+	width, err = strconv.Atoi(strings.TrimSpace(imageSizes[0]))
+	if err != nil {
+		return 0, 0, fmt.Errorf("wrong value of %s=%s. 1st value width must be integer", envVarName, imageSize)
+	}
+
+	height, err = strconv.Atoi(strings.TrimSpace(imageSizes[1]))
+	if err != nil {
+		return 0, 0, fmt.Errorf("wrong value of %s=%s. 2nd value height must be integer", envVarName, imageSize)
+	}
+	return width, height, nil
 }
