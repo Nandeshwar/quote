@@ -110,6 +110,18 @@ Krishna & Amrish Story: Ananya bhakti of Krishna.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
+			Info: `
+definition of pati brata stri - Always think about her husband.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=9oqWHdzp83E&list=PLA3B03C8320853BC2&index=67",
+			},
+			CreationDate: time.Date(2019, 2, 1, 11, 25, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Radha Tatva",
 			Info: ` Nice explanation of Radha Tatva by Kripalu ji maharaj. Durga ji personal expansion of Radha ji,
 Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are one
