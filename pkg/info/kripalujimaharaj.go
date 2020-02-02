@@ -268,6 +268,19 @@ He talks about bring people towards god by being humble.
 			},
 			CreationDate: time.Date(2019, 1, 30, 9, 23, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Krishna Tatva by  Kripalu ji Maharaj",
+			Info: `
+Why Krishna came to this world?
+Krishna came to this world so that people in this world can enjoy love - Prem, Bhakti.
+Beautiful song of Krishna at end of this video.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Od_E3KRrfKw",
+			},
+			CreationDate: time.Date(2019, 2, 2, 9, 23, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

@@ -586,6 +586,19 @@ Krishna Krishna Hare Hare
 			},
 			CreationDate: time.Date(2019, 1, 29, 8, 15, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Ramayan Ramanand Sagar: Sita, Laxman love towards Ram",
+			Info: `
+Sita always wants to see Ram.
+Sita always want to make Ram Happy.
+Laxman Ji has not imagined himself without Ram.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=AvXufbbrclY",
+			},
+			CreationDate: time.Date(2019, 2, 2, 1, 0, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
