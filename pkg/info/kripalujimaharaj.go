@@ -110,6 +110,22 @@ Krishna & Amrish Story: Ananya bhakti of Krishna.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 27",
+			Info: `
+The people who enjoy bhakti will enjoy bliss.
+Their action will not for them but for others.
+Bhakti ki Lakshan: How to know if you are in bhakti
+Anurag in Pooja: Ved Vyas.
+Anurag in Kathha: Gargacharya
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=8NRCU-5yK2g&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=27",
+			},
+			CreationDate: time.Date(2019, 2, 3, 8, 38, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.

@@ -25,7 +25,7 @@ I am trying to make them happy and smile every moment.
 		},
 
 		{
-			Title: "My Chintan(My Contemplation) - Think about love of Radha Krishna, Sita Ram whever negativity comes",
+			Title: "My Chintan(My Contemplation) - Think about love of Radha Krishna, Sita Ram whenever negativity comes",
 			Info: ` 
 Think about love of Radha Krishna, Sita Ram whenever negativity - lust, anger, greed comes.
 Think about love of Radha Krishna, Sita Ram, whenever go to bed and early in the morning when eyes are opened.
@@ -54,10 +54,24 @@ Happiness in path of God-Bhakti is unlimited.
 		},
 
 		{
-			Title: "My Chintan(My Contemplation) - keep body healthy to attend God",
+			Title: "My Chintan(My Contemplation) - keep body healthy to attain God",
 			Info: ` 
-This body is very important to attend God.
+This body is very important to attained God.
 Mind is a such a beautiful and important to enjoy bliss.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 2, 12, 30, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Chintan(My Contemplation) - Love God, Love everyone",
+			Info: ` 
+Love Radha Krishna, Sita Ram and Think about them. 
+Love everyone. Don't heart anyone. 
+Kam bolo, dhire bolo, Mitha bolo. Speak less, Speak slowly, Speak sweet.
+once mind is purified, action will be purified and God will be attained.
 `,
 			Link: []string{
 				"",
