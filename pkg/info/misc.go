@@ -795,6 +795,25 @@ Laxman Ji has not imagined himself without Ram.
 			},
 			CreationDate: time.Date(2019, 2, 2, 13, 0, 0, 0, time.Local),
 		},
+
+		{
+			Title: "What is Upanishads (upnisad - upnishad): Shared by Abhijit Sharma",
+			Info: `
+[1:15 PM, 2/4/2020] Abhijit New India: Upanishads are part of Vedas
+[1:15 PM, 2/4/2020] Abhijit New India: 108 Upanishads total
+[1:15 PM, 2/4/2020] Abhijit New India: Which are distributed among 5 Vedas
+[1:15 PM, 2/4/2020] Abhijit New India: Rigveda has 10 Upanishads
+[1:16 PM, 2/4/2020] Abhijit New India: Samaveda had 16 Upanishads
+[1:16 PM, 2/4/2020] Abhijit New India: Krishna Yajurveda has 32 Upanishads (including Kathopinashad)
+[1:16 PM, 2/4/2020] Abhijit New India: Shukla Yajurveda has 19 Upanishads
+[1:17 PM, 2/4/2020] Abhijit New India: Atharvaveda has 31 upanishads (including Mandukya Upanishads)
+[1:17 PM, 2/4/2020] Abhijit New India: So total 108 Upanishads in 5 Vedas.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 4, 13, 19, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
