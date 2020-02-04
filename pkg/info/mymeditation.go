@@ -78,6 +78,56 @@ once mind is purified, action will be purified and God will be attained.
 			},
 			CreationDate: time.Date(2019, 2, 2, 12, 30, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(My Contemplation) - Sacrifice happiness for Krishna happiness",
+			Info: ` 
+My each and every action- thought, speech , body must be for krishna happiness. I must scarify my happiness for krishna happiness. Please god help me. I failed many times. World is attracting me . Please help me.
+
+If I fail like this how I can meet krishna.
+I have experienced the happiness in path of Bhakti  but get attracted by maya many times in a day. 
+
+I will ask krishna before doing anything . Please help me god. 
+
+I must trend my mind to think only about krishna and his devotee to purify my mind. 
+
+I know there is joy in path of Bhakti.
+
+O my mind , please think about Radha krishna love when my body is in area of lust anger greed. 
+
+Hanuman ji, can you help me?
+Narad ji, can you help me?
+Kripalu ji? Can you help me?
+O all good souls , can you help me?
+
+Each time you sacrifice, you are one step towards god. That is yog.
+
+O my mind , understand worldly happiness is for short duration and it is blocker to get joy, bliss.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 4, 8, 48, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Meditation - Joy in serving",
+			Info: ` 
+One of my friend served tea yesterday. I felt great happiness. 
+and I started thinking how I can serve something,
+how I can give same happiness.
+
+I started imagining the love of Sita and Laxman towords Ram.
+They were happy making Ram happy.
+Sita is serving some fruits to Ram. Laxman is bringing flower so that Ram can do pooja(prayer).
+
+Ram is feeding fruits to Sita and Laxman. This is selfless love.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 4, 9, 39, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
