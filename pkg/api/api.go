@@ -4,17 +4,13 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"quote/pkg/event"
 	image2 "quote/pkg/image"
-	info2 "quote/pkg/info"
 	"quote/pkg/quote"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/logic-building/functional-go/fp"
 	"github.com/sirupsen/logrus"
 )
 
@@ -49,7 +45,7 @@ func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
 func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
@@ -65,145 +61,53 @@ func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
 	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='gopher' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
 }
 
 func events(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 
-	allEvents := event.AllEvents()
-
-	var filteredEvents []*event.EventDetail
-
-	filterBySearch := func(event *event.EventDetail) bool {
-
-		if strings.Contains(strings.ToLower(event.Info), searchText) ||
-			strings.Contains(strings.ToLower(event.Title), searchText) ||
-			strings.Contains(strings.ToLower(event.URL), searchText) {
-			return true
-		}
-		return false
-	}
-
-	if searchText != "" {
-		searchText = strings.ToLower(searchText)
-		filteredEvents = event.FilterEventDetailPtr(filterBySearch, allEvents)
-	} else {
-		filteredEvents = allEvents
-	}
-
-	fmt.Fprintf(w, "<title>Events</title>")
-
-	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
-
-	fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Title</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Info</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Link</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Event Date</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Event Creattion Date</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-	for i, event := range filteredEvents {
-		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", event.Title))
-
-		// Split info by .
-		fmt.Fprintf(w, fmt.Sprintf("<td>"))
-		fmt.Fprintf(w, fmt.Sprintf("<table>"))
-		for _, info := range strings.Split(event.Info, ".") {
-			fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-			fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info))
-			fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-		}
-		fmt.Fprintf(w, fmt.Sprintf("</table>"))
-		fmt.Fprintf(w, fmt.Sprintf("</td>"))
-
-		// Display URL in different table under td
-		fmt.Fprintf(w, fmt.Sprintf("<td>"))
-		fmt.Fprintf(w, fmt.Sprintf("<table>"))
-		for i, url := range strings.Split(event.URL, ";") {
-			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d </a></td></tr>", url, i+1))
-		}
-		fmt.Fprintf(w, fmt.Sprintf("</td>"))
-		fmt.Fprintf(w, fmt.Sprintf("</table>"))
-
-		fmt.Fprintf(w, fmt.Sprintf("<td>%d-%d-%d</td>", event.Year, event.Month, event.Day))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", event.CreationDate))
-
-		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-		fmt.Fprintf(w, fmt.Sprintf("</br>"))
-
-	}
-	fmt.Fprintf(w, fmt.Sprintf("</table>"))
+	filteredEvents := findEvents(searchText)
+	displayEvents(filteredEvents, w)
 }
 
 func info(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 
-	allInfo := info2.GetAllInfo()
+	filteredInfo := findInfo(searchText)
+	displayInfo(filteredInfo, w)
+}
 
-	var filteredInfo []info2.Info
+func (s *Server) search(w http.ResponseWriter, r *http.Request) {
+	searchText := mux.Vars(r)["searchText"]
 
-	filterBySearch := func(info info2.Info) bool {
+	var wg sync.WaitGroup
 
-		if strings.Contains(strings.ToLower(info.Info), searchText) ||
-			strings.Contains(strings.ToLower(info.Title), searchText) {
-			return true
-		}
-		return false
-	}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		filteredInfo := findInfo(searchText)
+		displayInfo(filteredInfo, w)
+	}()
 
-	if searchText != "" {
-		searchText = strings.ToLower(searchText)
-		filteredInfo = info2.Filter(filterBySearch, allInfo)
-	} else {
-		filteredInfo = allInfo
-	}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		filteredEvents := findEvents(searchText)
+		displayEvents(filteredEvents, w)
+	}()
 
-	fmt.Fprintf(w, "<title>Info</title>")
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		foundImages := findImage(searchText)
 
-	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
+		displayImage(foundImages, w)
 
-	fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Title</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Info</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Link</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Info Added</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-	for i, info := range filteredInfo {
-		fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
-		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Title))
+	}()
 
-		// Split info by .
-		fmt.Fprintf(w, fmt.Sprintf("<td>"))
-		fmt.Fprintf(w, fmt.Sprintf("<table>"))
-		for _, info := range strings.Split(info.Info, ".") {
-			fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-			fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info))
-			fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-		}
-		fmt.Fprintf(w, fmt.Sprintf("</table>"))
-		fmt.Fprintf(w, fmt.Sprintf("</td>"))
+	wg.Wait()
 
-		// Display URL in different table under td
-		fmt.Fprintf(w, fmt.Sprintf("<td>"))
-		fmt.Fprintf(w, fmt.Sprintf("<table>"))
-		for i, url := range info.Link {
-			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d </a></td></tr>", url, i+1))
-		}
-		fmt.Fprintf(w, fmt.Sprintf("</td>"))
-		fmt.Fprintf(w, fmt.Sprintf("</table>"))
-
-		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", info.CreationDate))
-		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-		fmt.Fprintf(w, fmt.Sprintf("</br>"))
-
-	}
-	fmt.Fprintf(w, fmt.Sprintf("</table>"))
 }
 
 func reduceImageSize(width, height, maxAllowedWidth, maxAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
@@ -225,31 +129,6 @@ func increaseImageSize(width, height, minAllowedWidth, minAllowedHeight, reduceF
 		} else {
 			return width, height
 		}
-	}
-}
-
-func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {
-
-	for {
-		imagePath = f(allImages)
-
-		if len(imageRead) >= allImageLen {
-			imageRead = nil
-			fmt.Printf("\nImage Cycle End for api=%s", apiName)
-			imageRead = append(imageRead, imagePath)
-			fmt.Printf("\nNew Image Cycle Started for api=%s", apiName)
-			fmt.Printf("\n%d/%d. Image for api %s: %s", len(imageRead), allImageLen, apiName, imagePath)
-			imageRead2 = append(imageRead2, imageRead...)
-			return imageRead2, imagePath
-		}
-
-		if !fp.ExistsStr(imagePath, imageRead) {
-			imageRead = append(imageRead, imagePath)
-			fmt.Printf("\n%d/%d. Image for api %s: %s", len(imageRead), allImageLen, apiName, imagePath)
-			imageRead2 = append(imageRead2, imageRead...)
-			return imageRead2, imagePath
-		}
-
 	}
 }
 
@@ -284,7 +163,19 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	router.HandleFunc("/events/{searchText}", events)
 	router.HandleFunc("/info", info)
 	router.HandleFunc("/info/{searchText}", info)
+	router.HandleFunc("/search/{searchText}", s.search)
+	router.HandleFunc("/find/{searchText}", s.search)
+
+	router.HandleFunc("/test123/{searchText}", test123)
+	router.HandleFunc("/test123", test123)
 	return s
+}
+
+func test123(w http.ResponseWriter, r *http.Request) {
+	searchTxt := mux.Vars(r)["searchText"]
+	fmt.Println(searchTxt)
+	fmt.Fprintf(w, "<title>Quote</title>")
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", "image-motivational/Nick-text-failure-requirement.jpg", 400, 400))
 }
 
 func (s *Server) Run() error {
