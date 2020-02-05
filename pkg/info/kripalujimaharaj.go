@@ -126,6 +126,29 @@ Anurag in Kathha: Gargacharya
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 28",
+			Info: `
+Mahapurus apna ahit karke, dusro ka hit karte hai.
+Different kind of people:
+1. He does bad for himself inorder to do bad for others.
+2. He does bad for others in order to do good for himself.
+3. He does good for himself and do good for others.
+4. He only does good for others.
+5. He does good for others by doing bad for himself.
+
+Bhakti ki Lakshan: How to know if you are in bhakti.
+Anurag in Pooja: Ved Vyas.
+Anurag in Kathha: Gargacharya
+AtmaRati : Sandilya
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=zASQov7ZWdU&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=28",
+			},
+			CreationDate: time.Date(2019, 2, 3, 8, 38, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
