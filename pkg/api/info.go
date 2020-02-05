@@ -31,12 +31,12 @@ func findInfo(searchText string) []info2.Info {
 }
 
 func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
-	fmt.Fprintf(w, "<title>Info</title>")
+	fmt.Fprintf(w, "<h1>Info:</h1>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
 
 	fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Info Number</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Title</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Info</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Link</th>"))

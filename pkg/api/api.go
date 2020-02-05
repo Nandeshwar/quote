@@ -101,9 +101,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	go func() {
 		defer wg.Done()
 		foundImages := findImage(searchText)
-
 		displayImage(foundImages, w)
-
 	}()
 
 	wg.Wait()
@@ -166,16 +164,7 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	router.HandleFunc("/search/{searchText}", s.search)
 	router.HandleFunc("/find/{searchText}", s.search)
 
-	router.HandleFunc("/test123/{searchText}", test123)
-	router.HandleFunc("/test123", test123)
 	return s
-}
-
-func test123(w http.ResponseWriter, r *http.Request) {
-	searchTxt := mux.Vars(r)["searchText"]
-	fmt.Println(searchTxt)
-	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", "image-motivational/Nick-text-failure-requirement.jpg", 400, 400))
 }
 
 func (s *Server) Run() error {

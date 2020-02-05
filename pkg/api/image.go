@@ -24,11 +24,12 @@ func findImage(searchText string) []string {
 }
 
 func displayImage(foundImages []string, w http.ResponseWriter) {
+	fmt.Fprintf(w, "<h1>Images:</h1>")
+	fmt.Fprintf(w, "<h1>Click to view image:</h1>")
 	for _, imagePath := range foundImages {
 		imagePathName := strings.Split(imagePath, "/")
-		fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s'> <img src='%s' alt='%s' style='width:%vpx;height:%vpx;'> click me</a>", imagePath, imagePath, imagePathName[1], 200, 200))
+		fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s'> <img src='%s' alt='%s' style='width:%vpx;height:%vpx;'></a>", imagePath, imagePath, imagePathName[1], 200, 50))
 	}
-	fmt.Fprintf(w, "</table>")
 }
 
 func getNonReadImage(apiName string, allImageLen int, imageRead []string, f func([]string) string, allImages []string) (imageRead2 []string, imagePath string) {

@@ -32,15 +32,15 @@ func findEvents(searchText string) []*event.EventDetail {
 }
 
 func displayEvents(filteredEvents []*event.EventDetail, w http.ResponseWriter) {
-	fmt.Fprintf(w, "<title>Events</title>")
+	fmt.Fprintf(w, "<h1>Events:</h1>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
 
 	fmt.Fprintf(w, fmt.Sprintf("<tr>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Title</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Info</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Link</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Title</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Info</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Link</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Date</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Creattion Date</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("</tr>"))
