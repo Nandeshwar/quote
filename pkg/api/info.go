@@ -31,7 +31,7 @@ func findInfo(searchText string) []info2.Info {
 }
 
 func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
-	fmt.Fprintf(w, "<h1>Info:</h1>")
+	fmt.Fprintf(w, "<h3>Info:</h3>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
 
