@@ -5,7 +5,16 @@ import (
 	"net/http"
 	"quote/pkg/event"
 	"strings"
+
+	"github.com/gorilla/mux"
 )
+
+func events(w http.ResponseWriter, r *http.Request) {
+	searchText := mux.Vars(r)["searchText"]
+
+	filteredEvents := findEvents(searchText)
+	displayEvents(filteredEvents, w)
+}
 
 func findEvents(searchText string) []*event.EventDetail {
 	allEvents := event.AllEvents()

@@ -6,9 +6,42 @@ import (
 	"quote/pkg/quote"
 	"strings"
 
+	image2 "quote/pkg/image"
+
 	"github.com/logic-building/functional-go/fp"
 )
 
+func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
+	allImageLen, allImages := quote.AllQuotesImage()
+
+	imageReadList, imagePath := getNonReadImage("All Image", allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
+	quote.AllImageRead = imageReadList
+
+	width, height := image2.GetImageDimension(imagePath)
+
+	width, height = increaseImageSize(width, height, s.devotionalImageMinWidth, s.devotionalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.devotionalImageMaxWidth, s.devotionalImageMaxHeight, 100)
+
+	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
+	fmt.Fprintf(w, "<title>Quote</title>")
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+}
+
+func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
+	allImageLen, allImages := quote.AllMotivationalImage()
+	imageReadList, imagePath := getNonReadImage("MotivationalImage", allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
+	quote.MotivationalImageRead = imageReadList
+
+	width, height := image2.GetImageDimension(imagePath)
+
+	width, height = increaseImageSize(width, height, s.motivationalImageMinWidth, s.motivationalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.motivationalImageMaxWidth, s.motivationalImageMaxHeight, 100)
+
+	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
+	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
+	fmt.Fprintf(w, "<title>Quote</title>")
+	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+}
 func findImage(searchText string) []string {
 	_, allImages := quote.AllQuotesImage()
 
@@ -26,9 +59,10 @@ func findImage(searchText string) []string {
 func displayImage(foundImages []string, w http.ResponseWriter) {
 	fmt.Fprintf(w, "<h1>Images:</h1>")
 	fmt.Fprintf(w, "<h1>Click to view image:</h1>")
-	for _, imagePath := range foundImages {
+	for ind, imagePath := range foundImages {
 		imagePathName := strings.Split(imagePath, "/")
-		fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s'> <img src='%s' alt='%s' style='width:%vpx;height:%vpx;'></a>", imagePath, imagePath, imagePathName[1], 200, 50))
+		fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s'> %d. <img src='%s' alt='%s' style='width:%vpx;height:%vpx;'></a>", imagePath, ind+1, imagePath, imagePathName[1], 400, 25))
+		fmt.Fprintf(w, "</br>")
 	}
 }
 

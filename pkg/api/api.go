@@ -2,12 +2,7 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"quote/pkg/event"
-	image2 "quote/pkg/image"
-	info2 "quote/pkg/info"
-	"quote/pkg/quote"
 	"strconv"
 	"sync"
 	"time"
@@ -32,127 +27,6 @@ type Server struct {
 	motivationalImageMaxHeight int
 	motivationalImageMinWidth  int
 	motivationalImageMinHeight int
-}
-
-func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
-	allImageLen, allImages := quote.AllQuotesImage()
-
-	imageReadList, imagePath := getNonReadImage("All Image", allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
-	quote.AllImageRead = imageReadList
-
-	width, height := image2.GetImageDimension(imagePath)
-
-	width, height = increaseImageSize(width, height, s.devotionalImageMinWidth, s.devotionalImageMinHeight, 100)
-	width, height = reduceImageSize(width, height, s.devotionalImageMaxWidth, s.devotionalImageMaxHeight, 100)
-
-	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
-	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
-}
-
-func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
-	allImageLen, allImages := quote.AllMotivationalImage()
-	imageReadList, imagePath := getNonReadImage("MotivationalImage", allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
-	quote.MotivationalImageRead = imageReadList
-
-	width, height := image2.GetImageDimension(imagePath)
-
-	width, height = increaseImageSize(width, height, s.motivationalImageMinWidth, s.motivationalImageMinHeight, 100)
-	width, height = reduceImageSize(width, height, s.motivationalImageMaxWidth, s.motivationalImageMaxHeight, 100)
-
-	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
-	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")
-	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
-}
-
-func events(w http.ResponseWriter, r *http.Request) {
-	searchText := mux.Vars(r)["searchText"]
-
-	filteredEvents := findEvents(searchText)
-	displayEvents(filteredEvents, w)
-}
-
-func info(w http.ResponseWriter, r *http.Request) {
-	searchText := mux.Vars(r)["searchText"]
-
-	filteredInfo := findInfo(searchText)
-	displayInfo(filteredInfo, w)
-}
-
-func (s *Server) search(w http.ResponseWriter, r *http.Request) {
-	searchText := mux.Vars(r)["searchText"]
-
-	var wg sync.WaitGroup
-
-	infoCh := make(chan []info2.Info, 1)
-	eventCh := make(chan []*event.EventDetail, 1)
-	imageCh := make(chan []string, 1)
-
-	wg.Add(1)
-	go func(infoCh chan []info2.Info) {
-		defer wg.Done()
-		filteredInfo := findInfo(searchText)
-		infoCh <- filteredInfo
-		close(infoCh)
-	}(infoCh)
-
-	wg.Add(1)
-	go func(eventCh chan []*event.EventDetail) {
-		defer wg.Done()
-		filteredEvents := findEvents(searchText)
-		eventCh <- filteredEvents
-		close(eventCh)
-	}(eventCh)
-
-	wg.Add(1)
-	go func(imageCh chan []string) {
-		defer wg.Done()
-		foundImages := findImage(searchText)
-		imageCh <- foundImages
-		close(imageCh)
-	}(imageCh)
-
-	wg.Add(1)
-	go func(infoCh chan []info2.Info, eventCh chan []*event.EventDetail, imageCh chan []string) {
-		defer wg.Done()
-
-		filteredInfo := <-infoCh
-		filteredEvents := <-eventCh
-		foundImages := <-imageCh
-
-		fmt.Fprintf(w, "<title>Search</title>")
-		fmt.Fprintf(w, fmt.Sprintf("<h1>Info: %d, Events: %d, Images: %d</h1>", len(filteredInfo), len(filteredEvents), len(foundImages)))
-
-		displayInfo(filteredInfo, w)
-		displayEvents(filteredEvents, w)
-		displayImage(foundImages, w)
-	}(infoCh, eventCh, imageCh)
-
-	wg.Wait()
-
-}
-
-func reduceImageSize(width, height, maxAllowedWidth, maxAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
-	for {
-		if width > maxAllowedWidth || height > maxAllowedHeight {
-			width -= reduceFactor
-			height -= reduceFactor
-		} else {
-			return width, height
-		}
-	}
-}
-
-func increaseImageSize(width, height, minAllowedWidth, minAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
-	for {
-		if width < minAllowedWidth || height < minAllowedHeight {
-			width += reduceFactor
-			height += reduceFactor
-		} else {
-			return width, height
-		}
-	}
 }
 
 func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devotionalImageMinWidth, devotionalImageMinHeight, motivationalImageMaxWidth, motivationalImageMaxHeight, motivationalImageMinWidth, motivationalImageMinHeight int) *Server {
@@ -218,4 +92,26 @@ func (s *Server) Close() {
 		}
 	}
 	logrus.Info("\nHttpServer : Stopped\n")
+}
+
+func reduceImageSize(width, height, maxAllowedWidth, maxAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
+	for {
+		if width > maxAllowedWidth || height > maxAllowedHeight {
+			width -= reduceFactor
+			height -= reduceFactor
+		} else {
+			return width, height
+		}
+	}
+}
+
+func increaseImageSize(width, height, minAllowedWidth, minAllowedHeight, reduceFactor int) (newWidth, newHeight int) {
+	for {
+		if width < minAllowedWidth || height < minAllowedHeight {
+			width += reduceFactor
+			height += reduceFactor
+		} else {
+			return width, height
+		}
+	}
 }

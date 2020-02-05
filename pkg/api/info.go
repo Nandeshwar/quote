@@ -5,7 +5,16 @@ import (
 	"net/http"
 	info2 "quote/pkg/info"
 	"strings"
+
+	"github.com/gorilla/mux"
 )
+
+func info(w http.ResponseWriter, r *http.Request) {
+	searchText := mux.Vars(r)["searchText"]
+
+	filteredInfo := findInfo(searchText)
+	displayInfo(filteredInfo, w)
+}
 
 func findInfo(searchText string) []info2.Info {
 	allInfo := info2.GetAllInfo()
@@ -31,7 +40,7 @@ func findInfo(searchText string) []info2.Info {
 }
 
 func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
-	fmt.Fprintf(w, "<h3>Info:</h3>")
+	fmt.Fprintf(w, "<h1>Info:</h1>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
 
