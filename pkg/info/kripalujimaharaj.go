@@ -320,6 +320,18 @@ Beautiful song of Krishna at end of this video.
 			},
 			CreationDate: time.Date(2019, 2, 2, 9, 23, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Bhajan: Ram and Hanuman bhajan by Kripalu Ji Maharaj",
+			Info: `
+Bhajan by Kripalu Ji Maharaj. 
+Ram Ji and Hanuman Ji Bhajan.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=uDjj5OX21o0",
+			},
+			CreationDate: time.Date(2019, 2, 6, 8, 12, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
