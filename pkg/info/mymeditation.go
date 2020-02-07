@@ -128,6 +128,39 @@ Ram is feeding fruits to Sita and Laxman. This is selfless love.
 			},
 			CreationDate: time.Date(2019, 2, 4, 9, 39, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Expectation is reason for misery",
+			Info: ` 
+I made time time table for kids. I was expecting kids will follow. But it did not happen.
+I did not feel good. 
+I remember Gita statement - Do Karma but don't worry about fruit.
+Enjoy the karma - action.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 87, 8, 53, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Chintan(Contemplation) - Attach mind to God",
+			Info: ` 
+Attach mind to God.
+Meditation.
+Prayer, Kirtan.
+Kathha.
+
+I am enjoy doing Kirtan & pooja. But I was too attached with that, I felt bad when I missed a day.
+That's not good. I understood pooja is way to attach mind to God. If I miss pooja, I can still try to 
+attach my mind to God. I can still think about love of God - Bharat, Ram Prem, Sita Ram Prem, Ram Laxman Prem,
+Radha Krishna Prem, Ram and Shankar ji Prem ....
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 87, 8, 53, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
