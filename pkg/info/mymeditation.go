@@ -144,7 +144,7 @@ Enjoy the karma - action.
 		},
 
 		{
-			Title: "My Chintan(Contemplation) - Attach mind to God",
+			Title: "My Chintan(Contemplation) - Goal of Pooj is to attach mind to God",
 			Info: ` 
 Attach mind to God.
 Meditation.
