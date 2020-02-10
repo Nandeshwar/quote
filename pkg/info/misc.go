@@ -814,6 +814,20 @@ Laxman Ji has not imagined himself without Ram.
 			},
 			CreationDate: time.Date(2019, 2, 4, 13, 19, 0, 0, time.Local),
 		},
+
+		{
+			Title: "No fap: An interview of Man who is very successful by meditation and by brahamcharya in this modern time",
+			Info: `
+He is 27 years old and followed brahamcharya for 8 years.
+He is very successful person.
+An Nice and inspiration interview. It's shared by my friend Abhijit Sharma.
+Nature starts helping each desire.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=x0NTMSFBmv0&app=desktop",
+			},
+			CreationDate: time.Date(2019, 2, 10, 10, 00, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
