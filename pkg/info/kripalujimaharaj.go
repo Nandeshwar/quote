@@ -164,6 +164,20 @@ Janak ji story.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 30",
+			Info: `
+Bhakti ka Lakshan: 
+param vyakulta - Narad ji. We all are sadhak, whenever mind forgets Krishna, bring mind to God again.
+Apne sab karm ko bhagwan ko Arpit karo.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=30",
+			},
+			CreationDate: time.Date(2019, 2, 11, 13, 57, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.

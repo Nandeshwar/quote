@@ -140,7 +140,7 @@ Enjoy the karma - action.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 87, 8, 53, 0, 0, time.Local),
+			CreationDate: time.Date(2019, 2, 8, 8, 53, 0, 0, time.Local),
 		},
 
 		{
@@ -159,7 +159,28 @@ Radha Krishna Prem, Ram and Shankar ji Prem ....
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 87, 8, 53, 0, 0, time.Local),
+			CreationDate: time.Date(2019, 2, 8, 8, 53, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Meditation - Sab se Prem karo",
+			Info: ` 
+Yosodha bankar apne bacho se prem karo.
+Nandbaba bankar apne bacho se prem karo.
+Krishna baankar apne dosto se prem karo.
+Ram baankar apne patni se prem karo, bhai se prem karo, Mitra se Prem karo.
+Ram, Krishna baankar apne maa se pyar karo.
+Ye Sita Ram ki duniya hai.
+Shiva Shankar Mahadev ki duniya hai.
+Radha Krishna ki duniya hai.
+
+Sabse prem karo, Bhagwan khhud aayenge ek din aur phir kabhhi nahi jayenge.
+
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 11, 13, 52, 0, 0, time.Local),
 		},
 	}
 	return infoList
