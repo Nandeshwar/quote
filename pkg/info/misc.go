@@ -828,6 +828,24 @@ Nature starts helping each desire.
 			},
 			CreationDate: time.Date(2019, 2, 10, 10, 00, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Brahamcharya ka asli artha by Acharya Prashant",
+			Info: `
+Come to such state when we do not see oposite sex as doll for sexual enjoyment.
+When we have test of spirituality, We will have less or zero interest in the following things .
+1. Enjoyment in sex.
+2. Earning a lot of money.
+3. Getting big post.
+
+Nice explanation in 25 minutes of video in 1st link.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=9A1TNV8MFV8",
+				"https://www.acharyaprashant.org/",
+			},
+			CreationDate: time.Date(2019, 2, 12, 8, 26, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

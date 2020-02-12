@@ -182,6 +182,31 @@ Sabse prem karo, Bhagwan khhud aayenge ek din aur phir kabhhi nahi jayenge.
 			},
 			CreationDate: time.Date(2019, 2, 11, 13, 52, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Don't skip Sadhna (Morning -Evening)",
+			Info: ` 
+I realized my morning sadhna makes me active whole day and My evening Sadhna makes my night beautiful and next morning beautiful.
+I don't want to skip then at any cost. Please Krishna help me.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 12, 8, 19, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Chintan(Contemplation) - Keep quiet or talk to everyone",
+			Info: ` 
+Sometimes: I think not to talk anyone and enjoy the prem of Radha Krishna, Sita Ram.
+Sometimes: I think to talk to everyone who talks about Prem - love, bhakti of God and his devotee.
+Kripalu ji Maharaj says: always do Satsang and always remember Radha Krishna
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 12, 8, 19, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
