@@ -207,6 +207,36 @@ Kripalu ji Maharaj says: always do Satsang and always remember Radha Krishna
 			},
 			CreationDate: time.Date(2019, 2, 12, 8, 19, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Sex & Spirituality(Prem & Bhakti)",
+			Info: ` 
+Enjoyment in sex is the way to get the world.
+Enjoyment in Prem is way to attain Krishna.
+
+Enjoyment in sex is great and temporary.
+Enjoyment in Prem is greatest and never ending.
+
+Mix of enjoyment in Sex and Enjoyment in Prem is still obstacle attaining Krishna & Ram.
+Bhakti(Prem) is the only way to attain Krishna. 
+Real Joy is only in Prem & Bhakti of Ram & Krishna.
+
+Searching happiness in world is foolish way.
+When I sleep more than required, it gives bad energy.
+
+Bhakti marg.
+Get up when eyes open in the morning and remember Krishna & Ram and his leela.
+Remember Krishna & Ram everytime.
+Remember Ram Krishan before doing anything.
+Bring Ram & Krishna in every work and make him happy with every action.
+
+Power of Prem can destroy all negativity - Lust, anger, greed.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 15, 13, 8, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
