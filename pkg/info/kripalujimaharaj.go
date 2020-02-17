@@ -178,6 +178,20 @@ Apne sab karm ko bhagwan ko Arpit karo.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 31",
+			Info: `
+Two kinds of Gopi.
+1. Sakhhi bhav. Love with internal personality.
+2. Kanta Bhav. Love with external beauty.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=31",
+			},
+			CreationDate: time.Date(2019, 2, 17, 8, 14, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
