@@ -24,6 +24,7 @@ func AllEvents() []*EventDetail {
 	allEvents = append(allEvents, KripaluJiMaharajEvents()...)
 	allEvents = append(allEvents, PrabhuyEvents()...)
 	allEvents = append(allEvents, MixEvents()...)
+	allEvents = append(allEvents, copyBikramSambatEventsToEventDetail()...)
 	return allEvents
 }
 
