@@ -846,6 +846,35 @@ Nice explanation in 25 minutes of video in 1st link.
 			},
 			CreationDate: time.Date(2019, 2, 12, 8, 26, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Solah Sringar (shringar) shringaar - sringaar 16 sringar ",
+			Info: `
+Woman looks beautiful in 16 sringar and get more respect from people.
+1.  Bindi. The bindi, an ornamental dot placed on the forehead between the eyebrows signifies the mystical third eye, the invisible organ of spiritual perception and second sight.
+2.  Sindoor
+3.  Maang Tikka.
+4.  Anjana or Kajal. Kajal is used purely to enhance the size and shape of the eyes. After all the eyes are called the windows of the soul and convey the feelings of the heart. Natural kajal or kohl can be easily prepared at home by collecting soot in a silver bowl balanced over a wick burning in mustard oil. Sometimes camphor is added to the oil. This mixture is applied with a silver stick to the outer rims of the eyes. When it mixes with the natural tears, it is said to protect the eyes from the harsh sunlight and dust.
+5.  Nath or Nose Ornament. Women who get their nose pierced for the nose ring are said to experience less pain during childbirth. Some say that it prevents the woman from being hypnotized as it controls brain wavelength.
+6.  Haar or Necklace. Necklaces like the mangalsutra are worn to control blood pressure levels and regularize blood circulation.
+7.  Karn Phool or Ear Ornaments or Earrings
+8.  Mehendi.
+9.  Choodiyan or Bangles: Bangles are said to increase a woman’s blood circulation and revert back to her the cosmic energy that is passing through her body due to their circular shape.
+10. Baajuband or Armlet.
+11. Aarsi & Haathphool & ring. You will notice that people wear finger rings on the fourth finger from the thumb. The belief is the nerve passing through this finger is evenly spread through brain neuron cells. Frequent metallic friction is good for the health of the wearers and helps them to handle life with ease and confidence.
+12. Keshapasharachana or Hair Accessory
+13. Kamarband or Waist Accessory. Waistbands are not regularly used these days, but they prevent saturation of fat in the waist and maintain a woman’s figure.
+14. Payal & Bichuas: Toe rings supposedly regularize the woman’s menstrual cycle. Apparently nerves in the second toe, where rings are worn, are connected to the uterus and friction with the rings help to revitalize the reproductive organ.
+15. Itar or Scent
+16. red, green, maroon, and golden and the attire can be with a salwar kameez, saree or lehenga
+
+`,
+			Link: []string{
+				"https://www.utsavpedia.com/cultural-connections/solah-shringar-the-grand-makeover/",
+				"https://timesofindia.indiatimes.com/life-style/beauty/Solah-Shringar-The-science-behind-it/articleshow/54520592.cms",
+			},
+			CreationDate: time.Date(2019, 2, 12, 8, 26, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

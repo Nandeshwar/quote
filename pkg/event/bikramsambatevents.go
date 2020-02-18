@@ -11,6 +11,7 @@ type Events struct {
 	EventDates   []EventDate
 	Title        string
 	Info         string
+	URL          string
 	CreationDate time.Time
 }
 
@@ -27,6 +28,7 @@ func allImportantEvents() []Events {
 			},
 			Title:        "Krishna appearance day",
 			Info:         "Krishna Janmasthmi",
+			URL:          "https://www.calendardate.com/krishna_janmashtami_2025.htm",
 			CreationDate: time.Date(2020, 2, 16, 0, 0, 0, 0, time.Local),
 		},
 	}
@@ -36,13 +38,14 @@ func copyBikramSambatEventsToEventDetail() []*EventDetail {
 	var events []*EventDetail
 
 	for _, bEvent := range allImportantEvents() {
-		for i := 0; i < len(bEvent.EventDates); i++ {
+		for _, eventDate := range bEvent.EventDates {
 			eventDetail := &EventDetail{
-				Day:          bEvent.EventDates[i].Day,
-				Month:        bEvent.EventDates[i].Month,
-				Year:         bEvent.EventDates[i].Year,
+				Day:          eventDate.Day,
+				Month:        eventDate.Month,
+				Year:         eventDate.Year,
 				Title:        bEvent.Title,
 				Info:         bEvent.Info,
+				URL:          bEvent.URL,
 				CreationDate: bEvent.CreationDate,
 			}
 			events = append(events, eventDetail)
