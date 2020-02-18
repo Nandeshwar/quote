@@ -31,6 +31,21 @@ func allImportantEvents() []Events {
 			URL:          "https://www.calendardate.com/krishna_janmashtami_2025.htm",
 			CreationDate: time.Date(2020, 2, 16, 0, 0, 0, 0, time.Local),
 		},
+
+		{
+			EventDates: []EventDate{
+				{Day: 26, Month: 8, Year: 2020},
+				{Day: 13, Month: 9, Year: 2021},
+				{Day: 3, Month: 9, Year: 2022},
+				{Day: 22, Month: 9, Year: 2023},
+				{Day: 11, Month: 8, Year: 2024},
+				{Day: 31, Month: 8, Year: 2025},
+			},
+			Title:        "Radha ji appearance day",
+			Info:         "Radha Janmasthmi",
+			URL:          "https://www.calendardate.com/krishna_janmashtami_2025.htm",
+			CreationDate: time.Date(2020, 2, 16, 0, 0, 0, 0, time.Local),
+		},
 	}
 }
 
