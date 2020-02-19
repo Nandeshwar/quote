@@ -192,6 +192,19 @@ Two kinds of Gopi.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 32",
+			Info: `
+Gopi love: Always think about the happiness of Krishna.
+A Nice story about Narad ji asking question why Krishna always think about Gopi.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=32",
+			},
+			CreationDate: time.Date(2019, 2, 19, 8, 19, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
@@ -374,6 +387,44 @@ Ram Ji and Hanuman Ji Bhajan.
 				"https://www.youtube.com/watch?v=uDjj5OX21o0",
 			},
 			CreationDate: time.Date(2019, 2, 6, 8, 12, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhav Bhaki ke lakshan - Kripalu Ji Maharaj",
+			Info: `
+How to know if we are in devotion.
+1. No anger. 
+2. No reaction if someone says anything bad about us.
+3. Kindness.
+4. Do your worldly work but there should not be any interest in worldly stuff.
+5. Koi sansarik baate kaare to hame lage ki wo muh me Gobar thhus raha hai.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Db1hLvVuig8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=115",
+			},
+			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhajan: Shree Radhe - Kripalu Ji Maharaj",
+			Info: `
+A nice bhajan by Kripalu ji Maharaj.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=glC6uwUJ7rk&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=2",
+			},
+			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhajan: Hare ram (short bhajan) - Kripalu Ji Maharaj",
+			Info: `
+A nice short bhajan by Kripalu ji Maharaj.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=EAgwbPdTQrY&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=3",
+			},
+			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
 		},
 	}
 	return infoList

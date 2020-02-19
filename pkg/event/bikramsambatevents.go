@@ -46,6 +46,21 @@ func allImportantEvents() []Events {
 			URL:          "https://www.calendardate.com/krishna_janmashtami_2025.htm",
 			CreationDate: time.Date(2020, 2, 16, 0, 0, 0, 0, time.Local),
 		},
+
+		{
+			EventDates: []EventDate{
+				{Day: 02, Month: 4, Year: 2020},
+				{Day: 21, Month: 4, Year: 2021},
+				{Day: 10, Month: 4, Year: 2022},
+				{Day: 30, Month: 3, Year: 2023},
+				{Day: 16, Month: 4, Year: 2024},
+				{Day: 5, Month: 4, Year: 2025},
+			},
+			Title:        "Shree Ram Ji appearance day",
+			Info:         "Ram, Bharat, Laxman, Satrughan Appearance day",
+			URL:          "https://www.calendardate.com/rama_navami_2020.htm",
+			CreationDate: time.Date(2020, 2, 19, 8, 40, 0, 0, time.Local),
+		},
 	}
 }
 
