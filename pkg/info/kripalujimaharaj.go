@@ -426,6 +426,24 @@ A nice short bhajan by Kripalu ji Maharaj.
 			},
 			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Guru kripa by Kripalu Ji Maharaj",
+			Info: `
+Old recording of Kripalu Ji Maharaj.
+1. Always obey Guru.
+2. Always feel good about gure even though Guru is angry.
+3. Be happy when we see Guru.
+4. Be happy when we touch Guru.
+5. A nice small story of Chaitnaya Mahaprabhu and one of his disciple.
+6. Don't have ill feeling about others because everyone is under influence of Maya.
+7. Don't feel bad if someone says bad about you.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=LCEVz7D8LnM",
+			},
+			CreationDate: time.Date(2019, 2, 20, 8, 32, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
