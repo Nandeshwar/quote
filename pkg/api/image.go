@@ -24,7 +24,7 @@ func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'>", imagePath, width, height))
+	fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s' target='_blank'><img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'> </a>", imagePath, imagePath, width, height))
 }
 
 func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
