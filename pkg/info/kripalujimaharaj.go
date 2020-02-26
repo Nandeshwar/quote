@@ -205,6 +205,21 @@ A Nice story about Narad ji asking question why Krishna always think about Gopi.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 33",
+			Info: `
+
+Chandrawali and Narad ji talk.
+Radha meri sakhhi ...nice song at end.
+little info about kripalu ji maharaj temple at end of the video.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=33",
+			},
+			CreationDate: time.Date(2019, 2, 19, 8, 19, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
