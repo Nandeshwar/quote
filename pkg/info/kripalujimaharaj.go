@@ -256,6 +256,16 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 		},
 
 		{
+			Title: "Complete Science of Guru and Disciple - Kripalu ji maharaj",
+			Info: ` 32 minutes of video. Nice explanation about Guru.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=03dvDlvM6lM",
+			},
+			CreationDate: time.Date(2019, 2, 27, 8, 25, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripaluji maharaj: difference between gyan & bhakti",
 			Info: ` God can be attained only by grace of God and bhakti is only the way by which we get grace of God to know him.
 `,
