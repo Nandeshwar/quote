@@ -237,6 +237,24 @@ Power of Prem can destroy all negativity - Lust, anger, greed.
 			},
 			CreationDate: time.Date(2019, 2, 15, 13, 8, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Prem and kaam",
+			Info: ` 
+Prem is just prem - happiness in giving.
+if I say I will love someone to get some thing, that is not prem.
+Do prem with God. If i want something from God, I will ask but not in cost of Prem. I will just ask him to give as your child.
+But when I am in prem & bhakti with God, it's just giving and making him happy.
+That moment is very beautiful.
+
+Do prem to everyone - bad people and good people.
+Always be in love and celebration.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2019, 2, 28, 8, 15, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

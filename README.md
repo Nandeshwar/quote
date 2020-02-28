@@ -23,3 +23,22 @@ docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 -e SERVER_RUN_DURATION_HOU
 docker build -t nandeshwar/quote .
 docker push nandeshwar/quote
 ```
+
+### Create image compatible for Raspberry pi
+```
+Step1: Create image specific to Raspberry pi 
+
+Install buildx with below commands,
+git clone git://github.com/docker/buildx && cd buildx
+make install
+Create image compatible with raspberry pi with below command,
+docker buildx create --name testbuilder
+docker buildx ls
+
+docker buildx use testbuilder
+
+docker buildx build --platform linux/amd64,linux/arm64 --tag nandeshwar/quote-r:latest --push .
+
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --tag nandeshwar/quote-r:latest --push .
+
+```
