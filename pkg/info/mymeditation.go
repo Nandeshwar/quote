@@ -21,7 +21,7 @@ I am trying to make them happy and smile every moment.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 1, 30, 8, 11, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 30, 8, 11, 0, 0, time.Local),
 		},
 
 		{
@@ -38,7 +38,7 @@ Try to purify mind by contemplating about Radha Krishna, Sita Ram and leave rest
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 2, 12, 30, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
 		},
 
 		{
@@ -50,7 +50,7 @@ Happiness in path of God-Bhakti is unlimited.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 2, 12, 30, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
 		},
 
 		{
@@ -62,7 +62,7 @@ Mind is a such a beautiful and important to enjoy bliss.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 2, 12, 30, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
 		},
 
 		{
@@ -76,7 +76,7 @@ once mind is purified, action will be purified and God will be attained.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 2, 12, 30, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
 		},
 
 		{
@@ -107,7 +107,7 @@ O my mind , understand worldly happiness is for short duration and it is blocker
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 4, 8, 48, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 4, 8, 48, 0, 0, time.Local),
 		},
 
 		{
@@ -126,7 +126,7 @@ Ram is feeding fruits to Sita and Laxman. This is selfless love.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 4, 9, 39, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 4, 9, 39, 0, 0, time.Local),
 		},
 
 		{
@@ -140,7 +140,7 @@ Enjoy the karma - action.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 8, 8, 53, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 8, 8, 53, 0, 0, time.Local),
 		},
 
 		{
@@ -159,7 +159,7 @@ Radha Krishna Prem, Ram and Shankar ji Prem ....
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 8, 8, 53, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 8, 8, 53, 0, 0, time.Local),
 		},
 
 		{
@@ -180,7 +180,7 @@ Sabse prem karo, Bhagwan khhud aayenge ek din aur phir kabhhi nahi jayenge.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 11, 13, 52, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 11, 13, 52, 0, 0, time.Local),
 		},
 
 		{
@@ -192,7 +192,7 @@ I don't want to skip then at any cost. Please Krishna help me.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 12, 8, 19, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 12, 8, 19, 0, 0, time.Local),
 		},
 
 		{
@@ -205,7 +205,7 @@ Kripalu ji Maharaj says: always do Satsang and always remember Radha Krishna
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 12, 8, 19, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 12, 8, 19, 0, 0, time.Local),
 		},
 
 		{
@@ -235,7 +235,7 @@ Power of Prem can destroy all negativity - Lust, anger, greed.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 15, 13, 8, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 15, 13, 8, 0, 0, time.Local),
 		},
 
 		{
@@ -253,7 +253,25 @@ Always be in love and celebration.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 28, 8, 15, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 28, 8, 15, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Chintan(Contemplation) - Bairagya and Abhyas: Detachment and Practise",
+			Info: ` 
+Negative energy - lust, anger, greed.
+How to get rid off?
+Bairagya - detachment. It comes from knowledge.
+
+But how to bring these in life? When these negative(lust, anger, greed) comes, we lose knowledge.
+Abhyas(Practise) is required.
+Practise remembering Krishna and his devotee.
+
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 2, 29, 13, 38, 0, 0, time.Local),
 		},
 	}
 	return infoList
