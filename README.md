@@ -42,3 +42,10 @@ docker buildx build --platform linux/amd64,linux/arm64 --tag nandeshwar/quote-r:
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --tag nandeshwar/quote-r:latest --push .
 
 ```
+
+### Disabling the blank screen once. Raspberry pi
+```
+$ sudo xset s off
+$ sudo xset -dpms
+$ sudo xset s noblank
+```
