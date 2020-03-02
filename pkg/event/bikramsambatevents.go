@@ -61,6 +61,21 @@ func allImportantEvents() []Events {
 			URL:          "https://www.calendardate.com/rama_navami_2020.htm",
 			CreationDate: time.Date(2020, 2, 19, 8, 40, 0, 0, time.Local),
 		},
+
+		{
+			EventDates: []EventDate{
+				{Day: 02, Month: 5, Year: 2020},
+				{Day: 21, Month: 5, Year: 2021},
+				{Day: 10, Month: 5, Year: 2022},
+				{Day: 29, Month: 4, Year: 2023},
+				{Day: 17, Month: 5, Year: 2024},
+				{Day: 6, Month: 5, Year: 2025},
+			},
+			Title:        "Sita Ji appearance day",
+			Info:         "Sita Navami, Sita Jayanti",
+			URL:          "https://www.prokerala.com/festivals/sita-navami.html",
+			CreationDate: time.Date(2020, 3, 2, 14, 13, 0, 0, time.Local),
+		},
 	}
 }
 
