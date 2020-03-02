@@ -19,7 +19,7 @@ Sri Kripalu ji Maharaj ( 1922 - 2013)
 				"https://en.wikipedia.org/wiki/Jagadguru",
 				"https://en.wikipedia.org/wiki/Kripalu_Maharaj",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 2
@@ -48,7 +48,7 @@ the procedures for everyday life". The text is the fourth Veda, but has been a l
 				"https://en.wikipedia.org/wiki/Samaveda",
 				"https://en.wikipedia.org/wiki/Atharvaveda",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 3
@@ -61,7 +61,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Vasishtha",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 4
@@ -72,7 +72,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=jnifjBM9dpM",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 5
@@ -83,7 +83,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=N-RSr4ecs9M&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=9",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 6
@@ -94,7 +94,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=Vb8-7DLSJuE&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=35",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 7
@@ -105,7 +105,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Link: []string{
 				"https://www.youtube.com/watch?v=AEpGYCwutcc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=49",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 8
@@ -117,7 +117,7 @@ Very emotional video. True love. God is bound by love.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Rc8v5SfXP5g&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=56",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 9
@@ -128,7 +128,7 @@ Very emotional video. True love. God is bound by love.
 			Link: []string{
 				"https://www.youtube.com/watch?v=3mmMm45rJpA&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=58",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 10
@@ -140,7 +140,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=jYkdBsUFMKs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=101",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 11
@@ -151,7 +151,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=3EnLaJKhO2A&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=107",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 12
@@ -162,7 +162,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=GnvQH8PH8sg&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=118",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 13
@@ -173,7 +173,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=cPTqAyqBAfc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=119",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 14
@@ -184,7 +184,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Ju4DR1A_vPY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=120",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 15
@@ -195,7 +195,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=nPRKafjtGGs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=127",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 16
@@ -206,7 +206,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=wOkFqjRwQYY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=134",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 17
@@ -217,7 +217,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=OtjFIe84d0E",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		// info 17
@@ -228,7 +228,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://www.youtube.com/watch?v=XP9rlhzJoxc",
 			},
-			CreationDate: time.Date(2019, 1, 26, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -243,7 +243,7 @@ of spiritual knowledge.
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Panchakanya",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -256,7 +256,7 @@ Son: Vidura, Shuka (Shuka Dev or Shukdev or shuk dev, shutji maharaj or sutji ma
 			Link: []string{
 				"https://en.wikipedia.org/wiki/Vyasa",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -307,7 +307,7 @@ Shri Ram adds that Shabri’s Bhakti is perfectly complete. Yet if anyone were t
 			Link: []string{
 				"https://www.speakingtree.in/allslides/navadha-bhakti---the-nine-steps-of-bhakti-devotion/267393",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -361,7 +361,7 @@ Krishna Krishna Hare Hare
 			Link: []string{
 				"https://spiritualworld.co.in/bhagat-tulsidas-ji-dohawali/ram-naam-jap-ki-nahtta/",
 			},
-			CreationDate: time.Date(2019, 1, 29, 8, 15, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 29, 8, 15, 0, 0, time.Local),
 		},
 
 		{
@@ -584,7 +584,7 @@ Krishna Krishna Hare Hare
 			Link: []string{
 				"https://www.jagranjunction.com/religious/meaning-of-hanuman-chalisa-in-hindi/",
 			},
-			CreationDate: time.Date(2019, 1, 29, 8, 15, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 29, 8, 15, 0, 0, time.Local),
 		},
 
 		{
@@ -780,7 +780,7 @@ Krishna Krishna Hare Hare
 			Link: []string{
 				"https://www.hanumanchalisahindi.com/sankat-mochan-hanuman-ashtak/",
 			},
-			CreationDate: time.Date(2019, 2, 4, 8, 46, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 4, 8, 46, 0, 0, time.Local),
 		},
 
 		{
@@ -793,7 +793,7 @@ Laxman Ji has not imagined himself without Ram.
 			Link: []string{
 				"https://www.youtube.com/watch?v=AvXufbbrclY",
 			},
-			CreationDate: time.Date(2019, 2, 2, 13, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 2, 13, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -812,7 +812,7 @@ Laxman Ji has not imagined himself without Ram.
 			Link: []string{
 				"",
 			},
-			CreationDate: time.Date(2019, 2, 4, 13, 19, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 4, 13, 19, 0, 0, time.Local),
 		},
 
 		{
@@ -826,7 +826,7 @@ Nature starts helping each desire.
 			Link: []string{
 				"https://www.youtube.com/watch?v=x0NTMSFBmv0&app=desktop",
 			},
-			CreationDate: time.Date(2019, 2, 10, 10, 00, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 10, 10, 00, 0, 0, time.Local),
 		},
 
 		{
@@ -844,7 +844,7 @@ Nice explanation in 25 minutes of video in 1st link.
 				"https://www.youtube.com/watch?v=9A1TNV8MFV8",
 				"https://www.acharyaprashant.org/",
 			},
-			CreationDate: time.Date(2019, 2, 12, 8, 26, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 12, 8, 26, 0, 0, time.Local),
 		},
 
 		{
@@ -873,7 +873,38 @@ Woman looks beautiful in 16 sringar and get more respect from people.
 				"https://www.utsavpedia.com/cultural-connections/solah-shringar-the-grand-makeover/",
 				"https://timesofindia.indiatimes.com/life-style/beauty/Solah-Shringar-The-science-behind-it/articleshow/54520592.cms",
 			},
-			CreationDate: time.Date(2019, 2, 12, 8, 26, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 12, 8, 26, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Steps in bhakti",
+			Info: `
+By Binod: Krishna temple, Denver.
+1. Faith - Sradhha
+2. Sadhu Sanga - Association with spiritual people.
+3. Bhajan Kriya. 
+4. Anarth Nibriti- Heart cleanse.
+5. Nisthha.
+6. Ruchi.
+7. Aasakti.
+8. Bhav.
+9. Prem.
+
+By MukundaNand ji: 
+1. Faith
+2. Satsang
+3. Anarth Nirbriti
+4. Nistha - firm faith.
+5. Ruchi.
+6. Aasakti - Deeply attahment to god.
+7. Bhav.
+8. Fully attached to God is final stage. United with God.
+`,
+			Link: []string{
+				"https://www.utsavpedia.com/cultural-connections/solah-shringar-the-grand-makeover/",
+				"https://timesofindia.indiatimes.com/life-style/beauty/Solah-Shringar-The-science-behind-it/articleshow/54520592.cms",
+			},
+			CreationDate: time.Date(2020, 3, 2, 8, 25, 0, 0, time.Local),
 		},
 	}
 	return infoList

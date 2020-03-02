@@ -25,7 +25,7 @@ Son: Ghanshyam Tripathi
 			Link: []string{
 				"https://www.google.com/search?q=kripalu+ji+maharaj+family&rlz=1C5GCEA_enUS869US869&oq=kripalu+ji&aqs=chrome.0.69i59l2j69i57j69i59j0j69i60l3.2695j0j4&sourceid=chrome&ie=UTF-8",
 			},
-			CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -37,7 +37,7 @@ The youtube link has nice story about Jaganath Mishra told by Kripalu Ji Maharaj
 			Link: []string{
 				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=21",
 			},
-			CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -48,7 +48,7 @@ Nice explanation about Ananya bhakti of Krishna.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Q7lFz7q9DS0&list=PLJQeuSbWtx9yifpHEAishnWhP-Wy1aBpm&index=22",
 			},
-			CreationDate: time.Date(2019, 1, 1, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 1, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -62,7 +62,7 @@ Respect every God and do bhakti of Krishna only.
 			Link: []string{
 				"https://www.youtube.com/watch?v=C3eoNzw52oI&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=23",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -76,7 +76,7 @@ Story of Kripalu ji Maharaj when he was child and fell down from tree.
 			Link: []string{
 				"https://www.youtube.com/watch?v=XlS_xy05kFI&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=24",
 			},
-			CreationDate: time.Date(2019, 1, 28, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 28, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -94,7 +94,7 @@ Bhagwan ke birodhi padarth se udasin rehna.
 			Link: []string{
 				"https://www.youtube.com/watch?v=28XLxBSFbzg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=25",
 			},
-			CreationDate: time.Date(2019, 1, 29, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 29, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -122,7 +122,7 @@ Anurag in Kathha: Gargacharya
 			Link: []string{
 				"https://www.youtube.com/watch?v=8NRCU-5yK2g&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=27",
 			},
-			CreationDate: time.Date(2019, 2, 3, 8, 38, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 3, 8, 38, 0, 0, time.Local),
 		},
 
 		{
@@ -145,7 +145,7 @@ AtmaRati : Sandilya
 			Link: []string{
 				"https://www.youtube.com/watch?v=zASQov7ZWdU&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=28",
 			},
-			CreationDate: time.Date(2019, 2, 3, 8, 38, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 3, 8, 38, 0, 0, time.Local),
 		},
 
 		{
@@ -160,7 +160,7 @@ Janak ji story.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=29",
 			},
-			CreationDate: time.Date(2019, 2, 10, 8, 25, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 10, 8, 25, 0, 0, time.Local),
 		},
 
 		{
@@ -174,7 +174,7 @@ Apne sab karm ko bhagwan ko Arpit karo.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=30",
 			},
-			CreationDate: time.Date(2019, 2, 11, 13, 57, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 11, 13, 57, 0, 0, time.Local),
 		},
 
 		{
@@ -201,7 +201,7 @@ A Nice story about Narad ji asking question why Krishna always think about Gopi.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=32",
 			},
-			CreationDate: time.Date(2019, 2, 19, 8, 19, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 19, 8, 19, 0, 0, time.Local),
 		},
 
 		{
@@ -216,7 +216,7 @@ little info about kripalu ji maharaj temple at end of the video.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=33",
 			},
-			CreationDate: time.Date(2019, 2, 19, 8, 19, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 19, 8, 19, 0, 0, time.Local),
 		},
 
 		{
@@ -228,7 +228,7 @@ definition of pati brata stri - Always think about her husband.
 			Link: []string{
 				"https://www.youtube.com/watch?v=9oqWHdzp83E&list=PLA3B03C8320853BC2&index=67",
 			},
-			CreationDate: time.Date(2019, 2, 1, 11, 25, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 1, 11, 25, 0, 0, time.Local),
 		},
 
 		{
@@ -240,7 +240,7 @@ Very interesting video. Sakar & Nirakar. Purpose of God coming to the world.
 			Link: []string{
 				"https://www.youtube.com/watch?v=9oqWHdzp83E&list=PLA3B03C8320853BC2&index=69",
 			},
-			CreationDate: time.Date(2019, 2, 24, 8, 9, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 24, 8, 9, 0, 0, time.Local),
 		},
 
 		{
@@ -262,7 +262,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=03dvDlvM6lM",
 			},
-			CreationDate: time.Date(2019, 2, 27, 8, 25, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 27, 8, 25, 0, 0, time.Local),
 		},
 
 		{
@@ -273,7 +273,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 				"https://www.youtube.com/watch?v=F9iGSuWellg",
 				"https://www.youtube.com/watch?v=9CT7Oj-3nfI&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=102",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -283,7 +283,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=9CT7Oj-3nfI&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=102",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -293,7 +293,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=9CT7Oj-3nfI&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=102",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -303,7 +303,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=8LM5q6gbTaA&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=114",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -313,7 +313,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=Db1hLvVuig8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=115",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -323,7 +323,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=jj2xoGQPYl8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=145",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -333,7 +333,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=D8TCdXpNDZM&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=140",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -343,7 +343,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=ew4ly-D-pCw&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=139",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -357,7 +357,7 @@ Krishna ji is in our heart. Radha ji is in Krishna heart. Radha and Krishna are 
 			Link: []string{
 				"https://www.youtube.com/watch?v=V6lBKUNbqT8&list=PLA3B03C8320853BC2&index=66",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -376,7 +376,7 @@ President – Shyama Shyam Dham, Vrindavan
 			Link: []string{
 				"http://jkp.org.in/about-us/",
 			},
-			CreationDate: time.Date(2019, 1, 27, 0, 0, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
 		},
 
 		{
@@ -398,7 +398,7 @@ He talks about bring people towards god by being humble.
 			Link: []string{
 				"https://www.youtube.com/watch?v=nx4ZEPfaBBk",
 			},
-			CreationDate: time.Date(2019, 1, 30, 9, 23, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 1, 30, 9, 23, 0, 0, time.Local),
 		},
 
 		{
@@ -411,7 +411,7 @@ Beautiful song of Krishna at end of this video.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Od_E3KRrfKw",
 			},
-			CreationDate: time.Date(2019, 2, 2, 9, 23, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 2, 9, 23, 0, 0, time.Local),
 		},
 
 		{
@@ -423,7 +423,7 @@ Ram Ji and Hanuman Ji Bhajan.
 			Link: []string{
 				"https://www.youtube.com/watch?v=uDjj5OX21o0",
 			},
-			CreationDate: time.Date(2019, 2, 6, 8, 12, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 6, 8, 12, 0, 0, time.Local),
 		},
 
 		{
@@ -439,7 +439,7 @@ How to know if we are in devotion.
 			Link: []string{
 				"https://www.youtube.com/watch?v=Db1hLvVuig8&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=115",
 			},
-			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 19, 8, 27, 0, 0, time.Local),
 		},
 
 		{
@@ -450,7 +450,7 @@ A nice bhajan by Kripalu ji Maharaj.
 			Link: []string{
 				"https://www.youtube.com/watch?v=glC6uwUJ7rk&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=2",
 			},
-			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 19, 8, 27, 0, 0, time.Local),
 		},
 
 		{
@@ -461,7 +461,7 @@ A nice short bhajan by Kripalu ji Maharaj.
 			Link: []string{
 				"https://www.youtube.com/watch?v=EAgwbPdTQrY&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=3",
 			},
-			CreationDate: time.Date(2019, 2, 19, 8, 27, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 19, 8, 27, 0, 0, time.Local),
 		},
 
 		{
@@ -479,7 +479,31 @@ Old recording of Kripalu Ji Maharaj.
 			Link: []string{
 				"https://www.youtube.com/watch?v=LCEVz7D8LnM",
 			},
-			CreationDate: time.Date(2019, 2, 20, 8, 32, 0, 0, time.Local),
+			CreationDate: time.Date(2020, 2, 20, 8, 32, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhagwat Gita Pravachan by Kripalu Ji Maharaj",
+			Info: `
+1. It's purpose is to implement in life.
+2. Maan aur buddhi ko krishna me lagawoo and do you karma.
+3. Gyani - Prasana Atma but still under maya. eg. story of bharat.
+4. Bhagwan ko jaanne ke baad Prem Ho jayega, karna nahi padega.
+5. Different Bhav.
+a. Saant bhav.
+b. Daasya Bhav.
+c. Sakhhya Bhav.
+d. Vatsalya bhav.
+e. Madhurya bhav.
+
+6. Karma - Guhiyat, Gyan guhiyatam, Bhakti Guhiyatam.
+7. Complete Surrender.
+8. Ask God to give whatever he thinks is good for us.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=-3NqwGH1p10",
+			},
+			CreationDate: time.Date(2020, 3, 2, 8, 15, 0, 0, time.Local),
 		},
 	}
 	return infoList
