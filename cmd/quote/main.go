@@ -80,7 +80,7 @@ func main() {
 		}
 	}
 	fmt.Printf("\"")
-	fmt.Println("\n")
+	fmt.Println()
 	fmt.Println("Link for the next quote")
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-devotional\n"))
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-motivational\n"))

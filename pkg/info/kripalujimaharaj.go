@@ -505,6 +505,17 @@ e. Madhurya bhav.
 			},
 			CreationDate: time.Date(2020, 3, 2, 8, 15, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Prem ki sarboch kachha by Kripalu Ji Maharaj",
+			Info: `
+Our purpose should to make krishna happy by thought, speech, action.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pa0p4DHIduw",
+			},
+			CreationDate: time.Date(2020, 3, 3, 12, 23, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
