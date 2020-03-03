@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"quote/pkg/event"
 	info2 "quote/pkg/info"
+	"strings"
 	"sync"
 
 	"github.com/gorilla/mux"
@@ -12,6 +13,7 @@ import (
 
 func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
+	searchTextList := strings.Split(searchText, "&")
 
 	var wg sync.WaitGroup
 
@@ -22,7 +24,11 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	wg.Add(1)
 	go func(infoCh chan []info2.Info) {
 		defer wg.Done()
-		filteredInfo := findInfo(searchText)
+
+		var filteredInfo []info2.Info
+		for _, searchTxt := range searchTextList {
+			filteredInfo = append(filteredInfo, findInfo(searchTxt)...)
+		}
 		infoCh <- filteredInfo
 		close(infoCh)
 	}(infoCh)
@@ -30,7 +36,10 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	wg.Add(1)
 	go func(eventCh chan []*event.EventDetail) {
 		defer wg.Done()
-		filteredEvents := findEvents(searchText)
+		var filteredEvents []*event.EventDetail
+		for _, searchTxt := range searchTextList {
+			filteredEvents = append(filteredEvents, findEvents(searchTxt)...)
+		}
 		eventCh <- filteredEvents
 		close(eventCh)
 	}(eventCh)
@@ -38,15 +47,17 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	wg.Add(1)
 	go func(imageCh chan []string) {
 		defer wg.Done()
-		foundImages := findImage(searchText)
+		var foundImages []string
+		for _, searchTxt := range searchTextList {
+			foundImages = append(foundImages, findImage(searchTxt)...)
+		}
 		imageCh <- foundImages
 		close(imageCh)
 	}(imageCh)
 
-	wg.Add(1)
-	go func(infoCh chan []info2.Info, eventCh chan []*event.EventDetail, imageCh chan []string) {
-		defer wg.Done()
+	wg.Wait()
 
+	func(infoCh chan []info2.Info, eventCh chan []*event.EventDetail, imageCh chan []string) {
 		filteredInfo := <-infoCh
 		filteredEvents := <-eventCh
 		foundImages := <-imageCh
@@ -58,7 +69,5 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 		displayEvents(filteredEvents, w)
 		displayImage(foundImages, w)
 	}(infoCh, eventCh, imageCh)
-
-	wg.Wait()
 
 }
