@@ -220,6 +220,21 @@ little info about kripalu ji maharaj temple at end of the video.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 34",
+			Info: `
+
+Two kinds of Gopi.
+1. Gopi goes to krishna.
+2. Krishna goes to Gopi.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=34",
+			},
+			CreationDate: time.Date(2020, 3, 4, 15, 35, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
