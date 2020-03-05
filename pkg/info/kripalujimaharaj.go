@@ -235,6 +235,22 @@ Two kinds of Gopi.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 35",
+			Info: `
+
+Arjuni Gopi.
+Niskam Prem - O jab chahe taab de.
+Sakam Prem - Jab hum chahe taab de.
+
+Kripa -> Avatar, Send his dearer Devotee.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=35",
+			},
+			CreationDate: time.Date(2020, 3, 5, 8, 57, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
@@ -530,6 +546,39 @@ Our purpose should to make krishna happy by thought, speech, action.
 				"https://www.youtube.com/watch?v=Pa0p4DHIduw",
 			},
 			CreationDate: time.Date(2020, 3, 3, 12, 23, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhajan: Nathwari Rangeeli Mahal wari by Kripalu ji maharaj",
+			Info: `
+Beautiful video on you tube.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=U64jsO9HrkM&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=8",
+			},
+			CreationDate: time.Date(2020, 3, 4, 8, 57, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhajan: Radhe Radhe Jai Jai Jai Shree Radhe by Kripalu ji maharaj",
+			Info: `
+Beautiful video on you tube.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=idEnSFHaixk&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=7",
+			},
+			CreationDate: time.Date(2020, 3, 4, 8, 57, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Bhajan: Jayati Gurubar by Kripalu ji maharaj",
+			Info: `
+Beautiful video on you tube.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=w0xxZeG8duk&list=PL3YCiknakg0q6cvhyO5tiFvdpcndjzztl&index=10",
+			},
+			CreationDate: time.Date(2020, 3, 4, 8, 57, 0, 0, time.Local),
 		},
 	}
 	return infoList
