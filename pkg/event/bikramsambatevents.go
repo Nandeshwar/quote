@@ -76,6 +76,21 @@ func allImportantEvents() []Events {
 			URL:          "https://www.prokerala.com/festivals/sita-navami.html",
 			CreationDate: time.Date(2020, 3, 2, 14, 13, 0, 0, time.Local),
 		},
+
+		{
+			EventDates: []EventDate{
+				{Day: 18, Month: 12, Year: 2020},
+				{Day: 8, Month: 12, Year: 2021},
+				{Day: 28, Month: 11, Year: 2022},
+				{Day: 16, Month: 12, Year: 2023},
+				{Day: 5, Month: 12, Year: 2024},
+				{Day: 25, Month: 12, Year: 2025},
+			},
+			Title:        "Sita Ram Vivah",
+			Info:         "Vivah Panchami",
+			URL:          "https://www.drikpanchang.com/festivals/vivah-panchami/vivah-panchami-date-time.html?year=2021",
+			CreationDate: time.Date(2020, 3, 6, 15, 19, 0, 0, time.Local),
+		},
 	}
 }
 
