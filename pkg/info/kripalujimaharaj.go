@@ -251,6 +251,29 @@ Kripa -> Avatar, Send his dearer Devotee.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 36",
+			Info: `
+Realize God's Kripa.
+Gyani wo hai jisme bhakti badhhti jaaye.
+Gyan se bhakti hogi.
+Bhagti se gyan hoga.
+Aur last me sirf bhakti rah jaayegi.
+Karm ka adhhar bhakti.
+Gyan ka adhar bhakti.
+Yog ka adhar bhakti.
+Gyan-karm-yog ke swamini bhati hi honi chahiye.
+
+Gyani me bhakti prem balwan hona chahiye. Nahi to o gyani nahi, gyan abhimani hai.
+
+Nice kirtan at end, Aaaja meri radhe.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=Pptvok8OKHg&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=36",
+			},
+			CreationDate: time.Date(2020, 3, 6, 8, 45, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - mai kaun mera kaun - part - 67",
 			Info: `
 definition of pati brata stri - Always think about her husband.
