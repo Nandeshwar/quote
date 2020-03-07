@@ -273,6 +273,18 @@ Practise remembering Krishna and his devotee.
 			},
 			CreationDate: time.Date(2020, 2, 29, 13, 38, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Prem & Yog",
+			Info: ` 
+Winning over lust, anger, greed is Yog according to meditation technique mentioned in Bhagwat Gita chapter-6. 
+Always be in Prem & bhakti and practice yog according to chapter-6, bhagwat gita.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 3, 7, 14, 16, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
