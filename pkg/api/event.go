@@ -82,8 +82,6 @@ func displayEvents(filteredEvents []*event.EventDetail, w http.ResponseWriter) {
 		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", event.CreationDate))
 
 		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-		fmt.Fprintf(w, fmt.Sprintf("</br>"))
-
 	}
 	fmt.Fprintf(w, fmt.Sprintf("</table>"))
 }
