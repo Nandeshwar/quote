@@ -29,6 +29,36 @@ Son: Ghanshyam Tripathi
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 1",
+			Info: `
+Narad meaning: Agyan ko Nast kaarke premanand pradaan kare.
+Two famous book for Karma.
+1. Purva mimansa Darshan by Jaimini, popular.
+2. Karma mimansa Darshan by Bhardwaj. 
+
+Two famous book for Gyan, both written by ved vyas.
+1. Uttar Mimansa Darshan. popular one.
+2. Sidhanta Darshan
+
+Books on Bhakti.
+1. Sandalya bhakti Darshan.
+2. Angirath Mimansa Darshan.
+3. Narad bhakti Darshan.
+
+Narad Smiriti.
+
+Athato bhaktim byakhya shyama.
+
+Krishna prem is only the bhakti.
+Nice bhajan at end. Raas barsane wari.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=1",
+			},
+			CreationDate: time.Date(2020, 3, 11, 8, 51, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 21",
 			Info: `
 Krishna will protect whatever we already have and give what we need.
