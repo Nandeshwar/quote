@@ -17,6 +17,10 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 	searchTextList := strings.Split(searchText, "&")
 
+	searchTextList = fp.MapStr(func(searchTxt string) string {
+		return strings.TrimSpace(searchTxt)
+	}, searchTextList)
+
 	searchTextList = searchIntelligence(searchTextList)
 
 	var wg sync.WaitGroup

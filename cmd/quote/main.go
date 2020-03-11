@@ -84,6 +84,7 @@ func main() {
 	fmt.Println("Link for the next quote")
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-devotional\n"))
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-motivational\n"))
+	fmt.Printf("\n%s :%s", blue("http://localhost:1922/search/krishna&radha"), red("search criteria can be delimited by '&'\n"))
 
 	todayEvents := event.TodayEvents()
 	if len(todayEvents) > 0 {
