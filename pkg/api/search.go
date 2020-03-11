@@ -8,12 +8,16 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/logic-building/functional-go/fp"
+
 	"github.com/gorilla/mux"
 )
 
 func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 	searchTextList := strings.Split(searchText, "&")
+
+	searchTextList = searchIntelligence(searchTextList)
 
 	var wg sync.WaitGroup
 
@@ -70,4 +74,30 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 		displayImage(foundImages, w)
 	}(infoCh, eventCh, imageCh)
 
+}
+
+func searchIntelligence(searchStrList []string) []string {
+
+	var newSearchStrList []string
+	m := map[string][]string{
+		"ram":       []string{"ram", "rama", "raam", "rama", "raaama", "ram-ji", "shree-ram-ji", "shree ram ji"},
+		"sita":      []string{"sita", "seeta", "sitaa", "seetaa", "setaa", "seeta"},
+		"krishna":   []string{"krishna", "krisna", "kirisna", "kirishna", "krishnaa", "krisna", "krishna-ji", "krishnaji"},
+		"radha":     []string{"radha", "rada", "raadha", "radhha", "radhaa", "radhe", "radhaji", "radha ji", "radha-ji"},
+		"hanuman":   []string{"hanuman", "hanumanji", "hanuman-ji", "hanumaan", "hanman", "hanmaan", "hanmanji", "hanman ji", "hanumaan-ji"},
+		"vedbyas":   []string{"ved vyas", "vedvyas", "ved byas", "vedbyas", "vyasbed", "vyas ved", "vedh vyas", "veddhvyas"},
+		"sukdev":    []string{"sukdev", "suk dev", "shukdev", "shuk dev", "sutji", "sutji maharaj", "shutji", "shut ji", "sut ji", "sut ji maharaj", "shut ji maharaj", "sut", "shut"},
+		"kripaluji": []string{"kripalu", "kripaluji", "kripalu ji", "kripalu ji maharaj", "kripaluji maharaj", "ram kripalu", "ramkripalu", "ram kripalu tripathhi", "kripalu-ji", "maharaj ji", "mahrajji", "kripaalu", "kreepalu", "krepalu", "kirpalu", "kerpalu"},
+	}
+
+	newSearchStrList = append(newSearchStrList, searchStrList...)
+	for _, searchTxt := range searchStrList {
+		for _, data := range m {
+			if fp.ExistsStrIgnoreCase(searchTxt, data) {
+				newSearchStrList = append(newSearchStrList, data...)
+			}
+		}
+	}
+
+	return fp.DistinctStrIgnoreCase(newSearchStrList)
 }
