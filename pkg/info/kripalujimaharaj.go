@@ -633,6 +633,22 @@ Beautiful video on you tube.
 			},
 			CreationDate: time.Date(2020, 3, 4, 8, 57, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Prem ko chhupana by Kripalu ji maharaj",
+			Info: `
+Beautiful video on you tube.
+1. Prem ko chhupana chahiye otherwise sukchhma ahankar will be generated.
+2. Karm yog: remember god while doing your work
+3. Karm Sanyas yog: practise sadhna daily for sometime
+4. Keep doing your sadhna and ignore world because everyone's' journey is alone.
+5. Whenever kusang, stop it right there
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=_b1iRD2IBSk",
+			},
+			CreationDate: time.Date(2020, 3, 12, 8, 44, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
