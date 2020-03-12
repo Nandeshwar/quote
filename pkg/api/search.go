@@ -40,11 +40,14 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 
 			for _, foundInfo := range foundList {
 
-				isTitleExist := func(info info2.Info) bool {
-					return foundInfo.Title == info.Title
+				isSame := func(info info2.Info) bool {
+					if foundInfo.Title == info.Title && foundInfo.CreationDate == info.CreationDate {
+						return true
+					}
+					return false
 				}
 
-				if !info2.Some(isTitleExist, filteredInfo) {
+				if !info2.Some(isSame, filteredInfo) {
 					filteredInfo = append(filteredInfo, foundInfo)
 				}
 			}
@@ -74,7 +77,10 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 			for _, foundEvent := range foundList {
 
 				isTitleExist := func(event *event.EventDetail) bool {
-					return event.Title == foundEvent.Title
+					if event.Title == foundEvent.Title && event.Year == foundEvent.Year && event.Month == foundEvent.Month && event.Day == foundEvent.Day {
+						return true
+					}
+					return false
 				}
 
 				if !Some(isTitleExist, filteredEvents) {
