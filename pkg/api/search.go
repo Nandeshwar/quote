@@ -35,7 +35,19 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 
 		var filteredInfo []info2.Info
 		for _, searchTxt := range searchTextList {
-			filteredInfo = append(filteredInfo, findInfo(searchTxt)...)
+			//if info2.Some()
+			foundList := findInfo(searchTxt)
+
+			for _, foundInfo := range foundList {
+
+				isTitleExist := func(info info2.Info) bool {
+					return foundInfo.Title == info.Title
+				}
+
+				if !info2.Some(isTitleExist, filteredInfo) {
+					filteredInfo = append(filteredInfo, foundInfo)
+				}
+			}
 		}
 		infoCh <- filteredInfo
 		close(infoCh)
@@ -45,8 +57,30 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	go func(eventCh chan []*event.EventDetail) {
 		defer wg.Done()
 		var filteredEvents []*event.EventDetail
+		Some := func(f func(detail *event.EventDetail) bool, list []*event.EventDetail) bool {
+			if f == nil {
+				return false
+			}
+			for _, v := range list {
+				if f(v) {
+					return true
+				}
+			}
+			return false
+		}
+
 		for _, searchTxt := range searchTextList {
-			filteredEvents = append(filteredEvents, findEvents(searchTxt)...)
+			foundList := findEvents(searchTxt)
+			for _, foundEvent := range foundList {
+
+				isTitleExist := func(event *event.EventDetail) bool {
+					return event.Title == foundEvent.Title
+				}
+
+				if !Some(isTitleExist, filteredEvents) {
+					filteredEvents = append(filteredEvents, foundEvent)
+				}
+			}
 		}
 		eventCh <- filteredEvents
 		close(eventCh)
@@ -59,6 +93,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 		for _, searchTxt := range searchTextList {
 			foundImages = append(foundImages, findImage(searchTxt)...)
 		}
+		foundImages = fp.DistinctStrIgnoreCase(foundImages)
 		imageCh <- foundImages
 		close(imageCh)
 	}(imageCh)
