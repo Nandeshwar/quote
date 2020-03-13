@@ -1,8 +1,12 @@
 package info
 
-import "time"
+import (
+	"math/rand"
+	"strings"
+	"time"
+)
 
-//go:generate gofp -destination fp.go -pkg info -type "Info"
+//go:generate gofp -destination fp.go -pkg info -type "Info, string"
 type Info struct {
 	Title        string
 	Info         string
@@ -16,4 +20,16 @@ func GetAllInfo() []Info {
 	allInfo = append(allInfo, getKripaluJiMaharajInfo()...)
 	allInfo = append(allInfo, getMyMeditaionInfo()...)
 	return allInfo
+}
+
+func GetRandomTwoWordsFromTitle() (word1, word2 string) {
+	allInfo := GetAllInfo()
+
+	s := rand.NewSource(time.Now().Unix())
+	r := rand.New(s) // initialize local pseudorandom generator
+	ind := r.Intn(len(allInfo))
+
+	info := allInfo[ind]
+	words := strings.Split(info.Title, " ")
+	return words[0], words[1]
 }

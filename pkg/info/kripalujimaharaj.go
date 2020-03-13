@@ -59,6 +59,29 @@ Nice bhajan at end. Raas barsane wari.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 2",
+			Info: `
+Parkasthha k prem Bhagwan me hoona bhakti hai.
+Amrit swaroopa cha.
+Bhakti is another form of God.
+Bhakti me bhagwan, Bhaktme bhagwan, Bhagwan me bhakt.
+Karm, Yog, Gyan, Bhakti.
+In Bhakti marg. sadhna is bhakti, Sidhi is bhakti. Do Bhakti for Bhakti.
+Karm swarg dega, then karm will die.
+Yog mukti dega, then die.
+
+Sidho Bhawati, amrioto bhawati, tripto bhawati.
+Sidhi in bhakti means komal ho jaana.
+Sant Hridya: Dusro ka dukhh se pighhal ke uska Kalyan karna.
+Nice bhajan at end.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=2",
+			},
+			CreationDate: time.Date(2020, 3, 13, 8, 15, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 21",
 			Info: `
 Krishna will protect whatever we already have and give what we need.

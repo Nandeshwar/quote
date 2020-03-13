@@ -285,6 +285,29 @@ Always be in Prem & bhakti and practice yog according to chapter-6, bhagwat gita
 			},
 			CreationDate: time.Date(2020, 3, 7, 14, 16, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Love every one",
+			Info: ` 
+Love everyone. Love how Radha loves Krishna.
+Love how krishna loves Radha.
+Love how yasodha maiya loves krishna.
+Love how Nandbaba loves Krishna.
+Love how Hanumna loves Rama.
+Love how Ram loves Hanuman.
+Love how Laxman, sita loves Rama.
+Love how Dashrat loves Ram.
+Love how Ram loves Dashrath.
+Love how Ram loves Laxman, sita, Bharat, Satrughhan.
+
+Bring these characteristics and love everyone.
+This is paht of bhakti. This is the way to make krishna happy.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 3, 13, 8, 21, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

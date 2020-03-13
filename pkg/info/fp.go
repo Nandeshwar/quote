@@ -215,3 +215,155 @@ func DropLast(list []Info) []Info {
 }
 
 
+// MapInfoStr takes two inputs -
+// 1. Function 2. List. Then It returns a new list after applying the function on each item of the list
+func MapInfoStr(f func(Info) string, list []Info) []string {
+	if f == nil {
+		return []string{}
+	}
+	newList := make([]string, len(list))
+	for i, v := range list {
+		newList[i] = f(v)
+	}
+	return newList
+}
+
+// PMapInfoStr applies the function(1st argument) on each item of the list and returns new list.
+// Run in parallel. no_of_goroutines = no_of_items_in_list
+//
+// Takes 2 inputs
+//	1. Function - takes 1 input type: Info output type: string
+//	2. List
+//
+// Returns
+//	New List of type string
+//	Empty list if all arguments are nil or either one is nil
+func PMapInfoStr(f func(Info) string, list []Info) []string {
+	if f == nil {
+		return []string{}
+	}
+
+	ch := make(chan map[int]string)
+	var wg sync.WaitGroup
+
+	for i, v := range list {
+		wg.Add(1)
+
+		go func(wg *sync.WaitGroup, ch chan map[int]string, i int, v Info) {
+			defer wg.Done()
+			ch <- map[int]string{i: f(v)}
+		}(&wg, ch, i, v)
+	}
+
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
+
+	newList := make([]string, len(list))
+	for m := range ch {
+		for k, v := range m {
+			newList[k] = v
+		}
+	}
+	return newList
+}
+
+// FilterMapInfoStr filters given list, then apply function(2nd argument) on each item in the list and returns a new list
+// Takes 3 inputs
+//	1. Function: takes one input type - Info and returns true/false.
+//	2. Function: takes Info as argument and returns string
+// 	3. List of type Info
+//
+// Returns:
+//	New List of type string
+//  Empty list if all there parameters are nil or either of parameter is nil
+func FilterMapInfoStr(fFilter func(Info) bool, fMap func(Info) string, list []Info) []string {
+	if fFilter == nil || fMap == nil {
+		return []string{}
+	}
+	var newList []string
+	for _, v := range list {
+		if fFilter(v) {
+			newList = append(newList, fMap(v))
+		}
+	}
+	return newList
+}
+
+// MapStrInfo takes two inputs -
+// 1. Function 2. List. Then It returns a new list after applying the function on each item of the list
+func MapStrInfo(f func(string) Info, list []string) []Info {
+	if f == nil {
+		return []Info{}
+	}
+	newList := make([]Info, len(list))
+	for i, v := range list {
+		newList[i] = f(v)
+	}
+	return newList
+}
+
+// PMapStrInfo applies the function(1st argument) on each item of the list and returns new list.
+// Run in parallel. no_of_goroutines = no_of_items_in_list
+//
+// Takes 2 inputs
+//	1. Function - takes 1 input type: string output type: Info
+//	2. List
+//
+// Returns
+//	New List of type Info
+//	Empty list if all arguments are nil or either one is nil
+func PMapStrInfo(f func(string) Info, list []string) []Info {
+	if f == nil {
+		return []Info{}
+	}
+
+	ch := make(chan map[int]Info)
+	var wg sync.WaitGroup
+
+	for i, v := range list {
+		wg.Add(1)
+
+		go func(wg *sync.WaitGroup, ch chan map[int]Info, i int, v string) {
+			defer wg.Done()
+			ch <- map[int]Info{i: f(v)}
+		}(&wg, ch, i, v)
+	}
+
+	go func() {
+		wg.Wait()
+		close(ch)
+	}()
+
+	newList := make([]Info, len(list))
+	for m := range ch {
+		for k, v := range m {
+			newList[k] = v
+		}
+	}
+	return newList
+}
+
+// FilterMapStrInfo filters given list, then apply function(2nd argument) on each item in the list and returns a new list
+// Takes 3 inputs
+//	1. Function: takes one input type - string and returns true/false.
+//	2. Function: takes string as argument and returns Info
+// 	3. List of type string
+//
+// Returns:
+//	New List of type Info
+//  Empty list if all there parameters are nil or either of parameter is nil
+func FilterMapStrInfo(fFilter func(string) bool, fMap func(string) Info, list []string) []Info {
+	if fFilter == nil || fMap == nil {
+		return []Info{}
+	}
+	var newList []Info
+	for _, v := range list {
+		if fFilter(v) {
+			newList = append(newList, fMap(v))
+		}
+	}
+	return newList
+}
+
