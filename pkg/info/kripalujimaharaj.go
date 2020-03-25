@@ -92,6 +92,17 @@ God will give everything needed to bhakta without asking.
 			},
 			CreationDate: time.Date(2020, 3, 16, 8, 56, 0, 0, time.Local),
 		},
+		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 4",
+			Info: `
+what not to do.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=4",
+			},
+			CreationDate: time.Date(2020, 3, 24, 10, 24, 0, 0, time.Local),
+		},
 
 		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 21",

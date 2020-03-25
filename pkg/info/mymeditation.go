@@ -184,6 +184,38 @@ Sabse prem karo, Bhagwan khhud aayenge ek din aur phir kabhhi nahi jayenge.
 		},
 
 		{
+			Title: "My Meditation - Love God Love Everyone",
+			Info: ` 
+When we love god, we will love everyone. 
+When we love god, we attain god and people around us will also either attend God or run in the path.
+We love everyone to make God happy.
+We love devotee of God because God is happy with him.
+When God becomes our lover, we will love everyone who loves God and we will love everyone to whom God loves because we want to see our lover happy.
+This is Prem.
+
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 3, 17, 7, 54, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Meditation - Prem me kya hota hai",
+			Info: ` 
+Jaab Ram aur sita ne pehli baar ek dusre ko dekhha to dekhhtai rah gaye.
+Jaab Ram aur Hunuman pehli baar mile to ek dusre ko dekhhte rahe.
+Jaab Radha aur Krishna pehli baar mile to kuchh hua...
+Jab Ram aur bharat Banwas ke samay mile to kuchh hua...
+
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 3, 25, 8, 55, 0, 0, time.Local),
+		},
+
+		{
 			Title: "My Chintan(Contemplation) - Don't skip Sadhna (Morning -Evening)",
 			Info: ` 
 I realized my morning sadhna makes me active whole day and My evening Sadhna makes my night beautiful and next morning beautiful.
