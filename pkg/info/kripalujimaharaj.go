@@ -105,6 +105,20 @@ what not to do.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 5",
+			Info: `
+Ask for sewa of krishna for his happiness.
+Be happy by making krishna happy.
+Madhuradhipati rakhhilam madhuram.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=5",
+			},
+			CreationDate: time.Date(2020, 3, 26, 8, 22, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 21",
 			Info: `
 Krishna will protect whatever we already have and give what we need.
