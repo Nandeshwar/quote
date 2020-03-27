@@ -1,0 +1,11 @@
+.idea
+vendor
+*.DS_Store
+.project
+.settings/
+
+# coverage files
+coverage.out
+
+# Benchmark output files
+result.txt
