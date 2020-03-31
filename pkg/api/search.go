@@ -61,17 +61,6 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	go func(eventCh chan []*event.EventDetail) {
 		defer wg.Done()
 		var filteredEvents []*event.EventDetail
-		Some := func(f func(detail *event.EventDetail) bool, list []*event.EventDetail) bool {
-			if f == nil {
-				return false
-			}
-			for _, v := range list {
-				if f(v) {
-					return true
-				}
-			}
-			return false
-		}
 
 		for _, searchTxt := range searchTextList {
 			foundList := findEvents(searchTxt)
@@ -84,7 +73,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 					return false
 				}
 
-				if !Some(isTitleExist, filteredEvents) {
+				if !event.SomeEventDetailPtr(isTitleExist, filteredEvents) {
 					filteredEvents = append(filteredEvents, foundEvent)
 				}
 			}

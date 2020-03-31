@@ -13,6 +13,17 @@ func Map(f func(Info) Info, list []Info) []Info {
 	return newList
 }
 
+func MapPtr(f func(*Info) *Info, list []*Info) []*Info {
+	if f == nil {
+		return []*Info{}
+	}
+	newList := make([]*Info, len(list))
+	for i, v := range list {
+		newList[i] = f(v)
+	}
+	return newList
+}
+
 func Filter(f func(Info) bool, list []Info) []Info {
 	if f == nil {
 		return []Info{}
@@ -53,6 +64,18 @@ func Remove(f func(Info) bool, list []Info) []Info {
 }
 
 func Some(f func(Info) bool, list []Info) bool {
+	if f == nil {
+		return false
+	}
+	for _, v := range list {
+		if f(v) {
+			return true
+		}
+	}
+	return false
+}
+
+func SomePtr(f func(*Info) bool, list []*Info) bool {
 	if f == nil {
 		return false
 	}
@@ -228,6 +251,19 @@ func MapInfoStr(f func(Info) string, list []Info) []string {
 	return newList
 }
 
+// MapInfoStr takes two inputs -
+// 1. Function 2. List. Then It returns a new list after applying the function on each item of the list
+func MapInfoStrPtr(f func(*Info) *string, list []*Info) []*string {
+	if f == nil {
+		return []*string{}
+	}
+	newList := make([]*string, len(list))
+	for i, v := range list {
+		newList[i] = f(v)
+	}
+	return newList
+}
+
 // PMapInfoStr applies the function(1st argument) on each item of the list and returns new list.
 // Run in parallel. no_of_goroutines = no_of_items_in_list
 //
@@ -298,6 +334,19 @@ func MapStrInfo(f func(string) Info, list []string) []Info {
 		return []Info{}
 	}
 	newList := make([]Info, len(list))
+	for i, v := range list {
+		newList[i] = f(v)
+	}
+	return newList
+}
+
+// MapStrInfo takes two inputs -
+// 1. Function 2. List. Then It returns a new list after applying the function on each item of the list
+func MapStrInfoPtr(f func(*string) *Info, list []*string) []*Info {
+	if f == nil {
+		return []*Info{}
+	}
+	newList := make([]*Info, len(list))
 	for i, v := range list {
 		newList[i] = f(v)
 	}

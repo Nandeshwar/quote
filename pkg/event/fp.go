@@ -13,6 +13,17 @@ func MapEventDetail(f func(EventDetail) EventDetail, list []EventDetail) []Event
 	return newList
 }
 
+func MapEventDetailPtr(f func(*EventDetail) *EventDetail, list []*EventDetail) []*EventDetail {
+	if f == nil {
+		return []*EventDetail{}
+	}
+	newList := make([]*EventDetail, len(list))
+	for i, v := range list {
+		newList[i] = f(v)
+	}
+	return newList
+}
+
 func FilterEventDetail(f func(EventDetail) bool, list []EventDetail) []EventDetail {
 	if f == nil {
 		return []EventDetail{}
@@ -53,6 +64,18 @@ func RemoveEventDetail(f func(EventDetail) bool, list []EventDetail) []EventDeta
 }
 
 func SomeEventDetail(f func(EventDetail) bool, list []EventDetail) bool {
+	if f == nil {
+		return false
+	}
+	for _, v := range list {
+		if f(v) {
+			return true
+		}
+	}
+	return false
+}
+
+func SomeEventDetailPtr(f func(*EventDetail) bool, list []*EventDetail) bool {
 	if f == nil {
 		return false
 	}
