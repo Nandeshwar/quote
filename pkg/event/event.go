@@ -16,6 +16,7 @@ type EventDetail struct {
 	Title        string
 	Info         string
 	URL          string
+	Type         string // Value can be same|different: different - event occurs different day in each year
 	CreationDate time.Time
 }
 
@@ -29,15 +30,21 @@ func AllEvents() []*EventDetail {
 }
 
 func TodayEvents() []*EventDetail {
-	_, month, day := time.Now().Date()
+	year, month, day := time.Now().Date()
 
-	var todayEvents []*EventDetail
-
-	for _, event := range AllEvents() {
-		if event.Month == int(month) && event.Day == day {
-			todayEvents = append(todayEvents, event)
+	findTodayEvent := func(event *EventDetail) bool {
+		if event.Type == "different" {
+			if event.Year == year && event.Month == int(month) && event.Day == day {
+				return true
+			}
+		} else if event.Month == int(month) && event.Day == day {
+			return true
 		}
+		return false
 	}
+
+	todayEvents := FilterEventDetailPtr(findTodayEvent, AllEvents())
+
 	return todayEvents
 }
 

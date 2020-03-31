@@ -106,6 +106,7 @@ func copyBikramSambatEventsToEventDetail() []*EventDetail {
 				Title:        bEvent.Title,
 				Info:         bEvent.Info,
 				URL:          bEvent.URL,
+				Type:         "different",
 				CreationDate: bEvent.CreationDate,
 			}
 			events = append(events, eventDetail)
