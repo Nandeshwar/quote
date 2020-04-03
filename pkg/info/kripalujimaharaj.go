@@ -709,6 +709,29 @@ Beautiful video on you tube.
 			},
 			CreationDate: time.Date(2020, 3, 12, 8, 44, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Madhurya Prem - Kripalu ji maharaj",
+			Info: `
+1. Madhurya Prem gives more freedom.
+2. Roop dhyan explanation
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=4wjRGmkM2rc",
+			},
+			CreationDate: time.Date(2020, 4, 3, 8, 44, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Kaiso Hai Kanhaiya - Nice bhajan with explanation by Kripalu ji Maharaj",
+			Info: `
+Beautiful bhajan.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=uUogyZn2oqM",
+			},
+			CreationDate: time.Date(2020, 4, 3, 8, 50, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

@@ -91,6 +91,21 @@ func allImportantEvents() []Events {
 			URL:          "https://www.drikpanchang.com/festivals/vivah-panchami/vivah-panchami-date-time.html?year=2021",
 			CreationDate: time.Date(2020, 3, 6, 15, 19, 0, 0, time.Local),
 		},
+
+		{
+			EventDates: []EventDate{
+				{Day: 8, Month: 4, Year: 2020},
+				{Day: 27, Month: 4, Year: 2021},
+				{Day: 16, Month: 4, Year: 2022},
+				{Day: 6, Month: 4, Year: 2023},
+				{Day: 23, Month: 4, Year: 2024},
+				{Day: 12, Month: 4, Year: 2025},
+			},
+			Title:        "Hanuman Jayanti",
+			Info:         "Hanuman ji appearance day",
+			URL:          "https://www.drikpanchang.com/festivals/hanuman-jayanti/hanuman-jayanti-date-time.html?year=2021",
+			CreationDate: time.Date(2020, 3, 6, 15, 19, 0, 0, time.Local),
+		},
 	}
 }
 
