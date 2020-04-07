@@ -100,6 +100,11 @@ func main() {
 		event.DisplayEvent()
 	}
 
+	fmt.Println("--------------Events Tomorrow------------------")
+	for _, event := range event.TomorrowEvents() {
+		event.DisplayEvent()
+	}
+
 	//if pic || img || img2 {
 	//	listDir("/image")
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")

@@ -48,6 +48,27 @@ func TodayEvents() []*EventDetail {
 	return todayEvents
 }
 
+func TomorrowEvents() []*EventDetail {
+	t := time.Now()
+	t = t.AddDate(0, 0, 1)
+	year, month, day := t.Date()
+
+	findTodayEvent := func(event *EventDetail) bool {
+		if event.Type == "different" {
+			if event.Year == year && event.Month == int(month) && event.Day == day {
+				return true
+			}
+		} else if event.Month == int(month) && event.Day == day {
+			return true
+		}
+		return false
+	}
+
+	todayEvents := FilterEventDetailPtr(findTodayEvent, AllEvents())
+
+	return todayEvents
+}
+
 func (e EventDetail) DisplayEvent() {
 	blue := color.FgBlue.Render
 	fmt.Println(e.Title)
