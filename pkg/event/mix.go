@@ -58,5 +58,90 @@ Great grandchild: Sakshi Chopra.
 	}
 	allEvents = append(allEvents, ramanandSagarDisAppearance)
 
+	arunGovilAppearance := &EventDetail{
+		Day:   30,
+		Month: 10,
+		Year:  1958,
+		Title: "Arun Govil - Ram in Ramayan of Ramanand Sagar - appearance day",
+		Info: ` Arun Govil played role of Ram in Ramayan of Ramanand Sagar.
+Arun Govil. Arun Govil is an Indian actor and producer. ... He was then cast as Lord Rama in Sagar's TV series Ramayan (1986), for which he won the Uptron Award in the Best Actor in a Leading Role category in 1988. He reprised his role as Rama in Sagar's Luv Kush.
+Parents: Shri Chandra Prakash Govil
+Film: Paheli, Sawan Ko Aane Do, Saanch Ko A...
+Sibling: Vijay Govil
+TV show: Ramayan, Vikram Aur Betaal, Luv Kush
+`,
+		URL:          "https://en.wikipedia.org/wiki/Arun_Govil",
+		CreationDate: time.Date(2020, 4, 11, 14, 26, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, arunGovilAppearance)
+
+	DeepikaChikhalia := &EventDetail{
+		Day:   29,
+		Month: 4,
+		Year:  1965,
+		Title: "Deepika Chikhalia - Sita in Ramayan of Ramanand Sagar - appearance day",
+		Info: `Dipika Topiwala is an Indian actress who rose to fame playing Devi Sita in Ramanand Sagar's hit television serial Ramayan and was known for acting in other Indian historical TV serials. Wikipedia
+Born: April 29, 1965 (age 54 years), Mumbai, India
+Height: 4′ 10″
+Spouse: Hemant Topiwala
+Party: Bharatiya Janata Party
+Children: Juhi Topiwala, Nidhi Topiwala
+`,
+		URL:          "https://en.wikipedia.org/wiki/Deepika_Chikhalia",
+		CreationDate: time.Date(2020, 4, 11, 14, 26, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, DeepikaChikhalia)
+
+	sunilLahri := &EventDetail{
+		Day:   9,
+		Month: 1,
+		Year:  1961,
+		Title: "Sunil Lahri - Laxman in Ramayan of Ramanand Sagar - appearance day",
+		Info: `Sunil Lahri is an Indian actor. He is most famous for appearing in the television works of Ramanand Sagar, beginning with his most famous role as Lakshman in Ramayan. Before Ramayan, he appeared in some stories of Vikram aur Betaal and Dada-Dadi Ki Kahaniyan
+`,
+		URL:          "https://en.wikipedia.org/wiki/Sunil_Lahri",
+		CreationDate: time.Date(2020, 4, 11, 14, 26, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, sunilLahri)
+
+	sanjayJog := &EventDetail{
+		Day:   24,
+		Month: 9,
+		Year:  1955,
+		Title: "Sanjay Jog - Bharat in Ramayan of Ramanand Sagar - appearance day",
+		Info: `Sanjay Jog played role of bharat ji in  Ramanand Sagar's Ramayan.
+`,
+		URL:          "https://maitrimanthan.wordpress.com/2011/10/10/sanjay-jog/",
+		CreationDate: time.Date(2020, 4, 11, 14, 26, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, sanjayJog)
+
+	DaraSinghAppearance := &EventDetail{
+		Day:   19,
+		Month: 11,
+		Year:  1928,
+		Title: "DaraSinghAppearance - Hanuman ji in Ramayan of Ramanand Sagar - appearance day",
+		Info: `2010
+Born	Deedar Singh Randhawa
+19 November 1928
+Dharmuchak,
+`,
+		URL:          "https://en.wikipedia.org/wiki/Dara_Singh",
+		CreationDate: time.Date(2020, 4, 11, 14, 26, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, DaraSinghAppearance)
+
+	DaraSinghDisAppearance := &EventDetail{
+		Day:   12,
+		Month: 7,
+		Year:  2012,
+		Title: "DaraSinghDisAppearance - Hanuman ji in Ramayan of Ramanand Sagar - disappearance day",
+		Info: `Died	12 July 2012 (aged 83)
+`,
+		URL:          "https://en.wikipedia.org/wiki/Dara_Singh",
+		CreationDate: time.Date(2020, 4, 11, 14, 26, 0, 0, time.Local),
+	}
+	allEvents = append(allEvents, DaraSinghDisAppearance)
+
 	return allEvents
 }
