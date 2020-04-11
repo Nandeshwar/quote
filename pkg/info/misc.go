@@ -906,6 +906,27 @@ By MukundaNand ji:
 			},
 			CreationDate: time.Date(2020, 3, 2, 8, 25, 0, 0, time.Local),
 		},
+
+		{
+			Title: "About Dasrat ji",
+			Info: `
+Dashrath ji is Father of Ram.
+Swaybhu Manu (Dashrath ji).
+Son of Manu .
+1. Utaanpaad. 
+  Son of Utaanpaad is Dhruva ji (Vishnu bhakta).
+2. Priyabrat (younger son of Manu).
+  Daughter of Priyabrat - Devhuti.
+Son of Devhuti - bhagwan Kapil.
+Satroopa (Kausalya Mata) is wife of Manu.
+This information collected from Sree Ram Charitamanas Baalkand.
+
+`,
+			Link: []string{
+				"https://en.wikipedia.org/wiki/Dasharatha",
+			},
+			CreationDate: time.Date(2020, 4, 11, 13, 22, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

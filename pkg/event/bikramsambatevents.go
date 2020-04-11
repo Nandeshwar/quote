@@ -106,6 +106,21 @@ func allImportantEvents() []Events {
 			URL:          "https://www.drikpanchang.com/festivals/hanuman-jayanti/hanuman-jayanti-date-time.html?year=2021",
 			CreationDate: time.Date(2020, 3, 6, 15, 19, 0, 0, time.Local),
 		},
+
+		{
+			EventDates: []EventDate{
+				{Day: 21, Month: 2, Year: 2020},
+				{Day: 11, Month: 3, Year: 2021},
+				{Day: 28, Month: 2, Year: 2022},
+				{Day: 18, Month: 2, Year: 2023},
+				{Day: 8, Month: 3, Year: 2024},
+				{Day: 25, Month: 25, Year: 2025},
+			},
+			Title:        "Maha Shiva Ratri",
+			Info:         "Maha Shivaratri is a Hindu festival celebrated annually in honour of Lord Shiva. The name also refers to the night when Shiva performs the heavenly dance",
+			URL:          "https://www.calendardate.com/maha_shivaratri_2020.htm;https://en.wikipedia.org/wiki/Maha_Shivaratri",
+			CreationDate: time.Date(2020, 4, 11, 13, 42, 0, 0, time.Local),
+		},
 	}
 }
 

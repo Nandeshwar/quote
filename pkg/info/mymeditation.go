@@ -340,6 +340,17 @@ This is paht of bhakti. This is the way to make krishna happy.
 			},
 			CreationDate: time.Date(2020, 3, 13, 8, 21, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Nandeshwar blog",
+			Info: ` 
+
+`,
+			Link: []string{
+				"http://godisbliss.blogspot.com/",
+			},
+			CreationDate: time.Date(2020, 4, 11, 14, 5, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
