@@ -732,6 +732,19 @@ Beautiful bhajan.
 			},
 			CreationDate: time.Date(2020, 4, 3, 8, 50, 0, 0, time.Local),
 		},
+
+		{
+			Title: "mai kaun mera kaun 75- By Kripalu Ji Maharaj",
+			Info: `
+Do work for happiness of krishna.
+Engage every senses for happiness of krishna.
+story of Sukdev and his father Ved Vyas.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=LEi2XDqxqV4",
+			},
+			CreationDate: time.Date(2020, 4, 12, 16, 29, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
