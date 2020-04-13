@@ -351,6 +351,48 @@ This is paht of bhakti. This is the way to make krishna happy.
 			},
 			CreationDate: time.Date(2020, 4, 11, 14, 5, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Radha Krishna Love",
+			Info: ` 
+Radha and Krishna are always together. Krishna left Gokul, but appeared in front of Radha and Sakhhi whenever they 
+called him. They never separed.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Chintan(Contemplation) - What to do when I see negativity in others",
+			Info: ` 
+When I see negativity(lust, anger, greed, pride) in others, I do bairgya and go away and remember love of 
+Radha Krishna, Ram Hanuman.
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
+		},
+
+		{
+			Title: "My Chintan(Contemplation) - My Sadhna",
+			Info: ` 
+3:30 get up.
+1. Meditation.
+2. Kripalu Ji maharaj video and Yoga and Pranayam.
+3. Pooja.
+
+if some negativigy comes in night before sleeping, then change sequence little bit.
+Do pooja first and then meditation and yoga later.
+
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
