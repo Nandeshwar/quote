@@ -119,6 +119,32 @@ Madhuradhipati rakhhilam madhuram.
 		},
 
 		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 6",
+			Info: `
+Kaam, krodh ka reason ho lekin kaam naa aaye, krodh naa aye is Sadhak.
+But do acting if required.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=6",
+			},
+			CreationDate: time.Date(2020, 4, 14, 7, 52, 0, 0, time.Local),
+		},
+
+		{
+			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 7",
+			Info: `
+Who is guru according to Chaitnya Mahaprabhu? Who has strong believe in Krishna.
+Raja bhoj & brahaman story.
+
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=YFfiph0pir8&list=PL3zx-BhgZPwRlrBdxuByXuE39X4SH3e6Q&index=7",
+			},
+			CreationDate: time.Date(2020, 4, 24, 10, 22, 0, 0, time.Local),
+		},
+
+		{
 			Title: "Kripalu Ji Maharaj - Narad bhakti - part - 21",
 			Info: `
 Krishna will protect whatever we already have and give what we need.

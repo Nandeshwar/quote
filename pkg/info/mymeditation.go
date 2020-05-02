@@ -393,6 +393,23 @@ Do pooja first and then meditation and yoga later.
 			},
 			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - Everyone has Negativity - What to do?",
+			Info: ` 
+Everybody has negativity - lust,anger, greed, pride. 
+What to do?
+Don't get involved.
+Love everyone and talk about Krishna, Prem. 
+People will change slowly.
+
+
+`,
+			Link: []string{
+				"",
+			},
+			CreationDate: time.Date(2020, 4, 14, 7, 55, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
