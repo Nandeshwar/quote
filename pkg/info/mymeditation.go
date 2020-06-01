@@ -410,6 +410,102 @@ People will change slowly.
 			},
 			CreationDate: time.Date(2020, 4, 14, 7, 55, 0, 0, time.Local),
 		},
+
+		{
+			Title: "My Chintan(Contemplation) - share to the world - Spiritual Sadhana, Aradhana, Upasana?",
+			Info: `
+
+I want to share this spiritual Sadhana to everyone and hear something back from them.
+I will progress in my spiritual path if share this to world.
+If will progress if this talk helps little bit to someone.
+
+if someone is in already in some spiritual path other than this specific Path of bhakti marg,
+they can take only required stuff which can help in their spiritual path and ignore rest of that.
+
+When I also hear something from differernt spiritual path, I accept only those things which help
+in my spiritual path.
+
+
+I heard something little bit.
+I did something little bit.
+I got something little bit.
+
+One should hide Prem/bhakti.
+Why ?
+ Two reasons: 
+   1. Sukshma Ahankar
+   2. Negative feedback can disturb Sadhana
+
+I am very cautious about these two things and I pray God to save me from these negativity.
+
+Two Points I am going to talk.
+1. About My Guru and his teaching in few lines.
+2. What I did
+3. What I experienced
+
+1. About My Guru.
+a. 
+  Kripalu was a Hindu spiritual leader from Allahabad, India.
+He was the founder of Jagadguru Kripalu Parishat, a worldwide Hindu non-profit organization with five main ashrams; four in India and one in the United States
+
+he was formally installed as the fifth Jagadguru ("world teacher").
+He was 34 years old when given the title on 14 January 1957, by the Kashi Vidvat Parishat, 
+a group of Hindu scholars The Kashi Vidvat Parishat also conferred on him the
+titles Bhaktiyog-Ras-Avtar and Jagadguruttam.
+
+Followers claim that he is the "fifth original Jagadguru" in the series of Jagadgurus after 
+Śrīpāda Śaṅkarācārya (A.D. 788-820), 
+Śrīpāda Rāmānujācārya (1017-1137), 
+Śrī Nimbārkācārya and, 
+Śrīpāda Madhvācārya (1239-1319).[5][16] He was also awarded, by the Kashi Vidvat
+
+Born: October 5, 1922, Pratapgarh, India
+Died: November 15, 2013, Gurugram, India
+Temple: Prem Mandir, Vrindavan; Bhakti Mandir Mangarh, Pratapgarh
+
+b. His technique to progress in spiritual path.
+   I. Roop dhyan (Meditation): Visualize and think about God, Leela(past times), Guru, bhakta (Devotee)
+   II. Sravan:
+   III. Kirtan, pooja 
+
+  He says these are the process to cleanse heart.
+  Then we will receive of Kripa(grace) of God.
+  And we can see divya(divine) form of God, We can touch, we can talk.
+
+
+2. What I did and doing 
+  a. Meditation Roop dhyan
+  b. Sravan - kripalu ji maharaj on youtube, read bhagwat gita, bhagwatam, Ramayan
+  c. Pooja - kirtan
+
+3. What I got:
+  Prem ki anubhuti - Experience of divine love 
+    - for few seconds.
+    - now for few minutes
+    - trying for hours and days.
+
+feeling of great happiness in mind that can not be compared to any material happiness.
+The happiness I want to ejoy every moment.
+This happiness can not be explained easily but can be experienced.
+
+
+
+
+ Three stages have been ordained for God realization- they are Upasana, Sadhana & Aradhana. Generally people take them as synonymous but they mean respectively as follows-
+ Upasana- namely seating near. How? By withdrawing one’s consciousness from mundane objects and directing it towards God & communicate immotionally with Him. When this process of communication starts, man beging to acquire Divine power.
+
+ Sadhana- It means moulding one-self according to divine discipling, to own, awaken & augment truthful tendencies, virtues & true efforts with full determination by means of inner inspiration, study, satsang ect. in conformity with bright future.
+
+ Aradhana- This means an effort to serve God through one’s own power. Now the question arises as to how at all man can be capable of serving the Almighty God? He is Formless & Bodyless.  How does He at all require the service of corporeal being? If at all, He requires, it what service can an ordinary being render to Him?
+ It is known that this universe is His gross visible form. God pervades every corner of this universe. An effort to make this beautiful orchard of his still more beautiful is true service to Him?
+ Upasana gives strangth to man, Sadhana develops this strength and Aradhana makes it properly useful. One, who follows this process in a prayerful mood, facilitates his path to God realization.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=q7GWNAfrKR0",
+				"https://www.youtube.com/watch?v=YnQsw60qjPo&list=PLMtaB_EdzfAOUKiWoFyGwUWTVFbNN972y&index=103",
+			},
+			CreationDate: time.Date(2020, 6, 1, 9, 06, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
