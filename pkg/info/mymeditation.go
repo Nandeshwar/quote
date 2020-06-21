@@ -417,12 +417,12 @@ People will change slowly.
 
 I want to share this spiritual Sadhana to everyone and hear something back from them.
 I will progress in my spiritual path if share this to world.
-If will progress if this talk helps little bit to someone.
+I will progress if this talk helps a little bit to someone.
 
 if someone is in already in some spiritual path other than this specific Path of bhakti marg,
 they can take only required stuff which can help in their spiritual path and ignore rest of that.
 
-When I also hear something from differernt spiritual path, I accept only those things which help
+When I also hear something from different spiritual path, I accept only those things which help
 in my spiritual path.
 
 
@@ -431,8 +431,8 @@ I did something little bit.
 I got something little bit.
 
 One should hide Prem/bhakti.
-Why ?.
- Two reasons:.
+Why?
+ Two reasons:
    1. Sukshma Ahankar.
    2. Negative feedback can disturb Sadhana.
 
@@ -444,14 +444,14 @@ Two Points I am going to talk.
 3. What I experienced.
 
 1. About My Guru.
-a. 
-  Kripalu was a Hindu spiritual leader from Allahabad, India.
-He was the founder of Jagadguru Kripalu Parishat, a worldwide Hindu non-profit organization with five main ashrams; four in India and one in the United States
-
-he was formally installed as the fifth Jagadguru ("world teacher").
-He was 34 years old when given the title on 14 January 1957, by the Kashi Vidvat Parishat, 
-a group of Hindu scholars The Kashi Vidvat Parishat also conferred on him the
-titles Bhaktiyog-Ras-Avtar and Jagadguruttam.
+	a. 
+	  Kripalu was a Hindu spiritual leader from Allahabad, India.
+	He was the founder of Jagadguru Kripalu Parishat, a worldwide Hindu non-profit organization with five main ashrams; four in India and one in the United States
+	
+	he was formally installed as the fifth Jagadguru ("world teacher").
+	He was 34 years old when given the title on 14 January 1957, by the Kashi Vidvat Parishat, 
+	a group of Hindu scholars The Kashi Vidvat Parishat also conferred on him the
+	titles Bhaktiyog-Ras-Avtar and Jagadguruttam.
 
 Followers claim that he is the "fifth original Jagadguru" in the series of Jagadgurus after.
 1. Śrīpāda Śaṅkarācārya (A.D. 788-820),. 
@@ -459,6 +459,7 @@ Followers claim that he is the "fifth original Jagadguru" in the series of Jagad
 3. Śrī Nimbārkācārya and,. 
 4. Śrīpāda Madhvācārya (1239-1319).[5][16] He was also awarded, by the Kashi Vidvat.
 
+5. Kripalu Ji Maharaj
 Born: October 5, 1922, Pratapgarh, India.
 Died: November 15, 2013, Gurugram, India.
 
@@ -469,13 +470,13 @@ Temple:
 
 b. His technique to progress in spiritual path.
    I. Roop dhyan (Meditation): Visualize and think about God, Leela(past times), Guru, bhakta (Devotee).
-   II.III. Kirtan, pooja.
-   III. Sravan:.
+   II. Kirtan, pooja.
+   III. Sravan.
    
 
   He says these are the process to cleanse heart.
   Then we will receive of Kripa(grace) of God.
-  And we can see divya(divine) form of God, We can touch, we can talk.
+  And we can see divya(divine) form of God and we can touch him, we can talk to him.
 
 
 2. What I did and doing.
@@ -485,21 +486,17 @@ b. His technique to progress in spiritual path.
 
 3. What I got:.
   Prem ki anubhuti - Experience of divine love. 
-    1. - for few seconds.
-    2. - now for few minutes.
-    3. - trying for hours and days.
+    - for few seconds.
+    - now for few minutes.
+    - trying for hours and days.
 
--. feeling of great happiness in mind that can not be compared to any material happiness.
--. The happiness I want to ejoy every moment.
--. This happiness can not be explained easily but can be experienced.
+- feeling of great happiness in mind that can not be compared with any material happiness.
+- The happiness I want to enjoy every moment.
+- This happiness can not be explained easily but can be experienced.
 
 
 
-.
-.
-.
-.
-.
+
  Three stages have been ordained for God realization- they are Upasana, Sadhana & Aradhana. Generally people take them as synonymous but they mean respectively as follows-
  Upasana- namely seating near. How? By withdrawing one’s consciousness from mundane objects and directing it towards God & communicate immotionally with Him. When this process of communication starts, man beging to acquire Divine power.
 

@@ -56,15 +56,8 @@ func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
 		fmt.Fprintf(w, fmt.Sprintf("<td>%d.</td>", i+1))
 		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Title))
 
-		// Split info by .
 		fmt.Fprintf(w, fmt.Sprintf("<td>"))
-		fmt.Fprintf(w, fmt.Sprintf("<table>"))
-		for _, info := range strings.Split(info.Info, ".") {
-			fmt.Fprintf(w, fmt.Sprintf("<tr>"))
-			fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info))
-			fmt.Fprintf(w, fmt.Sprintf("</tr>"))
-		}
-		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+		fmt.Fprintf(w, fmt.Sprintf("<pre>%s</pre>", info.Info))
 		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 
 		// Display URL in different table under td

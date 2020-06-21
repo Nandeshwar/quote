@@ -249,8 +249,8 @@ of spiritual knowledge.
 		{
 			Title: "Ved vyas :  Who is his Father and who are his sons",
 			Info: ` 
-Father: Parashara. He is son of Shaki Maharishi and Shakti Maharishi is son of Vasisthha - Guru of Ram.
-Son: Vidura, Shuka (Shuka Dev or Shukdev or shuk dev, shutji maharaj or sutji maharaj or sut ji), Pandu, Dhritarashtra
+Father: Parashara. He is son of Shakti Maharishi and Shakti Maharishi is son of Vasisthha - Guru of Ram.
+Son: Vidura, Shuka (Shuka Dev or Shukdev or shuk dev), Pandu, Dhritarashtra
 
 `,
 			Link: []string{
