@@ -771,6 +771,63 @@ story of Sukdev and his father Ved Vyas.
 			},
 			CreationDate: time.Date(2020, 4, 12, 16, 29, 0, 0, time.Local),
 		},
+
+		{
+			Title: "About Kripalu Ji Maharaj and Prabhu Pad ji",
+			Info: `
+***************************************
+Kripalu Ji Maharaj
+***************************************
+Born: October 5, 1922, Pratapgarh, India
+Died: November 15, 2013, Gurugram, India
+At age of 91 
+
+Education
+--------
+1935 - age of 13 - left Mangarh to study to attend Peelin Kothin Sanskrit school in chitrakoot.
+1936 - age of 14 - Completed degree in Sanskrit Grammar
+1937 - age of 15 - Sat the intermediate examination for Ayurveda at Ashtang Ayurvedic College.
+
+Meditation - Radha Krishna love
+----------
+1938 - age of 16 Went to dense forests near Sharbhang Ashram in Chitrakoot
+     - He was in this state approximately 2 years
+
+
+Education
+---------
+1942 - age of 20 - Returned to Indore and completed a poetry examination and received degree Kavyatirtha.
+1943 - age of 21 - Received degree of Ayurveda Acharya from Delhi Vidyapeeth
+1944 - age of 22 - Received Master of Literature from Calcutta Vidyapeeth
+
+After Education: 
+1957 Jan - 14 - age of 35 - 5th Jagad guru title 
+
+######################
+Prabhu Pad ji
+#######################
+Born	Abhay Charan De
+1 September 1896
+Calcutta, Bengal Presidency, British India
+
+Died	14 November 1977 (aged 81)
+Vrindavan, Uttar Pradesh, India
+
+
+1950 - Novice renunciate
+1959 - Complete Sanyas
+1965 - Reached to USA
+1966 - ISKCON
+
+
+`,
+			Link: []string{
+				"https://radhamadhavsociety.org/about-us/kripaluji-life-history/page1",
+				"https://www.youtube.com/watch?v=sr-d5e2YgGI",
+				"https://en.wikipedia.org/wiki/A._C._Bhaktivedanta_Swami_Prabhupada",
+			},
+			CreationDate: time.Date(2020, 6, 21, 14, 49, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }

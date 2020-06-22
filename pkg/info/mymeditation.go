@@ -449,9 +449,30 @@ Two Points I am going to talk.
 	He was the founder of Jagadguru Kripalu Parishat, a worldwide Hindu non-profit organization with five main ashrams; four in India and one in the United States
 	
 	he was formally installed as the fifth Jagadguru ("world teacher").
-	He was 34 years old when given the title on 14 January 1957, by the Kashi Vidvat Parishat, 
+	He was 35 years old when given the title on 14 January 1957, by the Kashi Vidvat Parishat, 
 	a group of Hindu scholars The Kashi Vidvat Parishat also conferred on him the
 	titles Bhaktiyog-Ras-Avtar and Jagadguruttam.
+
+Education
+--------
+1935 - age of 13 - left Mangarh to study to attend Peelin Kothin Sanskrit school in chitrakoot.
+1936 - age of 14 - Completed degree in Sanskrit Grammar
+1937 - age of 15 - Sat the intermediate examination for Ayurveda at Ashtang Ayurvedic College.
+
+Meditation - Radha Krishna love
+----------
+1938 - age of 16 Went to dense forests near Sharbhang Ashram in Chitrakoot
+     - He was in this state approximately 2 years
+
+
+Education
+---------
+1942 - age of 20 - Returned to Indore and completed a poetry examination and received degree Kavyatirtha.
+1943 - age of 21 - Received degree of Ayurveda Acharya from Delhi Vidyapeeth
+1944 - age of 22 - Received Master of Literature from Calcutta Vidyapeeth
+
+After Education: 
+1957 Jan - 14 - age of 35 - 5th Jagad guru title 
 
 Followers claim that he is the "fifth original Jagadguru" in the series of Jagadgurus after.
 1. Śrīpāda Śaṅkarācārya (A.D. 788-820),. 
@@ -464,9 +485,8 @@ Born: October 5, 1922, Pratapgarh, India.
 Died: November 15, 2013, Gurugram, India.
 
 Temple: 
-  1. Prem Mandir,. 
-  2. Vrindavan;. 
-  3. Bhakti Mandir Mangarh, Pratapgarh.
+  1. Prem Mandir, Vrindavan;. 
+  2. Bhakti Mandir Mangarh, Pratapgarh.
 
 b. His technique to progress in spiritual path.
    I. Roop dhyan (Meditation): Visualize and think about God, Leela(past times), Guru, bhakta (Devotee).
