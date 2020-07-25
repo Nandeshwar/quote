@@ -57,17 +57,18 @@ func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
 		fmt.Fprintf(w, fmt.Sprintf("<td>%s</td>", info.Title))
 
 		fmt.Fprintf(w, fmt.Sprintf("<td>"))
-		fmt.Fprintf(w, fmt.Sprintf("<pre>%s</pre>", info.Info))
-		fmt.Fprintf(w, fmt.Sprintf("</td>"))
-
 		// Display URL in different table under td
-		fmt.Fprintf(w, fmt.Sprintf("<td>"))
 		fmt.Fprintf(w, fmt.Sprintf("<table>"))
 		for i, url := range info.Link {
-			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d </a></td></tr>", url, i+1))
+			var youtubeLink string
+			if strings.Contains(strings.ToLower(url), "youtube") {
+				youtubeLink = "click me to watch on youtube"
+			}
+			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d. %s </a></td></tr>", url, i+1, youtubeLink))
 		}
-		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+		fmt.Fprintf(w, fmt.Sprintf("<pre>%s</pre>", info.Info))
+		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 
 		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", info.CreationDate))
 		fmt.Fprintf(w, fmt.Sprintf("</tr>"))

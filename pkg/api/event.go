@@ -73,7 +73,11 @@ func displayEvents(filteredEvents []*event.EventDetail, w http.ResponseWriter) {
 		fmt.Fprintf(w, fmt.Sprintf("<td>"))
 		fmt.Fprintf(w, fmt.Sprintf("<table>"))
 		for i, url := range strings.Split(event.URL, ";") {
-			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d </a></td></tr>", url, i+1))
+			var youtubeLink string
+			if strings.Contains(strings.ToLower(url), "youtube") {
+				youtubeLink = "click me to watch on youtube"
+			}
+			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d. %s </a></td></tr>", url, i+1, youtubeLink))
 		}
 		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))

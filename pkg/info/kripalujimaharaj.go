@@ -828,6 +828,40 @@ Vrindavan, Uttar Pradesh, India
 			},
 			CreationDate: time.Date(2020, 6, 21, 14, 49, 0, 0, time.Local),
 		},
+
+		{
+			Title: "Sadhak savdhani- By Kripalu Ji Maharaj",
+			Info: `
+Everyone is under Maya.
+Everyone has lust, anger, greed ...
+Forgive everyone
+Real Sadhana is not to allow negativity- lust, anger, greed ...
+
+Keep practising to love God, 
+              lover everyone,
+Keep practising to forgive everyone,
+Keep practising to divert lust, anger, greed ... towards
+               Love to Radha, Krishna
+               Love to Everyone.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=9cUDnNyhCjM&feature=youtu.be",
+			},
+			CreationDate: time.Date(2020, 7, 25, 13, 34, 0, 0, time.Local),
+		},
+
+		{
+			Title: "About Shree Krishna- By Kripalu Ji Maharaj",
+			Info: `
+EverHe is infinite times beautiful than Kamdev. He is also called Madan Mohan.
+Madan mean kamdev.
+He is also called JagMohan.
+`,
+			Link: []string{
+				"https://www.youtube.com/watch?v=4Qh4o6YaDro&feature=youtu.be",
+			},
+			CreationDate: time.Date(2020, 7, 25, 13, 34, 0, 0, time.Local),
+		},
 	}
 	return infoList
 }
