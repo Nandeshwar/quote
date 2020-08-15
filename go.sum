@@ -24,6 +24,14 @@ github.com/logic-building/functional-go v8.10.1+incompatible h1:2QVaz5eBnKkZ2JAL
 github.com/logic-building/functional-go v8.10.1+incompatible/go.mod h1:039sQZvxoKRCcPgWkkePhiR15dNOS/J/dIFQKpwwJI8=
 github.com/logic-building/functional-go v8.11.0+incompatible h1:QtQDr1D9xwDoxHysDKeMJ8/SEASKYAGRa7ZqPKSzCYU=
 github.com/logic-building/functional-go v8.11.0+incompatible/go.mod h1:039sQZvxoKRCcPgWkkePhiR15dNOS/J/dIFQKpwwJI8=
+github.com/logic-building/functional-go v8.12.0+incompatible h1:5j2kQavRXO5GFY3+fKn7faTpZ23ITcSi3BhAM6OFgp8=
+github.com/logic-building/functional-go v8.12.0+incompatible/go.mod h1:039sQZvxoKRCcPgWkkePhiR15dNOS/J/dIFQKpwwJI8=
+github.com/logic-building/functional-go v8.12.1+incompatible h1:sDa9OYsri1Ljmsym7Q2qMnrHpcjVmdT5hqSxVb9rJuQ=
+github.com/logic-building/functional-go v8.12.1+incompatible/go.mod h1:039sQZvxoKRCcPgWkkePhiR15dNOS/J/dIFQKpwwJI8=
+github.com/logic-building/functional-go v8.12.2+incompatible h1:DchdRT2u6w0jI2W44PngfvKxQi1nOYyTMmyRVYxE9cE=
+github.com/logic-building/functional-go v8.12.2+incompatible/go.mod h1:039sQZvxoKRCcPgWkkePhiR15dNOS/J/dIFQKpwwJI8=
+github.com/logic-building/functional-go v8.13.0+incompatible h1:N5zzPZdvW/cqHDIEQMofPnaDbAJOToZWuSkh+u7pSzc=
+github.com/logic-building/functional-go v8.13.0+incompatible/go.mod h1:039sQZvxoKRCcPgWkkePhiR15dNOS/J/dIFQKpwwJI8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/sirupsen/logrus v1.4.2 h1:SPIRibHv4MatM3XXNO2BJeFLZwZ2LvZgfQ5+UNI2im4=
