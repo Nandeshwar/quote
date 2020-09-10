@@ -100,8 +100,13 @@ func main() {
 		event.DisplayEvent()
 	}
 
-	fmt.Println("--------------Events Tomorrow------------------")
-	for _, event := range event.TomorrowEvents() {
+	fmt.Println("--------------Events Tomorrow------------------\n")
+	for _, event := range event.TomorrowEvents(1) {
+		event.DisplayEvent()
+	}
+
+	fmt.Println("--------------Events Day After Tomorrow------------------\n")
+	for _, event := range event.TomorrowEvents(2) {
 		event.DisplayEvent()
 	}
 

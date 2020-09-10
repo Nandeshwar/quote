@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"net/http"
+	"net/http/pprof"
 	"strconv"
 	"sync"
 	"time"
@@ -37,8 +38,8 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),
 		Handler:        router,
-		ReadTimeout:    15 * time.Second,
-		WriteTimeout:   15 * time.Second,
+		ReadTimeout:    15 * time.Minute,
+		WriteTimeout:   15 * time.Minute,
 		MaxHeaderBytes: 1000000,
 	}
 	s := &Server{
@@ -62,6 +63,11 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	router.HandleFunc("/info/{searchText}", info)
 	router.HandleFunc("/search/{searchText}", s.search)
 	router.HandleFunc("/find/{searchText}", s.search)
+
+	router.HandleFunc("/debug/pprof/", pprof.Index)
+	router.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+	router.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	router.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
 
 	return s
 }

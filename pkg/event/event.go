@@ -49,9 +49,9 @@ func TodayEvents() []*EventDetail {
 	return todayEvents
 }
 
-func TomorrowEvents() []*EventDetail {
+func TomorrowEvents(day int) []*EventDetail {
 	t := time.Now()
-	t = t.AddDate(0, 0, 1)
+	t = t.AddDate(0, 0, day)
 	year, month, day := t.Date()
 
 	findTodayEvent := func(event *EventDetail) bool {
