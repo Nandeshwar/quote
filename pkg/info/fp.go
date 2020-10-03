@@ -4,6 +4,7 @@ import "reflect"
 import "sort" 
 import "sync" 
 import "time"
+import "github.com/logic-building/functional-go/fp" 
 
 func Map(f func(Info) Info, list []Info) []Info {
 	if f == nil {
@@ -543,161 +544,543 @@ func TakeWhileErr(f func(Info) (bool, error), list []Info) ([]Info, error) {
 	return newList, nil
 }
 
-func PMap(f func(Info) Info, list []Info) []Info {
+// PMap applies the function(1st argument) on each item in the list and returns a new list.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
+//
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMap(f func(Info) Info, list []Info, optional ...fp.Optional) []Info {
 	if f == nil {
 		return []Info{}
 	}
 
-	ch := make(chan map[int]Info)
-	var wg sync.WaitGroup
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
 
-	for i, v := range list {
-		wg.Add(1)
-
-		go func(wg *sync.WaitGroup, ch chan map[int]Info, i int, v Info) {
-			defer wg.Done()
-			ch <- map[int]Info{i: f(v)}
-		}(&wg, ch, i, v)
-	}
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	newList := make([]Info, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+		if optional[0].RandomOrder == true {
+			return pMapNoOrder(f, list, worker)
 		}
 	}
+
+	return pMapPreserveOrder(f, list, worker)
+}
+
+func pMapPreserveOrder(f func(Info) Info, list []Info, worker int) []Info {
+	chJobs := make(chan map[int]Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan map[int]Info, chJobs chan map[int]Info) {
+			defer wg.Done()
+
+			for m := range chJobs {
+				for k, v := range m {
+					chResult <- map[int]Info{k: f(v)}
+				}
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]Info, len(list))
+	newList := make([]Info, len(list))
+
+	for m := range chResult {
+		for k, v := range m {
+			newListMap[k] = v
+		}
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList
 }
 
-// PMapPtr applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
-func PMapPtr(f func(*Info) *Info, list []*Info) []*Info {
+func pMapNoOrder(f func(Info) Info, list []Info, worker int) []Info {
+	chJobs := make(chan Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan Info, chJobs chan Info) {
+			defer wg.Done()
+
+			for v := range chJobs {
+				chResult <- f(v)
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]Info, len(list))
+	i := 0
+
+	for v := range chResult {
+		newList[i] = v
+		i++
+	}
+
+	return newList
+}
+
+// PMapPtr applies the function(1st argument) on each item in the list and returns a new list.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
+//
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapPtr(f func(*Info) *Info, list []*Info, optional ...fp.Optional) []*Info {
 	if f == nil {
 		return []*Info{}
 	}
 
-	ch := make(chan map[int]*Info)
-	var wg sync.WaitGroup
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
 
-	for i, v := range list {
-		wg.Add(1)
-
-		go func(wg *sync.WaitGroup, ch chan map[int]*Info, i int, v *Info) {
-			defer wg.Done()
-			ch <- map[int]*Info{i: f(v)}
-		}(&wg, ch, i, v)
-	}
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	newList := make([]*Info, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+		if optional[0].RandomOrder == true {
+			return pMapPtrNoOrder(f, list, worker)
 		}
 	}
+
+	return pMapPtrPreserveOrder(f, list, worker)
+}
+
+func pMapPtrPreserveOrder(f func(*Info) *Info, list []*Info, worker int) []*Info {
+	chJobs := make(chan map[int]*Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]*Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]*Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan map[int]*Info, chJobs chan map[int]*Info) {
+			defer wg.Done()
+
+			for m := range chJobs {
+				for k, v := range m {
+					chResult <- map[int]*Info{k: f(v)}
+				}
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]*Info, len(list))
+	newList := make([]*Info, len(list))
+
+	for m := range chResult {
+		for k, v := range m {
+			newListMap[k] = v
+		}
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList
 }
 
-// PMapPtrErr applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
-func PMapPtrErr(f func(*Info) (*Info, error), list []*Info) ([]*Info, error) {
+func pMapPtrNoOrder(f func(*Info) *Info, list []*Info, worker int) []*Info {
+	chJobs := make(chan *Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan *Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan *Info, chJobs chan *Info) {
+			defer wg.Done()
+
+			for v := range chJobs {
+				chResult <- f(v)
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]*Info, len(list))
+	i := 0
+
+	for v := range chResult {
+		newList[i] = v
+		i++
+	}
+
+	return newList
+}
+
+// PMapPtrErr applies the function(1st argument) on each item in the list and returns a new list and error.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
+//
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapPtrErr(f func(*Info) (*Info, error), list []*Info, optional ...fp.Optional) ([]*Info, error) {
 	if f == nil {
 		return []*Info{}, nil
 	}
 
-	ch := make(chan map[int]*Info, len(list))
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
+
+		if optional[0].RandomOrder == true {
+			return pMapPtrErrNoOrder(f, list, worker)
+		}
+	}
+
+	return pMapPtrErrPreserveOrder(f, list, worker)
+}
+
+func pMapPtrErrPreserveOrder(f func(*Info) (*Info, error), list []*Info, worker int) ([]*Info, error) {
+	chJobs := make(chan map[int]*Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]*Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]*Info, worker/3)
+
 	errCh := make(chan error, len(list))
 	var wg sync.WaitGroup
 
-	for i, v := range list {
+	for i := 0; i < worker; i++ {
 		wg.Add(1)
 
-		go func(wg *sync.WaitGroup, ch chan map[int]*Info, i int, v *Info) {
+		go func(chResult chan map[int]*Info, chJobs chan map[int]*Info, errCh chan error) {
 			defer wg.Done()
-			if len(errCh) >= 1 {
+			if len(errCh) > 0 {
 				return
 			}
-			r, err := f(v)
-			if err != nil {
-				errCh <- err
-				return
+			for m := range chJobs {
+				for k, v := range m {
+					r, err := f(v)
+					if err != nil {
+						errCh <- err
+						return
+					}
+					chResult <- map[int]*Info{k: r}
+				}
 			}
-			ch <- map[int]*Info{i: r}
-		}(&wg, ch, i, v)
+		}(chResult, chJobs, errCh)
 	}
 
-	wg.Wait()
-	close(ch)
-	close(errCh)
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
-	for err := range errCh {
-		if err != nil {
-			return nil, err
-		}
-	}
-
+	newListMap := make(map[int]*Info, len(list))
 	newList := make([]*Info, len(list))
-	for m := range ch {
+
+	for m := range chResult {
+		select {
+		case err := <-errCh:
+			return []*Info{}, err
+		default:
+		}
 		for k, v := range m {
-			newList[k] = v
+			newListMap[k] = v
 		}
 	}
+
+	if len(errCh) > 0 {
+		return []*Info{}, <-errCh
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList, nil
 }
 
-// PMapErr applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
-func PMapErr(f func(Info) (Info, error), list []Info) ([]Info, error) {
+func pMapPtrErrNoOrder(f func(*Info) (*Info, error), list []*Info, worker int) ([]*Info, error) {
+	chJobs := make(chan *Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan *Info, worker/3)
+
+	errCh := make(chan error, len(list))
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan *Info, chJobs chan *Info, errCh chan error) {
+			defer wg.Done()
+			if len(errCh) > 0 {
+				return
+			}
+			for v := range chJobs {
+				r, err := f(v)
+				if err != nil {
+					errCh <- err
+					return
+				}
+				chResult <- r
+			}
+		}(chResult, chJobs, errCh)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]*Info, len(list))
+	i := 0
+
+	for v := range chResult {
+		select {
+		case err := <-errCh:
+			return []*Info{}, err
+		default:
+		}
+		newList[i] = v
+		i++
+	}
+
+	if len(errCh) > 0 {
+		return []*Info{}, <-errCh
+	}
+
+	return newList, nil
+}
+
+// PMapErr applies the function(1st argument) on each item in the list and returns a new list and error.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
+//
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapErr(f func(Info) (Info, error), list []Info, optional ...fp.Optional) ([]Info, error) {
 	if f == nil {
 		return []Info{}, nil
 	}
 
-	ch := make(chan map[int]Info, len(list))
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
+
+		if optional[0].RandomOrder == true {
+			return pMapErrNoOrder(f, list, worker)
+		}
+	}
+
+	return pMapErrPreserveOrder(f, list, worker)
+}
+
+func pMapErrPreserveOrder(f func(Info) (Info, error), list []Info, worker int) ([]Info, error) {
+	chJobs := make(chan map[int]Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]Info, worker/3)
+
 	errCh := make(chan error, len(list))
 	var wg sync.WaitGroup
 
-	for i, v := range list {
+	for i := 0; i < worker; i++ {
 		wg.Add(1)
 
-		go func(wg *sync.WaitGroup, ch chan map[int]Info, i int, v Info) {
+		go func(chResult chan map[int]Info, chJobs chan map[int]Info, errCh chan error) {
 			defer wg.Done()
-			if len(errCh) >= 1 {
+			if len(errCh) > 0 {
 				return
 			}
-			r, err := f(v)
-			if err != nil {
-				errCh <- err
-				return
+			for m := range chJobs {
+				for k, v := range m {
+					r, err := f(v)
+					if err != nil {
+						errCh <- err
+						return
+					}
+					chResult <- map[int]Info{k: r}
+				}
 			}
-			ch <- map[int]Info{i: r}
-		}(&wg, ch, i, v)
+		}(chResult, chJobs, errCh)
 	}
 
-	wg.Wait()
-	close(ch)
-	close(errCh)
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
-	for err := range errCh {
-		if err != nil {
-			return nil, err
+	newListMap := make(map[int]Info, len(list))
+	newList := make([]Info, len(list))
+
+	for m := range chResult {
+		select {
+		case err := <-errCh:
+			return []Info{}, err
+		default:
+		}
+		for k, v := range m {
+			newListMap[k] = v
 		}
 	}
+
+	if len(errCh) > 0 {
+		return []Info{}, <-errCh
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
+	return newList, nil
+}
+
+func pMapErrNoOrder(f func(Info) (Info, error), list []Info, worker int) ([]Info, error) {
+	chJobs := make(chan Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan Info, worker/3)
+
+	errCh := make(chan error, len(list))
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan Info, chJobs chan Info, errCh chan error) {
+			defer wg.Done()
+			if len(errCh) > 0 {
+				return
+			}
+			for v := range chJobs {
+				r, err := f(v)
+				if err != nil {
+					errCh <- err
+					return
+				}
+				chResult <- r
+			}
+		}(chResult, chJobs, errCh)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
 	newList := make([]Info, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+	i := 0
+
+	for v := range chResult {
+		select {
+		case err := <-errCh:
+			return []Info{}, err
+		default:
 		}
+		newList[i] = v
+		i++
 	}
+
+	if len(errCh) > 0 {
+		return []Info{}, <-errCh
+	}
+
 	return newList, nil
 }
 
@@ -1574,195 +1957,543 @@ func MapInfoStrPtrErr(f func(*Info) (*string, error), list []*Info) ([]*string, 
 	return newList, nil
 }
 
-// PMapInfoStr applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+// PMapInfoStr applies the function(1st argument) on each item in the list and returns a new list.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: Info output type: string
-//	2. List
-//
-// Returns
-//	New List of type string
-//	Empty list if all arguments are nil or either one is nil
-func PMapInfoStr(f func(Info) string, list []Info) []string {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapInfoStr(f func(Info) string, list []Info, optional ...fp.Optional) []string {
 	if f == nil {
 		return []string{}
 	}
 
-	ch := make(chan map[int]string)
-	var wg sync.WaitGroup
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
 
-	for i, v := range list {
-		wg.Add(1)
-
-		go func(wg *sync.WaitGroup, ch chan map[int]string, i int, v Info) {
-			defer wg.Done()
-			ch <- map[int]string{i: f(v)}
-		}(&wg, ch, i, v)
-	}
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	newList := make([]string, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+		if optional[0].RandomOrder == true {
+			return pMapInfoStrNoOrder(f, list, worker)
 		}
 	}
+
+	return pMapInfoStrPreserveOrder(f, list, worker)
+}
+
+func pMapInfoStrPreserveOrder(f func(Info) string, list []Info, worker int) []string {
+	chJobs := make(chan map[int]Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]string, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan map[int]string, chJobs chan map[int]Info) {
+			defer wg.Done()
+
+			for m := range chJobs {
+				for k, v := range m {
+					chResult <- map[int]string{k: f(v)}
+				}
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]string, len(list))
+	newList := make([]string, len(list))
+
+	for m := range chResult {
+		for k, v := range m {
+			newListMap[k] = v
+		}
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList
 }
 
-// PMapInfoStrErr applies the function(1st argument) on each item of the list and returns new list and error.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+func pMapInfoStrNoOrder(f func(Info) string, list []Info, worker int) []string {
+	chJobs := make(chan Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan string, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan string, chJobs chan Info) {
+			defer wg.Done()
+
+			for v := range chJobs {
+				chResult <- f(v)
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]string, len(list))
+	i := 0
+
+	for v := range chResult {
+		newList[i] = v
+		i++
+	}
+
+	return newList
+}
+
+// PMapInfoStrErr applies the function(1st argument) on each item in the list and returns a new list and error.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: Info output type: (string, error)
-//	2. List
-//
-// Returns
-//	New List of type (string, error)
-//	Empty list if all arguments are nil or either one is nil
-func PMapInfoStrErr(f func(Info) (string, error), list []Info) ([]string, error) {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapInfoStrErr(f func(Info) (string, error), list []Info, optional ...fp.Optional) ([]string, error) {
 	if f == nil {
 		return []string{}, nil
 	}
 
-	ch := make(chan map[int]string, len(list))
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
+
+		if optional[0].RandomOrder == true {
+			return pMapInfoStrErrNoOrder(f, list, worker)
+		}
+	}
+
+	return pMapInfoStrErrPreserveOrder(f, list, worker)
+}
+
+func pMapInfoStrErrPreserveOrder(f func(Info) (string, error), list []Info, worker int) ([]string, error) {
+	chJobs := make(chan map[int]Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]string, worker/3)
+
 	errCh := make(chan error, len(list))
 	var wg sync.WaitGroup
 
-	for i, v := range list {
+	for i := 0; i < worker; i++ {
 		wg.Add(1)
 
-		go func(wg *sync.WaitGroup, ch chan map[int]string, i int, v Info) {
+		go func(chResult chan map[int]string, chJobs chan map[int]Info, errCh chan error) {
 			defer wg.Done()
-			if len(errCh) >= 1 {
+			if len(errCh) > 0 {
 				return
 			}
-			r, err := f(v)
-			if err != nil {
-				errCh <- err
-				return
+			for m := range chJobs {
+				for k, v := range m {
+					r, err := f(v)
+					if err != nil {
+						errCh <- err
+						return
+					}
+					chResult <- map[int]string{k: r}
+				}
 			}
-			ch <- map[int]string{i: r}
-		}(&wg, ch, i, v)
+		}(chResult, chJobs, errCh)
 	}
 
-	wg.Wait()
-	close(ch)
-	close(errCh)
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
-	for err := range errCh {
-		if err != nil {
-			return nil, err
-		}
-	}
-
+	newListMap := make(map[int]string, len(list))
 	newList := make([]string, len(list))
-	for m := range ch {
+
+	for m := range chResult {
+		select {
+		case err := <-errCh:
+			return []string{}, err
+		default:
+		}
 		for k, v := range m {
-			newList[k] = v
+			newListMap[k] = v
 		}
 	}
+
+	if len(errCh) > 0 {
+		return []string{}, <-errCh
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList, nil
 }
 
-// PMapInfoStrPtr applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+func pMapInfoStrErrNoOrder(f func(Info) (string, error), list []Info, worker int) ([]string, error) {
+	chJobs := make(chan Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan string, worker/3)
+
+	errCh := make(chan error, len(list))
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan string, chJobs chan Info, errCh chan error) {
+			defer wg.Done()
+			if len(errCh) > 0 {
+				return
+			}
+			for v := range chJobs {
+				r, err := f(v)
+				if err != nil {
+					errCh <- err
+					return
+				}
+				chResult <- r
+			}
+		}(chResult, chJobs, errCh)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]string, len(list))
+	i := 0
+
+	for v := range chResult {
+		select {
+		case err := <-errCh:
+			return []string{}, err
+		default:
+		}
+		newList[i] = v
+		i++
+	}
+
+	if len(errCh) > 0 {
+		return []string{}, <-errCh
+	}
+
+	return newList, nil
+}
+
+// PMapInfoStrPtr applies the function(1st argument) on each item in the list and returns a new list.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: *Info output type: *string
-//	2. List
-//
-// Returns
-//	New List of type *string
-//	Empty list if all arguments are nil or either one is nil
-func PMapInfoStrPtr(f func(*Info) *string, list []*Info) []*string {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapInfoStrPtr(f func(*Info) *string, list []*Info, optional ...fp.Optional) []*string {
 	if f == nil {
 		return []*string{}
 	}
 
-	ch := make(chan map[int]*string)
-	var wg sync.WaitGroup
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
 
-	for i, v := range list {
-		wg.Add(1)
-
-		go func(wg *sync.WaitGroup, ch chan map[int]*string, i int, v *Info) {
-			defer wg.Done()
-			ch <- map[int]*string{i: f(v)}
-		}(&wg, ch, i, v)
-	}
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	newList := make([]*string, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+		if optional[0].RandomOrder == true {
+			return pMapInfoStrPtrNoOrder(f, list, worker)
 		}
 	}
+
+	return pMapInfoStrPtrPreserveOrder(f, list, worker)
+}
+
+func pMapInfoStrPtrPreserveOrder(f func(*Info) *string, list []*Info, worker int) []*string {
+	chJobs := make(chan map[int]*Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]*Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]*string, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan map[int]*string, chJobs chan map[int]*Info) {
+			defer wg.Done()
+
+			for m := range chJobs {
+				for k, v := range m {
+					chResult <- map[int]*string{k: f(v)}
+				}
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]*string, len(list))
+	newList := make([]*string, len(list))
+
+	for m := range chResult {
+		for k, v := range m {
+			newListMap[k] = v
+		}
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList
 }
 
-// PMapInfoStrPtrErr applies the function(1st argument) on each item of the list and returns new list and error.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+func pMapInfoStrPtrNoOrder(f func(*Info) *string, list []*Info, worker int) []*string {
+	chJobs := make(chan *Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan *string, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan *string, chJobs chan *Info) {
+			defer wg.Done()
+
+			for v := range chJobs {
+				chResult <- f(v)
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]*string, len(list))
+	i := 0
+
+	for v := range chResult {
+		newList[i] = v
+		i++
+	}
+
+	return newList
+}
+
+// PMapInfoStrPtrErr applies the function(1st argument) on each item in the list and returns a new list and error.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: *Info output type: (*string, error)
-//	2. List
-//
-// Returns
-//	New List of type (*string, error)
-//	Empty list if all arguments are nil or either one is nil
-func PMapInfoStrPtrErr(f func(*Info) (*string, error), list []*Info) ([]*string, error) {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapInfoStrPtrErr(f func(*Info) (*string, error), list []*Info, optional ...fp.Optional) ([]*string, error) {
 	if f == nil {
 		return []*string{}, nil
 	}
 
-	ch := make(chan map[int]*string, len(list))
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
+
+		if optional[0].RandomOrder == true {
+			return pMapInfoStrPtrErrNoOrder(f, list, worker)
+		}
+	}
+
+	return pMapInfoStrPtrErrPreserveOrder(f, list, worker)
+}
+
+func pMapInfoStrPtrErrPreserveOrder(f func(*Info) (*string, error), list []*Info, worker int) ([]*string, error) {
+	chJobs := make(chan map[int]*Info, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]*Info{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]*string, worker/3)
+
 	errCh := make(chan error, len(list))
 	var wg sync.WaitGroup
 
-	for i, v := range list {
+	for i := 0; i < worker; i++ {
 		wg.Add(1)
 
-		go func(wg *sync.WaitGroup, ch chan map[int]*string, i int, v *Info) {
+		go func(chResult chan map[int]*string, chJobs chan map[int]*Info, errCh chan error) {
 			defer wg.Done()
-			if len(errCh) >= 1 {
+			if len(errCh) > 0 {
 				return
 			}
-			r, err := f(v)
-			if err != nil {
-				errCh <- err
-				return
+			for m := range chJobs {
+				for k, v := range m {
+					r, err := f(v)
+					if err != nil {
+						errCh <- err
+						return
+					}
+					chResult <- map[int]*string{k: r}
+				}
 			}
-			ch <- map[int]*string{i: r}
-		}(&wg, ch, i, v)
+		}(chResult, chJobs, errCh)
 	}
 
-	wg.Wait()
-	close(ch)
-	close(errCh)
-	
-	for err := range errCh {
-		if err != nil {
-			return nil, err
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]*string, len(list))
+	newList := make([]*string, len(list))
+
+	for m := range chResult {
+		select {
+		case err := <-errCh:
+			return []*string{}, err
+		default:
+		}
+		for k, v := range m {
+			newListMap[k] = v
 		}
 	}
+
+	if len(errCh) > 0 {
+		return []*string{}, <-errCh
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
+	return newList, nil
+}
+
+func pMapInfoStrPtrErrNoOrder(f func(*Info) (*string, error), list []*Info, worker int) ([]*string, error) {
+	chJobs := make(chan *Info, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan *string, worker/3)
+
+	errCh := make(chan error, len(list))
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan *string, chJobs chan *Info, errCh chan error) {
+			defer wg.Done()
+			if len(errCh) > 0 {
+				return
+			}
+			for v := range chJobs {
+				r, err := f(v)
+				if err != nil {
+					errCh <- err
+					return
+				}
+				chResult <- r
+			}
+		}(chResult, chJobs, errCh)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
 	newList := make([]*string, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+	i := 0
+
+	for v := range chResult {
+		select {
+		case err := <-errCh:
+			return []*string{}, err
+		default:
 		}
+		newList[i] = v
+		i++
 	}
+
+	if len(errCh) > 0 {
+		return []*string{}, <-errCh
+	}
+
 	return newList, nil
 }
 
@@ -1908,195 +2639,543 @@ func MapStrInfoPtrErr(f func(*string) (*Info, error), list []*string) ([]*Info, 
 	return newList, nil
 }
 
-// PMapStrInfo applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+// PMapStrInfo applies the function(1st argument) on each item in the list and returns a new list.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: string output type: Info
-//	2. List
-//
-// Returns
-//	New List of type Info
-//	Empty list if all arguments are nil or either one is nil
-func PMapStrInfo(f func(string) Info, list []string) []Info {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapStrInfo(f func(string) Info, list []string, optional ...fp.Optional) []Info {
 	if f == nil {
 		return []Info{}
 	}
 
-	ch := make(chan map[int]Info)
-	var wg sync.WaitGroup
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
 
-	for i, v := range list {
-		wg.Add(1)
-
-		go func(wg *sync.WaitGroup, ch chan map[int]Info, i int, v string) {
-			defer wg.Done()
-			ch <- map[int]Info{i: f(v)}
-		}(&wg, ch, i, v)
-	}
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	newList := make([]Info, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+		if optional[0].RandomOrder == true {
+			return pMapStrInfoNoOrder(f, list, worker)
 		}
 	}
+
+	return pMapStrInfoPreserveOrder(f, list, worker)
+}
+
+func pMapStrInfoPreserveOrder(f func(string) Info, list []string, worker int) []Info {
+	chJobs := make(chan map[int]string, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]string{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan map[int]Info, chJobs chan map[int]string) {
+			defer wg.Done()
+
+			for m := range chJobs {
+				for k, v := range m {
+					chResult <- map[int]Info{k: f(v)}
+				}
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]Info, len(list))
+	newList := make([]Info, len(list))
+
+	for m := range chResult {
+		for k, v := range m {
+			newListMap[k] = v
+		}
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList
 }
 
-// PMapStrInfoErr applies the function(1st argument) on each item of the list and returns new list and error.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+func pMapStrInfoNoOrder(f func(string) Info, list []string, worker int) []Info {
+	chJobs := make(chan string, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan Info, chJobs chan string) {
+			defer wg.Done()
+
+			for v := range chJobs {
+				chResult <- f(v)
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]Info, len(list))
+	i := 0
+
+	for v := range chResult {
+		newList[i] = v
+		i++
+	}
+
+	return newList
+}
+
+// PMapStrInfoErr applies the function(1st argument) on each item in the list and returns a new list and error.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: string output type: (Info, error)
-//	2. List
-//
-// Returns
-//	New List of type (Info, error)
-//	Empty list if all arguments are nil or either one is nil
-func PMapStrInfoErr(f func(string) (Info, error), list []string) ([]Info, error) {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapStrInfoErr(f func(string) (Info, error), list []string, optional ...fp.Optional) ([]Info, error) {
 	if f == nil {
 		return []Info{}, nil
 	}
 
-	ch := make(chan map[int]Info, len(list))
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
+
+		if optional[0].RandomOrder == true {
+			return pMapStrInfoErrNoOrder(f, list, worker)
+		}
+	}
+
+	return pMapStrInfoErrPreserveOrder(f, list, worker)
+}
+
+func pMapStrInfoErrPreserveOrder(f func(string) (Info, error), list []string, worker int) ([]Info, error) {
+	chJobs := make(chan map[int]string, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]string{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]Info, worker/3)
+
 	errCh := make(chan error, len(list))
 	var wg sync.WaitGroup
 
-	for i, v := range list {
+	for i := 0; i < worker; i++ {
 		wg.Add(1)
 
-		go func(wg *sync.WaitGroup, ch chan map[int]Info, i int, v string) {
+		go func(chResult chan map[int]Info, chJobs chan map[int]string, errCh chan error) {
 			defer wg.Done()
-			if len(errCh) >= 1 {
+			if len(errCh) > 0 {
 				return
 			}
-			r, err := f(v)
-			if err != nil {
-				errCh <- err
-				return
+			for m := range chJobs {
+				for k, v := range m {
+					r, err := f(v)
+					if err != nil {
+						errCh <- err
+						return
+					}
+					chResult <- map[int]Info{k: r}
+				}
 			}
-			ch <- map[int]Info{i: r}
-		}(&wg, ch, i, v)
+		}(chResult, chJobs, errCh)
 	}
 
-	wg.Wait()
-	close(ch)
-	close(errCh)
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
-	for err := range errCh {
-		if err != nil {
-			return nil, err
-		}
-	}
-
+	newListMap := make(map[int]Info, len(list))
 	newList := make([]Info, len(list))
-	for m := range ch {
+
+	for m := range chResult {
+		select {
+		case err := <-errCh:
+			return []Info{}, err
+		default:
+		}
 		for k, v := range m {
-			newList[k] = v
+			newListMap[k] = v
 		}
 	}
+
+	if len(errCh) > 0 {
+		return []Info{}, <-errCh
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList, nil
 }
 
-// PMapStrInfoPtr applies the function(1st argument) on each item of the list and returns new list.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+func pMapStrInfoErrNoOrder(f func(string) (Info, error), list []string, worker int) ([]Info, error) {
+	chJobs := make(chan string, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan Info, worker/3)
+
+	errCh := make(chan error, len(list))
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan Info, chJobs chan string, errCh chan error) {
+			defer wg.Done()
+			if len(errCh) > 0 {
+				return
+			}
+			for v := range chJobs {
+				r, err := f(v)
+				if err != nil {
+					errCh <- err
+					return
+				}
+				chResult <- r
+			}
+		}(chResult, chJobs, errCh)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]Info, len(list))
+	i := 0
+
+	for v := range chResult {
+		select {
+		case err := <-errCh:
+			return []Info{}, err
+		default:
+		}
+		newList[i] = v
+		i++
+	}
+
+	if len(errCh) > 0 {
+		return []Info{}, <-errCh
+	}
+
+	return newList, nil
+}
+
+// PMapStrInfoPtr applies the function(1st argument) on each item in the list and returns a new list.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: *string output type: *Info
-//	2. List
-//
-// Returns
-//	New List of type *Info
-//	Empty list if all arguments are nil or either one is nil
-func PMapStrInfoPtr(f func(*string) *Info, list []*string) []*Info {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapStrInfoPtr(f func(*string) *Info, list []*string, optional ...fp.Optional) []*Info {
 	if f == nil {
 		return []*Info{}
 	}
 
-	ch := make(chan map[int]*Info)
-	var wg sync.WaitGroup
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
 
-	for i, v := range list {
-		wg.Add(1)
-
-		go func(wg *sync.WaitGroup, ch chan map[int]*Info, i int, v *string) {
-			defer wg.Done()
-			ch <- map[int]*Info{i: f(v)}
-		}(&wg, ch, i, v)
-	}
-
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	newList := make([]*Info, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+		if optional[0].RandomOrder == true {
+			return pMapStrInfoPtrNoOrder(f, list, worker)
 		}
 	}
+
+	return pMapStrInfoPtrPreserveOrder(f, list, worker)
+}
+
+func pMapStrInfoPtrPreserveOrder(f func(*string) *Info, list []*string, worker int) []*Info {
+	chJobs := make(chan map[int]*string, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]*string{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]*Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan map[int]*Info, chJobs chan map[int]*string) {
+			defer wg.Done()
+
+			for m := range chJobs {
+				for k, v := range m {
+					chResult <- map[int]*Info{k: f(v)}
+				}
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]*Info, len(list))
+	newList := make([]*Info, len(list))
+
+	for m := range chResult {
+		for k, v := range m {
+			newListMap[k] = v
+		}
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
 	return newList
 }
 
-// PMapStrInfoPtrErr applies the function(1st argument) on each item of the list and returns new list and error.
-// Run in parallel. no_of_goroutines = no_of_items_in_list
+func pMapStrInfoPtrNoOrder(f func(*string) *Info, list []*string, worker int) []*Info {
+	chJobs := make(chan *string, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan *Info, worker/3)
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan *Info, chJobs chan *string) {
+			defer wg.Done()
+
+			for v := range chJobs {
+				chResult <- f(v)
+			}
+		}(chResult, chJobs)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newList := make([]*Info, len(list))
+	i := 0
+
+	for v := range chResult {
+		newList[i] = v
+		i++
+	}
+
+	return newList
+}
+
+// PMapStrInfoPtrErr applies the function(1st argument) on each item in the list and returns a new list and error.
+//  Order of new list is guaranteed. This feature can be disabled by passing: Optional{RandomOrder: true} to gain performance
+//  Run in parallel. no_of_goroutines = no_of_items_in_list or 3rd argument can be passed to fix the number of goroutines.
 //
-// Takes 2 inputs
-//	1. Function - takes 1 input type: *string output type: (*Info, error)
-//	2. List
-//
-// Returns
-//	New List of type (*Info, error)
-//	Empty list if all arguments are nil or either one is nil
-func PMapStrInfoPtrErr(f func(*string) (*Info, error), list []*string) ([]*Info, error) {
+// Takes 3 inputs. 3rd argument is optional
+//  1. Function - takes 1 input
+//  2. List
+//  3. optional argument - fp.Optional{FixedPool: <some_number>}
+func PMapStrInfoPtrErr(f func(*string) (*Info, error), list []*string, optional ...fp.Optional) ([]*Info, error) {
 	if f == nil {
 		return []*Info{}, nil
 	}
 
-	ch := make(chan map[int]*Info, len(list))
+	var worker = len(list)
+	if optional != nil && len(optional) > 0 {
+		if optional[0].FixedPool > 0 && optional[0].FixedPool < worker {
+			worker = optional[0].FixedPool
+		}
+
+		if optional[0].RandomOrder == true {
+			return pMapStrInfoPtrErrNoOrder(f, list, worker)
+		}
+	}
+
+	return pMapStrInfoPtrErrPreserveOrder(f, list, worker)
+}
+
+func pMapStrInfoPtrErrPreserveOrder(f func(*string) (*Info, error), list []*string, worker int) ([]*Info, error) {
+	chJobs := make(chan map[int]*string, len(list))
+	go func() {
+		for i, v := range list {
+			chJobs <- map[int]*string{i: v}
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan map[int]*Info, worker/3)
+
 	errCh := make(chan error, len(list))
 	var wg sync.WaitGroup
 
-	for i, v := range list {
+	for i := 0; i < worker; i++ {
 		wg.Add(1)
 
-		go func(wg *sync.WaitGroup, ch chan map[int]*Info, i int, v *string) {
+		go func(chResult chan map[int]*Info, chJobs chan map[int]*string, errCh chan error) {
 			defer wg.Done()
-			if len(errCh) >= 1 {
+			if len(errCh) > 0 {
 				return
 			}
-			r, err := f(v)
-			if err != nil {
-				errCh <- err
-				return
+			for m := range chJobs {
+				for k, v := range m {
+					r, err := f(v)
+					if err != nil {
+						errCh <- err
+						return
+					}
+					chResult <- map[int]*Info{k: r}
+				}
 			}
-			ch <- map[int]*Info{i: r}
-		}(&wg, ch, i, v)
+		}(chResult, chJobs, errCh)
 	}
 
-	wg.Wait()
-	close(ch)
-	close(errCh)
-	
-	for err := range errCh {
-		if err != nil {
-			return nil, err
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
+
+	newListMap := make(map[int]*Info, len(list))
+	newList := make([]*Info, len(list))
+
+	for m := range chResult {
+		select {
+		case err := <-errCh:
+			return []*Info{}, err
+		default:
+		}
+		for k, v := range m {
+			newListMap[k] = v
 		}
 	}
+
+	if len(errCh) > 0 {
+		return []*Info{}, <-errCh
+	}
+
+	for i := 0; i < len(list); i++ {
+		newList[i] = newListMap[i]
+	}
+
+	return newList, nil
+}
+
+func pMapStrInfoPtrErrNoOrder(f func(*string) (*Info, error), list []*string, worker int) ([]*Info, error) {
+	chJobs := make(chan *string, len(list))
+	go func() {
+		for _, v := range list {
+			chJobs <- v
+		}
+		close(chJobs)
+	}()
+
+	chResult := make(chan *Info, worker/3)
+
+	errCh := make(chan error, len(list))
+	var wg sync.WaitGroup
+
+	for i := 0; i < worker; i++ {
+		wg.Add(1)
+
+		go func(chResult chan *Info, chJobs chan *string, errCh chan error) {
+			defer wg.Done()
+			if len(errCh) > 0 {
+				return
+			}
+			for v := range chJobs {
+				r, err := f(v)
+				if err != nil {
+					errCh <- err
+					return
+				}
+				chResult <- r
+			}
+		}(chResult, chJobs, errCh)
+	}
+
+	// This will wait for the workers to complete their job and then close the channel
+	go func() {
+		wg.Wait()
+		close(chResult)
+	}()
 
 	newList := make([]*Info, len(list))
-	for m := range ch {
-		for k, v := range m {
-			newList[k] = v
+	i := 0
+
+	for v := range chResult {
+		select {
+		case err := <-errCh:
+			return []*Info{}, err
+		default:
 		}
+		newList[i] = v
+		i++
 	}
+
+	if len(errCh) > 0 {
+		return []*Info{}, <-errCh
+	}
+
 	return newList, nil
 }
 
