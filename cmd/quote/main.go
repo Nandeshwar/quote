@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"quote/pkg/info"
 	"strconv"
@@ -17,6 +18,11 @@ import (
 )
 
 func main() {
+
+	// go tool pprof http://localhost:8080/debug/pprof/heap
+	// go tool pprof http://localhost:8080/debug/pprof/profile
+	go http.ListenAndServe(":8080", nil)
+
 	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
 	serverRunTimeInHour := env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
 
@@ -101,11 +107,13 @@ func main() {
 	}
 
 	fmt.Println("--------------Events Tomorrow------------------")
+	fmt.Println(" ")
 	for _, event := range event.TomorrowEvents(1) {
 		event.DisplayEvent()
 	}
 
 	fmt.Println("--------------Events Day After Tomorrow------------------")
+	fmt.Println("")
 	for _, event := range event.TomorrowEvents(2) {
 		event.DisplayEvent()
 	}
