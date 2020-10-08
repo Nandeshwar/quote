@@ -16,14 +16,12 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		user := r.Form["username"]
 		password := r.Form[("password")]
-		// logic part of log in
-		fmt.Println("username:", r.Form["username"])
-		fmt.Println("password:", r.Form["password"])
 
 		err := s.loginService.Login(user[0], password[0])
 		if err != nil {
 			fmt.Println("error=", err)
 			http.Redirect(w, r, "login", http.StatusSeeOther)
+			return
 		}
 
 		session, _ := s.sessionCookieStore.Get(r, "cookie-name")
@@ -31,7 +29,7 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		session.Values["authenticated"] = true
 		session.Save(r, w)
 
-		t, _ := template.ParseFiles("./views/info2.gtpl")
+		t, _ := template.ParseFiles("./views/admin.gtpl")
 		t.Execute(w, nil)
 	}
 }

@@ -71,7 +71,9 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 	router.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
 
 	// Admin section
+	//router.HandleFunc("/", s.index)
 	router.HandleFunc("/login", s.login)
+	router.HandleFunc("/", s.login)
 	router.HandleFunc("/info2", s.adminInfo)
 	router.HandleFunc("/event2", s.adminEvent)
 
