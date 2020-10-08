@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/pprof"
+	"quote/pkg/service"
 	"strconv"
 	"sync"
 	"time"
@@ -19,21 +20,28 @@ var (
 	store = sessions.NewCookieStore(key)
 )
 
-type Server struct {
-	server                   *http.Server
-	wg                       sync.WaitGroup
-	devotionalImageMaxWidth  int
-	devotionalImageMaxHeight int
-	devotionalImageMinWidth  int
-	devotionalImageMinHeight int
+type ImageWidth struct {
+	DevotionalImageMaxWidth  int
+	DevotionalImageMaxHeight int
+	DevotionalImageMinWidth  int
+	DevotionalImageMinHeight int
 
-	motivationalImageMaxWidth  int
-	motivationalImageMaxHeight int
-	motivationalImageMinWidth  int
-	motivationalImageMinHeight int
+	MotivationalImageMaxWidth  int
+	MotivationalImageMaxHeight int
+	MotivationalImageMinWidth  int
+	MotivationalImageMinHeight int
 }
 
-func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devotionalImageMinWidth, devotionalImageMinHeight, motivationalImageMaxWidth, motivationalImageMaxHeight, motivationalImageMinWidth, motivationalImageMinHeight int) *Server {
+type Server struct {
+	server     *http.Server
+	wg         sync.WaitGroup
+	imageWidth ImageWidth
+
+	loginService service.ILogin
+}
+
+func NewServer(httpPort int, imageWidth ImageWidth, loginService service.ILogin) *Server {
+
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
@@ -46,15 +54,10 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 		MaxHeaderBytes: 1000000,
 	}
 	s := &Server{
-		server:                     server,
-		devotionalImageMaxWidth:    devotionalImageMaxWidth,
-		devotionalImageMaxHeight:   devotionalImageMaxHeight,
-		devotionalImageMinWidth:    devotionalImageMinWidth,
-		devotionalImageMinHeight:   devotionalImageMinHeight,
-		motivationalImageMaxWidth:  motivationalImageMaxWidth,
-		motivationalImageMaxHeight: motivationalImageMaxHeight,
-		motivationalImageMinWidth:  motivationalImageMinWidth,
-		motivationalImageMinHeight: motivationalImageMinHeight,
+		server:     server,
+		imageWidth: imageWidth,
+
+		loginService: loginService,
 	}
 
 	router.HandleFunc("/quotes-devotional", s.quotesAll)
@@ -72,7 +75,7 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	router.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
 
 	// Admin section
-	router.HandleFunc("/login", login)
+	router.HandleFunc("/login", s.login)
 	router.HandleFunc("/info2", adminInfo)
 	router.HandleFunc("/event2", adminEvent)
 

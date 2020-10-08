@@ -19,8 +19,8 @@ func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	width, height = increaseImageSize(width, height, s.devotionalImageMinWidth, s.devotionalImageMinHeight, 100)
-	width, height = reduceImageSize(width, height, s.devotionalImageMaxWidth, s.devotionalImageMaxHeight, 100)
+	width, height = increaseImageSize(width, height, s.imageWidth.DevotionalImageMinWidth, s.imageWidth.DevotionalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.imageWidth.DevotionalImageMaxWidth, s.imageWidth.DevotionalImageMaxHeight, 100)
 
 	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<title>Quote</title>")
@@ -34,8 +34,8 @@ func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	width, height = increaseImageSize(width, height, s.motivationalImageMinWidth, s.motivationalImageMinHeight, 100)
-	width, height = reduceImageSize(width, height, s.motivationalImageMaxWidth, s.motivationalImageMaxHeight, 100)
+	width, height = increaseImageSize(width, height, s.imageWidth.MotivationalImageMinWidth, s.imageWidth.MotivationalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.imageWidth.MotivationalImageMaxWidth, s.imageWidth.MotivationalImageMaxHeight, 100)
 
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")

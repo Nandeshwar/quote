@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"quote/pkg/info"
+	"quote/pkg/repo"
+	"quote/pkg/service"
 	"strconv"
 	"strings"
 	"time"
@@ -30,6 +32,8 @@ func main() {
 	devotionalImageMinSize := env.GetStringWithDefault("DEVOTIONAL_IMAGE_MIN_SIZE", "700:700")
 	motivationalImageMaxSize := env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MAX_SIZE", "2800:1700")
 	motivationalImageMinSize := env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
+
+	sqlite3file := env.GetStringWithDefault("SQLITE3_FILE", "./db/quote.db")
 
 	devotionalImageMaxWidth, devotionalImageMaxHeight, err := getImageSize(devotionalImageMaxSize, "DEVOTIONAL_IMAGE_MAX_SIZE")
 	if err != nil {
@@ -131,8 +135,24 @@ func main() {
 
 	fmt.Printf("\n\nServer will be quit in %d hour and %d minutes at %v", serverRunTimeInHour, serverRunTimeInMin, currentTime.Format(layout))
 	fmt.Printf("\n or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n")
+	sqlite3Repo, err := repo.NewSqlite3Repo(sqlite3file)
+	if err != nil {
+		fmt.Println("error=", err)
+	}
+
+	quoteSerive := service.NewQuoteService(sqlite3Repo)
 	const httpPort int = 1922
-	apiServer := api.NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devotionalImageMinWidth, devotionalImageMinHeight, motivationalImageMaxWidth, motivationalImageMaxHeight, motivationalImageMinWidth, motivationalImageMinHeight)
+	imageWidth := api.ImageWidth{
+		DevotionalImageMaxWidth:    devotionalImageMaxWidth,
+		DevotionalImageMaxHeight:   devotionalImageMaxHeight,
+		DevotionalImageMinWidth:    devotionalImageMinWidth,
+		DevotionalImageMinHeight:   devotionalImageMinHeight,
+		MotivationalImageMaxWidth:  motivationalImageMaxWidth,
+		MotivationalImageMaxHeight: motivationalImageMaxHeight,
+		MotivationalImageMinWidth:  motivationalImageMinWidth,
+		MotivationalImageMinHeight: motivationalImageMinHeight,
+	}
+	apiServer := api.NewServer(httpPort, imageWidth, quoteSerive)
 	go func() {
 		apiServer.Run()
 	}()
