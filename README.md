@@ -42,3 +42,13 @@ docker buildx build --platform linux/amd64,linux/arm64 --tag nandeshwar/quote-r:
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --tag nandeshwar/quote-r:latest --push .
 
 ```
+
+### Enter to MySqlite3
+```
+sqlite3 ./db/quote.db 
+```
+
+### List tables
+```
+.tables
+```

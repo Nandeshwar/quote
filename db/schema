@@ -1,0 +1,7 @@
+CREATE TABLE `login` (
+    `user` varchar(64),
+    `password` VARCHAR(64) NULL,
+    `created` DATE NULL
+);
+
+

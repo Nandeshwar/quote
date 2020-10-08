@@ -9,12 +9,15 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 	"github.com/sirupsen/logrus"
 )
 
-func intro(w http.ResponseWriter, req *http.Request) {
-	w.Write([]byte("Coming soon"))
-}
+var (
+	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
+	key   = []byte("super-secret-key")
+	store = sessions.NewCookieStore(key)
+)
 
 type Server struct {
 	server                   *http.Server
@@ -54,7 +57,6 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 		motivationalImageMinHeight: motivationalImageMinHeight,
 	}
 
-	router.HandleFunc("/intro", intro)
 	router.HandleFunc("/quotes-devotional", s.quotesAll)
 	router.HandleFunc("/quotes-motivational", s.quotesMotivational)
 	router.HandleFunc("/events", events)
@@ -68,6 +70,11 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	router.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
 	router.HandleFunc("/debug/pprof/profile", pprof.Profile)
 	router.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+
+	// Admin section
+	router.HandleFunc("/login", login)
+	router.HandleFunc("/info2", adminInfo)
+	router.HandleFunc("/event2", adminEvent)
 
 	return s
 }
