@@ -35,6 +35,9 @@ func main() {
 
 	sqlite3file := env.GetStringWithDefault("SQLITE3_FILE", "./db/quote.db")
 
+	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
+	webSessionSecretKey := env.GetStringWithDefault("WEB_SESSION_SECRET_KEY", "super-secret-key")
+
 	devotionalImageMaxWidth, devotionalImageMaxHeight, err := getImageSize(devotionalImageMaxSize, "DEVOTIONAL_IMAGE_MAX_SIZE")
 	if err != nil {
 		fmt.Errorf(err.Error())
@@ -152,7 +155,7 @@ func main() {
 		MotivationalImageMinWidth:  motivationalImageMinWidth,
 		MotivationalImageMinHeight: motivationalImageMinHeight,
 	}
-	apiServer := api.NewServer(httpPort, imageWidth, quoteSerive)
+	apiServer := api.NewServer(httpPort, imageWidth, webSessionSecretKey, quoteSerive)
 	go func() {
 		apiServer.Run()
 	}()

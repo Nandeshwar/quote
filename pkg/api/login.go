@@ -20,35 +20,13 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("username:", r.Form["username"])
 		fmt.Println("password:", r.Form["password"])
 
-		//db, err := sql.Open("sqlite3", "./db/quote.db")
-		//if err != nil {
-		//	fmt.Println("Database connection error.....")
-		//}
-		//
-		//rows, err := db.Query("SELECT user, password FROM login")
-		//if err != nil {
-		//	fmt.Println("Error in selecting login")
-		//}
-		//
-		//var dbUser string
-		//var dbPassword string
-		//
-		//for rows.Next() {
-		//	err = rows.Scan(&dbUser, &dbPassword)
-		//	if err != nil {
-		//		fmt.Println("Db error in select statement", err)
-		//	}
-		//
-		//	fmt.Printf("\n Db user=%v, password=%v", dbUser, dbPassword)
-		//}
-
 		err := s.loginService.Login(user[0], password[0])
 		if err != nil {
 			fmt.Println("error=", err)
 			http.Redirect(w, r, "login", http.StatusSeeOther)
 		}
 
-		session, _ := store.Get(r, "cookie-name")
+		session, _ := s.sessionCookieStore.Get(r, "cookie-name")
 
 		session.Values["authenticated"] = true
 		session.Save(r, w)

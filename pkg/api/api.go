@@ -14,12 +14,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var (
-	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
-	key   = []byte("super-secret-key")
-	store = sessions.NewCookieStore(key)
-)
-
 type ImageWidth struct {
 	DevotionalImageMaxWidth  int
 	DevotionalImageMaxHeight int
@@ -37,10 +31,11 @@ type Server struct {
 	wg         sync.WaitGroup
 	imageWidth ImageWidth
 
-	loginService service.ILogin
+	loginService       service.ILogin
+	sessionCookieStore *sessions.CookieStore
 }
 
-func NewServer(httpPort int, imageWidth ImageWidth, loginService service.ILogin) *Server {
+func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, loginService service.ILogin) *Server {
 
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
@@ -57,7 +52,8 @@ func NewServer(httpPort int, imageWidth ImageWidth, loginService service.ILogin)
 		server:     server,
 		imageWidth: imageWidth,
 
-		loginService: loginService,
+		loginService:       loginService,
+		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
 	}
 
 	router.HandleFunc("/quotes-devotional", s.quotesAll)
@@ -76,8 +72,8 @@ func NewServer(httpPort int, imageWidth ImageWidth, loginService service.ILogin)
 
 	// Admin section
 	router.HandleFunc("/login", s.login)
-	router.HandleFunc("/info2", adminInfo)
-	router.HandleFunc("/event2", adminEvent)
+	router.HandleFunc("/info2", s.adminInfo)
+	router.HandleFunc("/event2", s.adminEvent)
 
 	return s
 }
