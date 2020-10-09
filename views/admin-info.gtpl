@@ -7,11 +7,11 @@
             <table>
                 <tr>
                     <td>Title</td>
-                    <td><input type="text" name="title" required="required" pattern="[A-Za-z0-9]{1,20}"  size="100"></td>
+                    <td><input type="text" name="title" required="required"  size="100"></td>
                 </tr>
                 <tr>
                     <td>Info</td>
-                    <td><textarea name="info" required="required" pattern="[A-Za-z0-9]{1,20}" rows="20" cols="100"></textarea></td>
+                    <td><textarea name="info" required="required" rows="20" cols="100"></textarea></td>
                 </tr>
                 <tr>
                     <td>Links Comma Separated</td>
