@@ -27,9 +27,11 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		session, _ := s.sessionCookieStore.Get(r, "cookie-name")
 
 		session.Values["authenticated"] = true
+		session.Options.MaxAge = 0
 		session.Save(r, w)
 
-		t, _ := template.ParseFiles("./views/admin.gtpl")
+		t, _ := template.ParseFiles("./views/admin.gtpl", "./views/admin-info.gtpl")
 		t.Execute(w, nil)
+
 	}
 }

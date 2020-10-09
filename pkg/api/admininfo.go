@@ -2,11 +2,12 @@ package api
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
+	"quote/pkg/model"
 )
 
 func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("method Nandeshar..:", r.Method) //get request method
 	session, _ := s.sessionCookieStore.Get(r, "cookie-name")
 
 	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
@@ -15,10 +16,29 @@ func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("*******************Inside Info")
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("./views/admin-info.gtpl")
+		t.Execute(w, nil)
+		return
+	}
 
 	r.ParseForm()
-	info := r.Form["info"]
-	// logic part of log in
-	fmt.Println("Info:", info)
+	infoForm := model.InfoForm{
+		Title:    r.Form["title"][0],
+		Info:     r.Form["info"][0],
+		Link:     r.Form["link"][0],
+		CreateAt: r.Form["createdAt"][0],
+	}
+
+	err := s.infoService.ValidateForm(infoForm)
+	if err != nil {
+		fmt.Println(err)
+		status := map[string]interface{}{"Status": "error. check log"}
+		t, _ := template.ParseFiles("./views/admin-info.gtpl")
+		t.Execute(w, status)
+		//http.Redirect(w, r, "admin-info", http.StatusSeeOther)
+		return
+	}
+
+	http.Redirect(w, r, "admin-info", http.StatusSeeOther)
 }

@@ -1,7 +1,22 @@
+
 CREATE TABLE `login` (
     `user` varchar(64),
     `password` VARCHAR(64) NULL,
     `created` DATE NULL
 );
 
+CREATE TABLE `info` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `title` VARCHAR(200) NOT NULL,
+    `info` VARCHAR(1000) NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
+CREATE TABLE `info_link` (
+    `link_id` INTEGER,
+    `link` VARCHAR(100),
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(link_id) REFERENCES INFO(ID)
+);

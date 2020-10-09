@@ -32,10 +32,11 @@ type Server struct {
 	imageWidth ImageWidth
 
 	loginService       service.ILogin
+	infoService        service.IInfo
 	sessionCookieStore *sessions.CookieStore
 }
 
-func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, loginService service.ILogin) *Server {
+func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, quoteService service.QuoteService) *Server {
 
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
@@ -52,7 +53,8 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 		server:     server,
 		imageWidth: imageWidth,
 
-		loginService:       loginService,
+		loginService:       quoteService,
+		infoService:        quoteService,
 		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
 	}
 
@@ -74,7 +76,8 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 	//router.HandleFunc("/", s.index)
 	router.HandleFunc("/login", s.login)
 	router.HandleFunc("/", s.login)
-	router.HandleFunc("/info2", s.adminInfo)
+	router.HandleFunc("/admin", s.admin)
+	router.HandleFunc("/admin-info", s.adminInfo)
 	router.HandleFunc("/event2", s.adminEvent)
 
 	return s

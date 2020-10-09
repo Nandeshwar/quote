@@ -8,10 +8,12 @@ import (
 
 //go:generate gofp -destination fp.go -pkg info -type "Info, string"
 type Info struct {
+	ID           int
 	Title        string
 	Info         string
 	Link         []string
 	CreationDate time.Time
+	UpdatedDate  time.Time
 }
 
 func GetAllInfo() []Info {
