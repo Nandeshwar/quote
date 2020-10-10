@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"quote/pkg/info"
 	"quote/pkg/repo"
 	"quote/pkg/service"
 	"strconv"
@@ -93,7 +92,7 @@ func main() {
 			fmt.Printf("%s ", green(wordList[i]))
 		}
 	}
-	word1, word2 := info.GetRandomTwoWordsFromTitle()
+	word1, word2 := "ram", "gopal"
 	fmt.Printf("\"")
 	fmt.Println()
 	fmt.Println("Links for the next quote")

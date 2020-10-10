@@ -3,7 +3,6 @@ package service
 import (
 	"fmt"
 	"quote/pkg/constants"
-	info2 "quote/pkg/info"
 	"quote/pkg/model"
 	"strings"
 	"time"
@@ -12,7 +11,7 @@ import (
 type IInfo interface {
 	ValidateForm(form model.InfoForm) error
 	CreateNewInfo(form model.InfoForm) (int64, error)
-	GetInfoByTitleOrInfo(searchTxt string) ([]info2.Info, error)
+	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
 }
 
 func (s QuoteService) ValidateForm(form model.InfoForm) error {
@@ -24,6 +23,23 @@ func (s QuoteService) ValidateForm(form model.InfoForm) error {
 		_, err := time.Parse(constants.DATE_FORMAT, createdAt)
 		if err != nil {
 			return err
+		}
+	}
+
+	link := strings.TrimSpace(form.Link)
+	if len(link) > 0 {
+		for _, link := range strings.Split(link, ",") {
+			link = strings.TrimSpace(link)
+			if len(link) < 4 {
+				return fmt.Errorf("comma seperated links value must start with http or https. link could not be less than 4")
+			}
+			if link[0:4] != "http" {
+				return fmt.Errorf("comma seperated links value must start with http or https")
+			}
+
+			if link[len(link)-1] == '"' || link[len(link)-1] == '\'' || link[len(link)-1] == '.' {
+				return fmt.Errorf("comma seperated link's value should not ended with (\", ', .)")
+			}
 		}
 	}
 	return nil
@@ -47,7 +63,7 @@ func (s QuoteService) CreateNewInfo(form model.InfoForm) (int64, error) {
 	if len(link) > 0 {
 		links = strings.Split(link, ",")
 	}
-	info := info2.Info{
+	info := model.Info{
 		Title:        form.Title,
 		Info:         form.Info,
 		Links:        links,
@@ -61,13 +77,13 @@ func (s QuoteService) CreateNewInfo(form model.InfoForm) (int64, error) {
 	return id, nil
 }
 
-func (s QuoteService) GetInfoByTitleOrInfo(searchTxt string) ([]info2.Info, error) {
+func (s QuoteService) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error) {
 	infoList, err := s.InfoRepo.GetInfoByTitleOrInfo(searchTxt)
 	if err != nil {
 		return nil, err
 	}
 
-	var distinctInfoList []info2.Info
+	var distinctInfoList []model.Info
 	var links []string
 	found := false
 	for i := 0; i < len(infoList); i++ {

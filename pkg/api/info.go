@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"quote/pkg/constants"
-	info2 "quote/pkg/info"
+	"quote/pkg/model"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -13,43 +13,14 @@ import (
 func (s *Server) info(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 
-	filteredInfo := s.findInfo(searchText)
-	displayInfo(filteredInfo, w)
-}
-
-func (s *Server) findInfo(searchText string) []info2.Info {
 	infoList, err := s.infoService.GetInfoByTitleOrInfo(searchText)
 	if err != nil {
 		fmt.Println("Error in findInfo", err)
 	}
-	fmt.Println("infoList: ", infoList)
-	allInfo := info2.GetAllInfo()
-
-	var filteredInfo []info2.Info
-
-	filterBySearch := func(info info2.Info) bool {
-
-		if strings.Contains(strings.ToLower(info.Info), searchText) ||
-			strings.Contains(strings.ToLower(info.Title), searchText) {
-			return true
-		}
-		return false
-	}
-
-	if searchText != "" {
-		searchText = strings.ToLower(searchText)
-		filteredInfo = info2.Filter(filterBySearch, allInfo)
-	} else {
-		filteredInfo = allInfo
-	}
-
-	if len(infoList) > 0 {
-		filteredInfo = append(filteredInfo, infoList...)
-	}
-	return filteredInfo
+	displayInfo(infoList, w)
 }
 
-func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
+func displayInfo(filteredInfo []model.Info, w http.ResponseWriter) {
 	fmt.Fprintf(w, "<h1>Info:</h1>")
 
 	fmt.Fprintf(w, fmt.Sprintf("<table border='2'>"))
@@ -75,7 +46,9 @@ func displayInfo(filteredInfo []info2.Info, w http.ResponseWriter) {
 			if strings.Contains(strings.ToLower(url), "youtube") {
 				youtubeLink = "click me to watch on youtube"
 			}
-			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Links%d. %s </a></td></tr>", url, i+1, youtubeLink))
+			if !strings.Contains(strings.ToLower(url), "no-link") {
+				fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Links%d. %s </a></td></tr>", url, i+1, youtubeLink))
+			}
 		}
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))
 		fmt.Fprintf(w, fmt.Sprintf("<pre>%s</pre>", info.Info))
