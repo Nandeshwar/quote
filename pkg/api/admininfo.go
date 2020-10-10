@@ -33,19 +33,22 @@ func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
 	err := s.infoService.ValidateForm(infoForm)
 	if err != nil {
 		fmt.Println(err)
-		status := map[string]interface{}{"Status": "valiation error. check log"}
+		status := map[string]interface{}{"Status": "validation error. check log"}
 		t, _ := template.ParseFiles("./views/admin-info.gtpl")
 		t.Execute(w, status)
 		//http.Redirect(w, r, "admin-info", http.StatusSeeOther)
 		return
 	}
 
-	err = s.infoService.CreateNewInfo(infoForm)
+	id, err := s.infoService.CreateNewInfo(infoForm)
 	if err != nil {
 		fmt.Println(err)
 		status := map[string]interface{}{"Status": "Did not create record. error. check log"}
 		t, _ := template.ParseFiles("./views/admin-info.gtpl")
 		t.Execute(w, status)
 	}
-	http.Redirect(w, r, "admin-info", http.StatusSeeOther)
+
+	status := map[string]interface{}{"Status": fmt.Sprintf("SUCCESS. ID=%d", id)}
+	t, _ := template.ParseFiles("./views/admin-info.gtpl")
+	t.Execute(w, status)
 }

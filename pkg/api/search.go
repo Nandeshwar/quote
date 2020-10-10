@@ -37,7 +37,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 		var filteredInfo []info2.Info
 		for _, searchTxt := range searchTextList {
 			//if info2.Some()
-			foundList := findInfo(searchTxt)
+			foundList := s.findInfo(searchTxt)
 
 			for _, foundInfo := range foundList {
 

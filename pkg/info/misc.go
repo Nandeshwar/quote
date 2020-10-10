@@ -15,7 +15,7 @@ func getMiscInfo() []Info {
 Śrī Vāllābhacārya (Sanskrit: श्री वल्लभाचार्य) (1479–1531): Founder of Shuddhadvaita school of Vedānta.[6]
 Sri Kripalu ji Maharaj ( 1922 - 2013)
 `,
-			Link: []string{
+			Links: []string{
 				"https://en.wikipedia.org/wiki/Jagadguru",
 				"https://en.wikipedia.org/wiki/Kripalu_Maharaj",
 			},
@@ -41,7 +41,7 @@ All but 75 verses have been taken from the Rigveda. Three recensions of the Sama
 4. Atharvaveda: The Atharva Veda (Sanskrit: अथर्ववेद, Atharvaveda from atharvāṇas and veda, meaning "knowledge") is the "knowledge storehouse of atharvāṇas, 
 the procedures for everyday life". The text is the fourth Veda, but has been a late addition to the Vedic scriptures of Hinduism.
 `,
-			Link: []string{
+			Links: []string{
 				"https://en.wikipedia.org/wiki/Vedas",
 				"https://en.wikipedia.org/wiki/Rigveda",
 				"https://en.wikipedia.org/wiki/Yajurveda",
@@ -58,7 +58,7 @@ the procedures for everyday life". The text is the fourth Veda, but has been a l
 In Rigvedic hymn 7.33.9, Vashishtha (Guru of Ram) is described as a scholar who moved across the Indus river to establish his school. 
 He was married to Arundhati, and therefore he was also called Arundhati Nath, meaning the husband of Arundhati.
 `,
-			Link: []string{
+			Links: []string{
 				"https://en.wikipedia.org/wiki/Vasishtha",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -69,7 +69,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Title: "Gita in 12 minutes",
 			Info: `Nice explanation of Bhagwat gita in 12 minutes. 
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=jnifjBM9dpM",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -80,7 +80,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Title: "Hanuman Mahima 1 hour video songs",
 			Info: `Hanumnan ji bhakti towards Ram and Krishna. A beautiful song.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=N-RSr4ecs9M&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=9",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -91,7 +91,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Title: "Garud puran in 56 min",
 			Info: `A beautiful song - Garud puran
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=Vb8-7DLSJuE&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=35",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -102,7 +102,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Title: "Bhajan - Govind Chale aao, Gopal chale aao",
 			Info: `A beautiful bhajan of Krishna. Heart touching song.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=AEpGYCwutcc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=49",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -114,7 +114,7 @@ He was married to Arundhati, and therefore he was also called Arundhati Nath, me
 			Info: `Ramayan - A beautiful video about Bharat Ji Prem towards Shree Ram Ji.
 Very emotional video. True love. God is bound by love.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=Rc8v5SfXP5g&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=56",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -125,7 +125,7 @@ Very emotional video. True love. God is bound by love.
 			Title: "Bhajan: Meri vinti hai radha rani",
 			Info: `A beautiful bhajan of Radha Rani.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=3mmMm45rJpA&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=58",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -137,7 +137,7 @@ Very emotional video. True love. God is bound by love.
 			Info: ` A beautiful story of Sushila, sudama told by 12 years old child. Speech given by this young kid is high level
 of spiritual knowledge.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=jYkdBsUFMKs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=101",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -148,7 +148,7 @@ of spiritual knowledge.
 			Title: "Bhajan: Itni Sakti dena hame",
 			Info: ` Beautiful bhajan : Itni Sakti hame dena bhagwan
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=3EnLaJKhO2A&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=107",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -159,7 +159,7 @@ of spiritual knowledge.
 			Title: "Bhajan: Jahe vidhi rakhhe ram",
 			Info: ` Heart touching bhajan : Sita ram, Sita ram kahiye - Jahe vidhi rakkhe ram
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=GnvQH8PH8sg&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=118",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -170,7 +170,7 @@ of spiritual knowledge.
 			Title: "Bhajan: Jai Radha Madhav",
 			Info: ` A beautiful Bhajan, Jai Radha Madhav, Jai Kunj Bihari
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=cPTqAyqBAfc&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=119",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -181,7 +181,7 @@ of spiritual knowledge.
 			Title: "Bhajan: Ae ri Sakhhi Mangal gao ri: Rishi Nitya Nand",
 			Info: ` A nice dance and bhajan - Ae ri Sakkhi Mangal gao ri
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=Ju4DR1A_vPY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=120",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -192,7 +192,7 @@ of spiritual knowledge.
 			Title: "Mission Genius mind - Soul after death",
 			Info: ` A story about girl's spirit
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=nPRKafjtGGs&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=127",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -203,7 +203,7 @@ of spiritual knowledge.
 			Title: "Bhajan: hum van ke bashi",
 			Info: ` Nice bhajan from Ramanand Sagar Ramayan
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=wOkFqjRwQYY&list=PL4I6x06f1KCt0uxfKkb3BgJZXNAjM3a-6&index=134",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -214,7 +214,7 @@ of spiritual knowledge.
 			Title: "Bhajan: Radha ke maan me bas gaye",
 			Info: ` Nice bhajan by Mridul krishna Sastri
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=OtjFIe84d0E",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -225,7 +225,7 @@ of spiritual knowledge.
 			Title: "Bhajan: O Kanha ab to murli ki madhur suna do taan",
 			Info: ` Heart touching bhajan
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=XP9rlhzJoxc",
 			},
 			CreationDate: time.Date(2020, 1, 26, 0, 0, 0, 0, time.Local),
@@ -240,7 +240,7 @@ of spiritual knowledge.
 4. Kunti - Monther of pandav in Mahabharat
 5. Dropati - Wife of Pandav
 `,
-			Link: []string{
+			Links: []string{
 				"https://en.wikipedia.org/wiki/Panchakanya",
 			},
 			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
@@ -253,7 +253,7 @@ Father: Parashara. He is son of Shakti Maharishi and Shakti Maharishi is son of 
 Son: Vidura, Shuka (Shuka Dev or Shukdev or shuk dev), Pandu, Dhritarashtra
 
 `,
-			Link: []string{
+			Links: []string{
 				"https://en.wikipedia.org/wiki/Vyasa",
 			},
 			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
@@ -304,7 +304,7 @@ In this state, one has full faith in the Lord, and becomes (child-like) simple w
 Shri Ram adds that Shabri’s Bhakti is perfectly complete. Yet if anyone were to have taken even one step towards devotion, out of all nine, he/she would be very dear to the Lord.
 
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.speakingtree.in/allslides/navadha-bhakti---the-nine-steps-of-bhakti-devotion/267393",
 			},
 			CreationDate: time.Date(2020, 1, 27, 0, 0, 0, 0, time.Local),
@@ -358,7 +358,7 @@ Krishna Krishna Hare Hare
 प्रस्तुत दोहे में तुलसीदासजी कहते हैं कि तू कुसंगीत और चित्त के सभी बुरे विचारों का त्याग करके प्रभु श्रीराम में ध्यान लगा और उनके नाम ‘राम’ का जप कर| ऐसा करने से तेरी अनेकों जन्मों की बिगड़ी हुई स्थिति अभी सुधर सकती है|.
 
 `,
-			Link: []string{
+			Links: []string{
 				"https://spiritualworld.co.in/bhagat-tulsidas-ji-dohawali/ram-naam-jap-ki-nahtta/",
 			},
 			CreationDate: time.Date(2020, 1, 29, 8, 15, 0, 0, time.Local),
@@ -581,7 +581,7 @@ Krishna Krishna Hare Hare
 हे संकट मोचन पवन कुमार! आप आनंद मंगलों के स्वरूप हैं। हे देवराज! आप श्री राम, सीता जी और लक्ष्मण सहित मेरे हृदय में निवास कीजिए।.
 
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.jagranjunction.com/religious/meaning-of-hanuman-chalisa-in-hindi/",
 			},
 			CreationDate: time.Date(2020, 1, 29, 8, 15, 0, 0, time.Local),
@@ -777,7 +777,7 @@ Krishna Krishna Hare Hare
 
 साथ ही आप इसे सुन भी सकते हैं और इसे गुनगुना सकते हैं, इससे आपको बहुत अच्छा लगेगा और कुछ दिनों में यह संकट मोचन हनुमान अष्टक आपको याद भी हो जायेगा .
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.hanumanchalisahindi.com/sankat-mochan-hanuman-ashtak/",
 			},
 			CreationDate: time.Date(2020, 2, 4, 8, 46, 0, 0, time.Local),
@@ -790,7 +790,7 @@ Sita always wants to see Ram.
 Sita always want to make Ram Happy.
 Laxman Ji has not imagined himself without Ram.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=AvXufbbrclY",
 			},
 			CreationDate: time.Date(2020, 2, 2, 13, 0, 0, 0, time.Local),
@@ -809,7 +809,7 @@ Laxman Ji has not imagined himself without Ram.
 [1:17 PM, 2/4/2020] Abhijit New India: Atharvaveda has 31 upanishads (including Mandukya Upanishads).
 [1:17 PM, 2/4/2020] Abhijit New India: So total 108 Upanishads in 5 Vedas.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 4, 13, 19, 0, 0, time.Local),
@@ -823,7 +823,7 @@ He is very successful person.
 An Nice and inspiration interview. It's shared by my friend Abhijit Sharma.
 Nature starts helping each desire.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=x0NTMSFBmv0&app=desktop",
 			},
 			CreationDate: time.Date(2020, 2, 10, 10, 00, 0, 0, time.Local),
@@ -840,7 +840,7 @@ When we have test of spirituality, We will have less or zero interest in the fol
 
 Nice explanation in 25 minutes of video in 1st link.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=9A1TNV8MFV8",
 				"https://www.acharyaprashant.org/",
 			},
@@ -869,7 +869,7 @@ Woman looks beautiful in 16 sringar and get more respect from people.
 16. red, green, maroon, and golden and the attire can be with a salwar kameez, saree or lehenga.
 
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.utsavpedia.com/cultural-connections/solah-shringar-the-grand-makeover/",
 				"https://timesofindia.indiatimes.com/life-style/beauty/Solah-Shringar-The-science-behind-it/articleshow/54520592.cms",
 			},
@@ -900,7 +900,7 @@ By MukundaNand ji:
 7. Bhav.
 8. Fully attached to God is final stage. United with God.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.utsavpedia.com/cultural-connections/solah-shringar-the-grand-makeover/",
 				"https://timesofindia.indiatimes.com/life-style/beauty/Solah-Shringar-The-science-behind-it/articleshow/54520592.cms",
 			},
@@ -922,7 +922,7 @@ Satroopa (Kausalya Mata) is wife of Manu.
 This information collected from Sree Ram Charitamanas Baalkand.
 
 `,
-			Link: []string{
+			Links: []string{
 				"https://en.wikipedia.org/wiki/Dasharatha",
 			},
 			CreationDate: time.Date(2020, 4, 11, 13, 22, 0, 0, time.Local),

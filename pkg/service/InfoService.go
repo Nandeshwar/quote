@@ -11,7 +11,8 @@ import (
 
 type IInfo interface {
 	ValidateForm(form model.InfoForm) error
-	CreateNewInfo(form model.InfoForm) error
+	CreateNewInfo(form model.InfoForm) (int64, error)
+	GetInfoByTitleOrInfo(searchTxt string) ([]info2.Info, error)
 }
 
 func (s QuoteService) ValidateForm(form model.InfoForm) error {
@@ -28,14 +29,14 @@ func (s QuoteService) ValidateForm(form model.InfoForm) error {
 	return nil
 }
 
-func (s QuoteService) CreateNewInfo(form model.InfoForm) error {
+func (s QuoteService) CreateNewInfo(form model.InfoForm) (int64, error) {
 	var createdAt time.Time
 	var err error
 
 	if len(strings.TrimSpace(form.CreatedAt)) > 0 {
 		createdAt, err = time.Parse(constants.DATE_FORMAT, form.CreatedAt)
 		if err != nil {
-			return err
+			return 0, err
 		}
 	} else {
 		createdAt = time.Now()
@@ -49,13 +50,40 @@ func (s QuoteService) CreateNewInfo(form model.InfoForm) error {
 	info := info2.Info{
 		Title:        form.Title,
 		Info:         form.Info,
-		Link:         links,
+		Links:        links,
 		CreationDate: createdAt,
 		UpdatedDate:  time.Now(),
 	}
-	err = s.InfoRepo.CreateInfo(info)
+	id, err := s.InfoRepo.CreateInfo(info)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return id, nil
+}
+
+func (s QuoteService) GetInfoByTitleOrInfo(searchTxt string) ([]info2.Info, error) {
+	infoList, err := s.InfoRepo.GetInfoByTitleOrInfo(searchTxt)
+	if err != nil {
+		return nil, err
+	}
+
+	var distinctInfoList []info2.Info
+	var links []string
+	found := false
+	for i := 0; i < len(infoList); i++ {
+		if i+1 < len(infoList) && infoList[i].Title == infoList[i+1].Title && infoList[i].Info == infoList[i+1].Info {
+			links = append(links, infoList[i].Link)
+			found = true
+		} else {
+			found = false
+		}
+
+		if !found {
+			links = append(links, infoList[i].Link)
+			infoList[i].Links = links
+			links = nil
+			distinctInfoList = append(distinctInfoList, infoList[i])
+		}
+	}
+	return distinctInfoList, nil
 }

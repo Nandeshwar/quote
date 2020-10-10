@@ -18,7 +18,7 @@ I am trying to make them happy and smile every moment.
 3. I am a Gopi and I invited krishna at my home and I am serving food to him. I am feeding him by my hand. I also went to many others gopi home where Krishna went. 
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 1, 30, 8, 11, 0, 0, time.Local),
@@ -35,7 +35,7 @@ When bed rest, Think about Radha Krishna, Sita Ram.
 Always think about God.
 Try to purify mind by contemplating about Radha Krishna, Sita Ram and leave rest of things on God.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
@@ -47,7 +47,7 @@ Try to purify mind by contemplating about Radha Krishna, Sita Ram and leave rest
 Worldly happiness is short and limited. 
 Happiness in path of God-Bhakti is unlimited.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
@@ -59,7 +59,7 @@ Happiness in path of God-Bhakti is unlimited.
 This body is very important to attained God.
 Mind is a such a beautiful and important to enjoy bliss.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
@@ -73,7 +73,7 @@ Love everyone. Don't heart anyone.
 Kam bolo, dhire bolo, Mitha bolo. Speak less, Speak slowly, Speak sweet.
 once mind is purified, action will be purified and God will be attained.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 2, 12, 30, 0, 0, time.Local),
@@ -104,7 +104,7 @@ Each time you sacrifice, you are one step towards god. That is yog.
 
 O my mind , understand worldly happiness is for short duration and it is blocker to get joy, bliss.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 4, 8, 48, 0, 0, time.Local),
@@ -123,7 +123,7 @@ Sita is serving some fruits to Ram. Laxman is bringing flower so that Ram can do
 
 Ram is feeding fruits to Sita and Laxman. This is selfless love.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 4, 9, 39, 0, 0, time.Local),
@@ -137,7 +137,7 @@ I did not feel good.
 I remember Gita statement - Do Karma but don't worry about fruit.
 Enjoy the karma - action.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 8, 8, 53, 0, 0, time.Local),
@@ -156,7 +156,7 @@ That's not good. I understood pooja is way to attach mind to God. If I miss pooj
 attach my mind to God. I can still think about love of God - Bharat, Ram Prem, Sita Ram Prem, Ram Laxman Prem,
 Radha Krishna Prem, Ram and Shankar ji Prem ....
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 8, 8, 53, 0, 0, time.Local),
@@ -177,7 +177,7 @@ Radha Krishna ki duniya hai.
 Sabse prem karo, Bhagwan khhud aayenge ek din aur phir kabhhi nahi jayenge.
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 11, 13, 52, 0, 0, time.Local),
@@ -194,7 +194,7 @@ When God becomes our lover, we will love everyone who loves God and we will love
 This is Prem.
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 3, 17, 7, 54, 0, 0, time.Local),
@@ -209,7 +209,7 @@ Jaab Radha aur Krishna pehli baar mile to kuchh hua...
 Jab Ram aur bharat Banwas ke samay mile to kuchh hua...
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 3, 25, 8, 55, 0, 0, time.Local),
@@ -221,7 +221,7 @@ Jab Ram aur bharat Banwas ke samay mile to kuchh hua...
 I realized my morning sadhna makes me active whole day and My evening Sadhna makes my night beautiful and next morning beautiful.
 I don't want to skip then at any cost. Please Krishna help me.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 12, 8, 19, 0, 0, time.Local),
@@ -234,7 +234,7 @@ Sometimes: I think not to talk anyone and enjoy the prem of Radha Krishna, Sita 
 Sometimes: I think to talk to everyone who talks about Prem - love, bhakti of God and his devotee.
 Kripalu ji Maharaj says: always do Satsang and always remember Radha Krishna
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 12, 8, 19, 0, 0, time.Local),
@@ -264,7 +264,7 @@ Bring Ram & Krishna in every work and make him happy with every action.
 
 Power of Prem can destroy all negativity - Lust, anger, greed.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 15, 13, 8, 0, 0, time.Local),
@@ -282,7 +282,7 @@ That moment is very beautiful.
 Do prem to everyone - bad people and good people.
 Always be in love and celebration.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 28, 8, 15, 0, 0, time.Local),
@@ -300,7 +300,7 @@ Abhyas(Practise) is required.
 Practise remembering Krishna and his devotee.
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 2, 29, 13, 38, 0, 0, time.Local),
@@ -312,7 +312,7 @@ Practise remembering Krishna and his devotee.
 Winning over lust, anger, greed is Yog according to meditation technique mentioned in Bhagwat Gita chapter-6. 
 Always be in Prem & bhakti and practice yog according to chapter-6, bhagwat gita.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 3, 7, 14, 16, 0, 0, time.Local),
@@ -335,7 +335,7 @@ Love how Ram loves Laxman, sita, Bharat, Satrughhan.
 Bring these characteristics and love everyone.
 This is paht of bhakti. This is the way to make krishna happy.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 3, 13, 8, 21, 0, 0, time.Local),
@@ -346,7 +346,7 @@ This is paht of bhakti. This is the way to make krishna happy.
 			Info: ` 
 
 `,
-			Link: []string{
+			Links: []string{
 				"http://godisbliss.blogspot.com/",
 			},
 			CreationDate: time.Date(2020, 4, 11, 14, 5, 0, 0, time.Local),
@@ -358,7 +358,7 @@ This is paht of bhakti. This is the way to make krishna happy.
 Radha and Krishna are always together. Krishna left Gokul, but appeared in front of Radha and Sakhhi whenever they 
 called him. They never separed.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
@@ -370,7 +370,7 @@ called him. They never separed.
 When I see negativity(lust, anger, greed, pride) in others, I do bairgya and go away and remember love of 
 Radha Krishna, Ram Hanuman.
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
@@ -388,7 +388,7 @@ if some negativigy comes in night before sleeping, then change sequence little b
 Do pooja first and then meditation and yoga later.
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 4, 13, 8, 50, 0, 0, time.Local),
@@ -405,7 +405,7 @@ People will change slowly.
 
 
 `,
-			Link: []string{
+			Links: []string{
 				"",
 			},
 			CreationDate: time.Date(2020, 4, 14, 7, 55, 0, 0, time.Local),
@@ -526,7 +526,7 @@ b. His technique to progress in spiritual path.
  It is known that this universe is His gross visible form. God pervades every corner of this universe. An effort to make this beautiful orchard of his still more beautiful is true service to Him?
  Upasana gives strangth to man, Sadhana develops this strength and Aradhana makes it properly useful. One, who follows this process in a prayerful mood, facilitates his path to God realization.
 `,
-			Link: []string{
+			Links: []string{
 				"https://www.youtube.com/watch?v=q7GWNAfrKR0",
 				"https://www.youtube.com/watch?v=YnQsw60qjPo&list=PLMtaB_EdzfAOUKiWoFyGwUWTVFbNN972y&index=103",
 			},

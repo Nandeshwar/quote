@@ -96,7 +96,7 @@ func main() {
 	word1, word2 := info.GetRandomTwoWordsFromTitle()
 	fmt.Printf("\"")
 	fmt.Println()
-	fmt.Println("Link for the next quote")
+	fmt.Println("Links for the next quote")
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-devotional\n"))
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-motivational\n"))
 	fmt.Printf("\n%s :%s", blue(fmt.Sprintf("http://localhost:1922/search/%s|%s", word1, word2)), red("search criteria can be delimited by '|'\n"))

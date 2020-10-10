@@ -11,7 +11,8 @@ type Info struct {
 	ID           int
 	Title        string
 	Info         string
-	Link         []string
+	Links        []string
+	Link         string
 	CreationDate time.Time
 	UpdatedDate  time.Time
 }

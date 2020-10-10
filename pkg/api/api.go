@@ -62,8 +62,8 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 	router.HandleFunc("/quotes-motivational", s.quotesMotivational)
 	router.HandleFunc("/events", events)
 	router.HandleFunc("/events/{searchText}", events)
-	router.HandleFunc("/info", info)
-	router.HandleFunc("/info/{searchText}", info)
+	router.HandleFunc("/info", s.info)
+	router.HandleFunc("/info/{searchText}", s.info)
 	router.HandleFunc("/search/{searchText}", s.search)
 	router.HandleFunc("/find/{searchText}", s.search)
 
