@@ -49,7 +49,7 @@ func displayEvents(filteredEvents []*event.EventDetail, w http.ResponseWriter) {
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Number</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Title</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Info</th>"))
-	fmt.Fprintf(w, fmt.Sprintf("<th>Event Link</th>"))
+	fmt.Fprintf(w, fmt.Sprintf("<th>Event Links</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Date</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("<th>Event Creattion Date</th>"))
 	fmt.Fprintf(w, fmt.Sprintf("</tr>"))
@@ -77,7 +77,7 @@ func displayEvents(filteredEvents []*event.EventDetail, w http.ResponseWriter) {
 			if strings.Contains(strings.ToLower(url), "youtube") {
 				youtubeLink = "click me to watch on youtube"
 			}
-			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Link%d. %s </a></td></tr>", url, i+1, youtubeLink))
+			fmt.Fprintf(w, fmt.Sprintf("<tr><td><a href='%s'>Links%d. %s </a></td></tr>", url, i+1, youtubeLink))
 		}
 		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))

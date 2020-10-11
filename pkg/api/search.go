@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"quote/pkg/event"
-	info2 "quote/pkg/info"
+	"quote/pkg/model"
 	"strings"
 	"sync"
 
@@ -26,29 +26,32 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 
 	var wg sync.WaitGroup
 
-	infoCh := make(chan []info2.Info, 1)
+	infoCh := make(chan []model.Info, 1)
 	eventCh := make(chan []*event.EventDetail, 1)
 	imageCh := make(chan []string, 1)
 
 	wg.Add(1)
-	go func(infoCh chan []info2.Info) {
+	go func(infoCh chan []model.Info) {
 		defer wg.Done()
 
-		var filteredInfo []info2.Info
+		var filteredInfo []model.Info
 		for _, searchTxt := range searchTextList {
 			//if info2.Some()
-			foundList := findInfo(searchTxt)
+			foundList, err := s.infoService.GetInfoByTitleOrInfo(searchTxt)
+			if err != nil {
+				fmt.Println("Error in findInfo", err)
+			}
 
 			for _, foundInfo := range foundList {
 
-				isSame := func(info info2.Info) bool {
+				isSame := func(info model.Info) bool {
 					if foundInfo.Title == info.Title && foundInfo.CreationDate == info.CreationDate {
 						return true
 					}
 					return false
 				}
 
-				if !info2.Some(isSame, filteredInfo) {
+				if !model.SomeInfo(isSame, filteredInfo) {
 					filteredInfo = append(filteredInfo, foundInfo)
 				}
 			}
@@ -96,7 +99,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 
 	wg.Wait()
 
-	func(infoCh chan []info2.Info, eventCh chan []*event.EventDetail, imageCh chan []string) {
+	func(infoCh chan []model.Info, eventCh chan []*event.EventDetail, imageCh chan []string) {
 		filteredInfo := <-infoCh
 		filteredEvents := <-eventCh
 		foundImages := <-imageCh

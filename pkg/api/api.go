@@ -4,33 +4,40 @@ import (
 	"context"
 	"net/http"
 	"net/http/pprof"
+	"quote/pkg/service"
 	"strconv"
 	"sync"
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 	"github.com/sirupsen/logrus"
 )
 
-func intro(w http.ResponseWriter, req *http.Request) {
-	w.Write([]byte("Coming soon"))
+type ImageWidth struct {
+	DevotionalImageMaxWidth  int
+	DevotionalImageMaxHeight int
+	DevotionalImageMinWidth  int
+	DevotionalImageMinHeight int
+
+	MotivationalImageMaxWidth  int
+	MotivationalImageMaxHeight int
+	MotivationalImageMinWidth  int
+	MotivationalImageMinHeight int
 }
 
 type Server struct {
-	server                   *http.Server
-	wg                       sync.WaitGroup
-	devotionalImageMaxWidth  int
-	devotionalImageMaxHeight int
-	devotionalImageMinWidth  int
-	devotionalImageMinHeight int
+	server     *http.Server
+	wg         sync.WaitGroup
+	imageWidth ImageWidth
 
-	motivationalImageMaxWidth  int
-	motivationalImageMaxHeight int
-	motivationalImageMinWidth  int
-	motivationalImageMinHeight int
+	loginService       service.ILogin
+	infoService        service.IInfo
+	sessionCookieStore *sessions.CookieStore
 }
 
-func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devotionalImageMinWidth, devotionalImageMinHeight, motivationalImageMaxWidth, motivationalImageMaxHeight, motivationalImageMinWidth, motivationalImageMinHeight int) *Server {
+func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, quoteService service.QuoteService) *Server {
+
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
@@ -43,24 +50,20 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 		MaxHeaderBytes: 1000000,
 	}
 	s := &Server{
-		server:                     server,
-		devotionalImageMaxWidth:    devotionalImageMaxWidth,
-		devotionalImageMaxHeight:   devotionalImageMaxHeight,
-		devotionalImageMinWidth:    devotionalImageMinWidth,
-		devotionalImageMinHeight:   devotionalImageMinHeight,
-		motivationalImageMaxWidth:  motivationalImageMaxWidth,
-		motivationalImageMaxHeight: motivationalImageMaxHeight,
-		motivationalImageMinWidth:  motivationalImageMinWidth,
-		motivationalImageMinHeight: motivationalImageMinHeight,
+		server:     server,
+		imageWidth: imageWidth,
+
+		loginService:       quoteService,
+		infoService:        quoteService,
+		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
 	}
 
-	router.HandleFunc("/intro", intro)
 	router.HandleFunc("/quotes-devotional", s.quotesAll)
 	router.HandleFunc("/quotes-motivational", s.quotesMotivational)
 	router.HandleFunc("/events", events)
 	router.HandleFunc("/events/{searchText}", events)
-	router.HandleFunc("/info", info)
-	router.HandleFunc("/info/{searchText}", info)
+	router.HandleFunc("/info", s.info)
+	router.HandleFunc("/info/{searchText}", s.info)
 	router.HandleFunc("/search/{searchText}", s.search)
 	router.HandleFunc("/find/{searchText}", s.search)
 
@@ -68,6 +71,14 @@ func NewServer(httpPort, devotionalImageMaxWidth, devotionalImageMaxHeight, devo
 	router.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
 	router.HandleFunc("/debug/pprof/profile", pprof.Profile)
 	router.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+
+	// Admin section
+	//router.HandleFunc("/", s.index)
+	router.HandleFunc("/login", s.login)
+	router.HandleFunc("/", s.login)
+	router.HandleFunc("/admin", s.admin)
+	router.HandleFunc("/admin-info", s.adminInfo)
+	router.HandleFunc("/event2", s.adminEvent)
 
 	return s
 }
