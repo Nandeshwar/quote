@@ -2,36 +2,44 @@ package main
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
-	"quote/pkg/repo"
-	"quote/pkg/service"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gookit/color"
 
+	"github.com/logic-building/functional-go/fp"
 	"quote/pkg/api"
 	"quote/pkg/env"
-	"quote/pkg/event"
+	"quote/pkg/log"
 	"quote/pkg/quote"
+	"quote/pkg/repo"
+	"quote/pkg/service"
 )
 
 func main() {
+	log.Init()
 
 	// go tool pprof http://localhost:8080/debug/pprof/heap
 	// go tool pprof http://localhost:8080/debug/pprof/profile
 	go http.ListenAndServe(":8080", nil)
 
-	serverRunTimeInMin := env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
-	serverRunTimeInHour := env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
+	var (
+		logLevel = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
 
-	devotionalImageMaxSize := env.GetStringWithDefault("DEVOTIONAL_IMAGE_MAX_SIZE", "2400:1700")
-	devotionalImageMinSize := env.GetStringWithDefault("DEVOTIONAL_IMAGE_MIN_SIZE", "700:700")
-	motivationalImageMaxSize := env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MAX_SIZE", "2800:1700")
-	motivationalImageMinSize := env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
+		serverRunTimeInMin  = env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
+		serverRunTimeInHour = env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
 
+		devotionalImageMaxSize   = env.GetStringWithDefault("DEVOTIONAL_IMAGE_MAX_SIZE", "2400:1700")
+		devotionalImageMinSize   = env.GetStringWithDefault("DEVOTIONAL_IMAGE_MIN_SIZE", "700:700")
+		motivationalImageMaxSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MAX_SIZE", "2800:1700")
+		motivationalImageMinSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
+	)
+
+	logrus.SetLevel(logLevel)
 	sqlite3file := env.GetStringWithDefault("SQLITE3_FILE", "./db/quote.db")
 
 	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
@@ -100,28 +108,41 @@ func main() {
 	fmt.Printf("%s", blue("http://localhost:1922/quotes-motivational\n"))
 	fmt.Printf("\n%s :%s", blue(fmt.Sprintf("http://localhost:1922/search/%s|%s", word1, word2)), red("search criteria can be delimited by '|'\n"))
 
-	todayEvents := event.TodayEvents()
-	if len(todayEvents) > 0 {
+	sqlite3Repo, err := repo.NewSqlite3Repo(sqlite3file)
+	if err != nil {
+		fmt.Println("error=", err)
+	}
+
+	quoteSerive := service.NewQuoteService(sqlite3Repo)
+
+	fmt.Println("   ")
+	eventsDayList := fp.RangeInt(0, 7)
+	for _, day := range eventsDayList {
 		today := time.Now()
-		todayDateStr := today.Format("Mon 2006-01-2")
-		fmt.Printf("\nToday %v is auspicious day\n", todayDateStr)
-		fmt.Println("-------------")
-	}
+		futureTime := today.AddDate(0, 0, day)
 
-	for _, event := range todayEvents {
-		event.DisplayEvent()
-	}
+		switch day {
+		case 0:
+			fmt.Println("--------------Events Today------------------")
+			fmt.Println("")
+		case 1:
+			fmt.Println("--------------Events Tomorrow------------------")
+			fmt.Println("")
+		case 2:
+			fmt.Println("--------------Events Day After Tomorrow------------------")
+			fmt.Println("")
+		default:
+			fmt.Printf("\n--------------Events on %s------------------", futureTime.Format("Monday Jan _2, 2006"))
+			fmt.Println("")
+		}
 
-	fmt.Println("--------------Events Tomorrow------------------")
-	fmt.Println(" ")
-	for _, event := range event.TomorrowEvents(1) {
-		event.DisplayEvent()
-	}
-
-	fmt.Println("--------------Events Day After Tomorrow------------------")
-	fmt.Println("")
-	for _, event := range event.TomorrowEvents(2) {
-		event.DisplayEvent()
+		eventsInFuture, err := quoteSerive.EventsInFuture(futureTime)
+		if err != nil {
+			fmt.Errorf("error while getting EventsInFuture for tomorrow, error=%v", err)
+		}
+		for _, event := range eventsInFuture {
+			event.DisplayEvent()
+		}
 	}
 
 	//if pic || img || img2 {
@@ -137,12 +158,7 @@ func main() {
 
 	fmt.Printf("\n\nServer will be quit in %d hour and %d minutes at %v", serverRunTimeInHour, serverRunTimeInMin, currentTime.Format(layout))
 	fmt.Printf("\n or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n")
-	sqlite3Repo, err := repo.NewSqlite3Repo(sqlite3file)
-	if err != nil {
-		fmt.Println("error=", err)
-	}
 
-	quoteSerive := service.NewQuoteService(sqlite3Repo)
 	const httpPort int = 1922
 	imageWidth := api.ImageWidth{
 		DevotionalImageMaxWidth:    devotionalImageMaxWidth,

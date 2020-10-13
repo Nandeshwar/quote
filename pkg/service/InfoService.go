@@ -18,7 +18,7 @@ func (s QuoteService) ValidateForm(form model.InfoForm) error {
 	createdAt := strings.TrimSpace(form.CreatedAt)
 	if len(createdAt) > 0 {
 		if len(createdAt) != 16 || createdAt[4] != '-' || createdAt[7] != '-' || createdAt[13] != ':' {
-			return fmt.Errorf("wrong date and time format. please provide date in this format yyyy-mm-dd tt:mm")
+			return fmt.Errorf("wrong date and time format. given date=%s, please provide date in this format yyyy-mm-dd tt:mm", createdAt)
 		}
 		_, err := time.Parse(constants.DATE_FORMAT, createdAt)
 		if err != nil {
@@ -31,14 +31,14 @@ func (s QuoteService) ValidateForm(form model.InfoForm) error {
 		for _, link := range strings.Split(link, ",") {
 			link = strings.TrimSpace(link)
 			if len(link) < 4 {
-				return fmt.Errorf("comma seperated links value must start with http or https. link could not be less than 4")
+				return fmt.Errorf("pipeline(|) seperated links value must start with http or https. link could not be less than 4")
 			}
 			if link[0:4] != "http" {
-				return fmt.Errorf("comma seperated links value must start with http or https")
+				return fmt.Errorf("pipeline(|) seperated links value must start with http or https")
 			}
 
 			if link[len(link)-1] == '"' || link[len(link)-1] == '\'' || link[len(link)-1] == '.' {
-				return fmt.Errorf("comma seperated link's value should not ended with (\", ', .)")
+				return fmt.Errorf("pipeline(|) seperated link's value should not ended with (\", ', .)")
 			}
 		}
 	}
@@ -83,22 +83,24 @@ func (s QuoteService) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, erro
 		return nil, err
 	}
 
+	infoListSorted := model.SortInfoByID(infoList)
+
 	var distinctInfoList []model.Info
 	var links []string
 	found := false
-	for i := 0; i < len(infoList); i++ {
-		if i+1 < len(infoList) && infoList[i].Title == infoList[i+1].Title && infoList[i].Info == infoList[i+1].Info {
-			links = append(links, infoList[i].Link)
+	for i := 0; i < len(infoListSorted); i++ {
+		if i+1 < len(infoListSorted) && infoListSorted[i].ID == infoListSorted[i+1].ID {
+			links = append(links, infoListSorted[i].Link)
 			found = true
 		} else {
 			found = false
 		}
 
 		if !found {
-			links = append(links, infoList[i].Link)
-			infoList[i].Links = links
+			links = append(links, infoListSorted[i].Link)
+			infoListSorted[i].Links = links
 			links = nil
-			distinctInfoList = append(distinctInfoList, infoList[i])
+			distinctInfoList = append(distinctInfoList, infoListSorted[i])
 		}
 	}
 	return distinctInfoList, nil

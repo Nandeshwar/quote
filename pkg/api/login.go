@@ -30,7 +30,7 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		session.Options.MaxAge = 0
 		session.Save(r, w)
 
-		t, _ := template.ParseFiles("./views/admin.gtpl", "./views/admin-info.gtpl")
+		t, _ := template.ParseFiles("./views/admin.gtpl")
 		t.Execute(w, nil)
 
 	}

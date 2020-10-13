@@ -3,7 +3,6 @@ package api
 import (
 	"fmt"
 	"net/http"
-	"quote/pkg/event"
 	"quote/pkg/model"
 	"strings"
 	"sync"
@@ -27,7 +26,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	var wg sync.WaitGroup
 
 	infoCh := make(chan []model.Info, 1)
-	eventCh := make(chan []*event.EventDetail, 1)
+	eventCh := make(chan []model.EventDetail, 1)
 	imageCh := make(chan []string, 1)
 
 	wg.Add(1)
@@ -61,22 +60,22 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 	}(infoCh)
 
 	wg.Add(1)
-	go func(eventCh chan []*event.EventDetail) {
+	go func(eventCh chan []model.EventDetail) {
 		defer wg.Done()
-		var filteredEvents []*event.EventDetail
+		var filteredEvents []model.EventDetail
 
 		for _, searchTxt := range searchTextList {
-			foundList := findEvents(searchTxt)
+			foundList := s.findEvents(searchTxt)
 			for _, foundEvent := range foundList {
 
-				isTitleExist := func(event *event.EventDetail) bool {
-					if event.Title == foundEvent.Title && event.Year == foundEvent.Year && event.Month == foundEvent.Month && event.Day == foundEvent.Day {
+				isTitleExist := func(event model.EventDetail) bool {
+					if event.ID == foundEvent.ID {
 						return true
 					}
 					return false
 				}
 
-				if !event.SomeEventDetailPtr(isTitleExist, filteredEvents) {
+				if !model.SomeEventDetail(isTitleExist, filteredEvents) {
 					filteredEvents = append(filteredEvents, foundEvent)
 				}
 			}
@@ -99,7 +98,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 
 	wg.Wait()
 
-	func(infoCh chan []model.Info, eventCh chan []*event.EventDetail, imageCh chan []string) {
+	func(infoCh chan []model.Info, eventCh chan []model.EventDetail, imageCh chan []string) {
 		filteredInfo := <-infoCh
 		filteredEvents := <-eventCh
 		foundImages := <-imageCh
@@ -128,6 +127,7 @@ func searchIntelligence(searchStrList []string) []string {
 		"kripaluji":  []string{"kripalu", "kripaluji", "kripalu ji", "kripalu ji maharaj", "kripaluji maharaj", "ram kripalu", "ramkripalu", "ram kripalu tripathhi", "kripalu-ji", "maharaj ji", "mahrajji", "kripaalu", "kreepalu", "krepalu", "kirpalu", "kerpalu"},
 		"dashrathji": []string{"dasrat", "dashrath", "dashrat", "dasrath", "dasrat ji", "dashrath ji", "dashrat ji", "dasrath ji", "dasratji", "dashrathji", "dashratji", "dasrathji"},
 		"nandeshwar": []string{"nandeshwar blog", "my blog", "nandeshwar meditation", "my meditation", "my  meditation", "my  blog"},
+		"chaitnya":   []string{"chaitnya", "chaitanaya", "chaitanya", "chaitanaya", "chaitnaya"},
 	}
 
 	newSearchStrList = append(newSearchStrList, searchStrList...)
