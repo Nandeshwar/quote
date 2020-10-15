@@ -51,6 +51,7 @@ func displayInfo(filteredInfo []model.Info, w http.ResponseWriter) {
 			}
 		}
 		fmt.Fprintf(w, fmt.Sprintf("</table>"))
+
 		fmt.Fprintf(w, fmt.Sprintf("<pre>%s</pre>", info.Info))
 		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 

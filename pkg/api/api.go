@@ -33,6 +33,7 @@ type Server struct {
 
 	loginService       service.ILogin
 	infoService        service.IInfo
+	eventDetailService service.IEventDetail
 	sessionCookieStore *sessions.CookieStore
 }
 
@@ -55,13 +56,14 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 
 		loginService:       quoteService,
 		infoService:        quoteService,
+		eventDetailService: quoteService,
 		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
 	}
 
 	router.HandleFunc("/quotes-devotional", s.quotesAll)
 	router.HandleFunc("/quotes-motivational", s.quotesMotivational)
-	router.HandleFunc("/events", events)
-	router.HandleFunc("/events/{searchText}", events)
+	router.HandleFunc("/events", s.events)
+	router.HandleFunc("/events/{searchText}", s.events)
 	router.HandleFunc("/info", s.info)
 	router.HandleFunc("/info/{searchText}", s.info)
 	router.HandleFunc("/search/{searchText}", s.search)
@@ -78,7 +80,7 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 	router.HandleFunc("/", s.login)
 	router.HandleFunc("/admin", s.admin)
 	router.HandleFunc("/admin-info", s.adminInfo)
-	router.HandleFunc("/event2", s.adminEvent)
+	router.HandleFunc("/admin-event-detail", s.adminEvent)
 
 	return s
 }

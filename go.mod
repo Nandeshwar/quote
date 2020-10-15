@@ -3,6 +3,7 @@ module quote
 go 1.12
 
 require (
+	github.com/google/uuid v1.1.2 // indirect
 	github.com/gookit/color v1.2.1
 	github.com/gorilla/mux v1.7.3
 	github.com/gorilla/sessions v1.2.1
