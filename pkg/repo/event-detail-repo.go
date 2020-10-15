@@ -18,11 +18,12 @@ func (s SQLite3Repo) CreateEventDetail(eventDetail model.EventDetail) (int64, er
 	query := `INSERT INTO event_detail 
     				(day, month, year, title, info, type, created_at, updated_at) 
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+	q := query
 	tx, _ := s.DB.Begin()
 
 	defer tx.Commit()
 
-	statement, err := tx.Prepare(query)
+	var statement, err = tx.Prepare(q)
 	if err != nil {
 		tx.Rollback()
 		return 0, fmt.Errorf("error preparing statements. query=%s, error=%v", query, err)
@@ -135,13 +136,13 @@ func (s SQLite3Repo) GetEventDetailByMonthDay(month, day int) ([]model.EventDeta
 					event_detail e, event_detail_link l
 				WHERE 
 					e.id = l.link_id AND e.month=? AND e.day=?`
-
+	q := query
 	logrus.WithFields(logrus.Fields{
 		"Query": query,
 		"Arg1":  month,
 		"Arg2":  day,
 	}).Debugf("querying db")
-	rows, err := s.DB.Query(query, month, day)
+	rows, err := s.DB.Query(q, month, day)
 	if err != nil {
 		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
 	}

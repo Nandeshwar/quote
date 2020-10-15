@@ -2,6 +2,7 @@ package repo
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"strings"
@@ -16,9 +17,17 @@ func (s SQLite3Repo) CreateInfo(info model.Info) (int64, error) {
 	query := `INSERT INTO info (title, info, created_at, updated_at) VALUES (?, ?, ?, ?)`
 	tx, _ := s.DB.Begin()
 
+	qry := query
 	defer tx.Commit()
 
-	statement, err := tx.Prepare(query)
+	logrus.WithFields(logrus.Fields{
+		"Query": query,
+		"arg1":  info.Title,
+		"arg2":  info.Info,
+		"arg3":  info.CreationDate.Format(constants.DATE_FORMAT),
+		"arg4":  info.UpdatedDate.Format(constants.DATE_FORMAT),
+	}).Debugf("inserting data")
+	statement, err := tx.Prepare(qry)
 	if err != nil {
 		tx.Rollback()
 		return 0, fmt.Errorf("error preparing statements. query=%s, error=%v", query, err)
