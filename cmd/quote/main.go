@@ -39,7 +39,9 @@ func main() {
 		motivationalImageMinSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
 	)
 
+	logrus.WithField("new_log_level", logLevel).Info("Setting log level")
 	logrus.SetLevel(logLevel)
+
 	sqlite3file := env.GetStringWithDefault("SQLITE3_FILE", "./db/quote.db")
 
 	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
