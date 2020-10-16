@@ -12,6 +12,7 @@ import (
 // Regex for 1 and more white space
 var space = regexp.MustCompile(`\s+`)
 
+//go:generate mockgen -source "event-detail-repo.go" -destination "mock/ieventdetail_repo.go" IEventDetailRepo
 type IEventDetailRepo interface {
 	CreateEventDetail(eventDetail model.EventDetail) (int64, error)
 	GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error)

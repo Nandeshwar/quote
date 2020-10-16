@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+//go:generate mockgen -destination mock/mock_iinfo_repo.go -source inforepo.go IInfoRepo
 type IInfoRepo interface {
 	CreateInfo(info model.Info) (int64, error)
 	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
