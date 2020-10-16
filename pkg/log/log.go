@@ -25,6 +25,7 @@ func Init() {
 		FullTimestamp:   true,
 		TimestampFormat: "2006-01-02T15:04:05.000000+00:00",
 	}})
+	//logrus.SetFormatter(&logrus.JSONFormatter{})
 	logrus.SetReportCaller(true)
 	logrus.SetOutput(os.Stdout)
 }

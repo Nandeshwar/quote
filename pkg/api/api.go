@@ -31,13 +31,14 @@ type Server struct {
 	wg         sync.WaitGroup
 	imageWidth ImageWidth
 
-	loginService       service.ILogin
-	infoService        service.IInfo
-	eventDetailService service.IEventDetail
-	sessionCookieStore *sessions.CookieStore
+	loginService         service.ILogin
+	infoService          service.IInfo
+	eventDetailService   service.IEventDetail
+	sessionCookieStore   *sessions.CookieStore
+	sessionExpireSeconds int
 }
 
-func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, quoteService service.QuoteService) *Server {
+func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, sessionExpireMinutes int, quoteService service.QuoteService) *Server {
 
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
@@ -54,10 +55,11 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 		server:     server,
 		imageWidth: imageWidth,
 
-		loginService:       quoteService,
-		infoService:        quoteService,
-		eventDetailService: quoteService,
-		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
+		loginService:         quoteService,
+		infoService:          quoteService,
+		eventDetailService:   quoteService,
+		sessionExpireSeconds: sessionExpireMinutes * 60,
+		sessionCookieStore:   sessions.NewCookieStore([]byte(webSessionSecretKey)),
 	}
 
 	router.HandleFunc("/quotes-devotional", s.quotesAll)

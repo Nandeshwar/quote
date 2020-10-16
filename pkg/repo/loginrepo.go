@@ -2,6 +2,7 @@ package repo
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 )
 
 type IRepo interface {
@@ -10,6 +11,9 @@ type IRepo interface {
 
 func (s SQLite3Repo) LoginInfo(user, password string) (err error) {
 	query := fmt.Sprintf(`SELECT user, password FROM login WHERE user='%s' AND password='%s'`, user, password)
+	logrus.WithFields(logrus.Fields{
+		"query": space.ReplaceAllString(query, " "),
+	}).Debugf("querying db")
 	rows, err := s.DB.Query(query)
 	if err != nil {
 		return fmt.Errorf("error querying db. query=%s, error=%v", query, err)
