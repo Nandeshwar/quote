@@ -5,8 +5,12 @@ import (
 	"github.com/sirupsen/logrus"
 	"quote/pkg/constants"
 	"quote/pkg/model"
+	"regexp"
 	"strings"
 )
+
+// Regex for 1 and more white space
+var space = regexp.MustCompile(`\s+`)
 
 type IEventDetailRepo interface {
 	CreateEventDetail(eventDetail model.EventDetail) (int64, error)
@@ -23,6 +27,17 @@ func (s SQLite3Repo) CreateEventDetail(eventDetail model.EventDetail) (int64, er
 
 	defer tx.Commit()
 
+	logrus.WithFields(logrus.Fields{
+		"query":      space.ReplaceAllString(query, " "),
+		"day":        eventDetail.Day,
+		"month":      eventDetail.Month,
+		"year":       eventDetail.Year,
+		"title":      eventDetail.Title,
+		"info":       eventDetail.Info,
+		"type":       eventDetail.Type,
+		"created_at": eventDetail.CreationDate.Format(constants.DATE_FORMAT),
+		"updated_at": eventDetail.UpdatedAt.Format(constants.DATE_FORMAT),
+	}).Debugf("inserting record to db")
 	var statement, err = tx.Prepare(q)
 	if err != nil {
 		tx.Rollback()
@@ -49,6 +64,14 @@ func (s SQLite3Repo) CreateEventDetail(eventDetail model.EventDetail) (int64, er
 
 	query = `INSERT INTO event_detail_link (link_id, link, created_at, updated_at) VALUES (?, ?, ?, ?)`
 	for _, l := range eventDetail.Links {
+		logrus.WithFields(logrus.Fields{
+			"query":      space.ReplaceAllString(query, " "),
+			"link_id":    id,
+			"link":       strings.TrimSpace(l),
+			"create_at":  eventDetail.CreationDate.Format(constants.DATE_FORMAT),
+			"updated_at": eventDetail.UpdatedAt.Format(constants.DATE_FORMAT),
+		}).Debugf("inserting record to db")
+
 		statement, err := tx.Prepare(query)
 		if err != nil {
 			tx.Rollback()
@@ -72,6 +95,9 @@ func (s SQLite3Repo) CreateEventDetail(eventDetail model.EventDetail) (int64, er
 			return 0, fmt.Errorf("error executing statements. query=%s, error=%v", query, err)
 		}
 	}
+	logrus.WithFields(logrus.Fields{
+		"id": id,
+	}).Debug("event detail  record inserted to db successfully")
 	return id, nil
 }
 
@@ -92,7 +118,12 @@ func (s SQLite3Repo) GetEventDetailByTitleOrInfo(searchTxt string) ([]model.Even
 				WHERE 
 					i.id = l.link_id AND (i.title like ? OR i.info like ?)`
 
-	fmt.Printf("Query=%s, arg1=%s, arg2=%s ", query, "%"+searchTxt+"%", "%"+searchTxt+"%")
+	logrus.WithFields(logrus.Fields{
+		"query": space.ReplaceAllString(query, " "),
+		"arg1":  "%" + searchTxt + "%",
+		"arg2":  "%" + searchTxt + "%",
+	}).Debugf("fetching data from db")
+
 	rows, err := s.DB.Query(query, "%"+searchTxt+"%", "%"+searchTxt+"%")
 	if err != nil {
 		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
@@ -116,6 +147,7 @@ func (s SQLite3Repo) GetEventDetailByTitleOrInfo(searchTxt string) ([]model.Even
 		}
 		eventDetailList = append(eventDetailList, eventDetailDB)
 	}
+	logrus.Debugf("data fetch from database=%v", eventDetailList)
 
 	return eventDetailList, nil
 }
@@ -138,10 +170,11 @@ func (s SQLite3Repo) GetEventDetailByMonthDay(month, day int) ([]model.EventDeta
 					e.id = l.link_id AND e.month=? AND e.day=?`
 	q := query
 	logrus.WithFields(logrus.Fields{
-		"Query": query,
-		"Arg1":  month,
-		"Arg2":  day,
-	}).Debugf("querying db")
+		"Query": space.ReplaceAllString(query, " "),
+		"month": month,
+		"day":   day,
+	}).Debugf("fetching data from database")
+
 	rows, err := s.DB.Query(q, month, day)
 	if err != nil {
 		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
@@ -163,6 +196,7 @@ func (s SQLite3Repo) GetEventDetailByMonthDay(month, day int) ([]model.EventDeta
 		if err != nil {
 			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
 		}
+		logrus.Debugf("data fetched from database=%v", eventDetailList)
 		eventDetailList = append(eventDetailList, eventDetailDB)
 	}
 

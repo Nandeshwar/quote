@@ -28,7 +28,8 @@ func main() {
 	go http.ListenAndServe(":8080", nil)
 
 	var (
-		logLevel = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
+		logLevel             = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
+		sessionExpireMinutes = env.GetIntWithDefault("SESSION_EXPIRE_MINUTES", 60)
 
 		serverRunTimeInMin  = env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
 		serverRunTimeInHour = env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
@@ -172,7 +173,7 @@ func main() {
 		MotivationalImageMinWidth:  motivationalImageMinWidth,
 		MotivationalImageMinHeight: motivationalImageMinHeight,
 	}
-	apiServer := api.NewServer(httpPort, imageWidth, webSessionSecretKey, quoteSerive)
+	apiServer := api.NewServer(httpPort, imageWidth, webSessionSecretKey, sessionExpireMinutes, quoteSerive)
 	go func() {
 		apiServer.Run()
 	}()
