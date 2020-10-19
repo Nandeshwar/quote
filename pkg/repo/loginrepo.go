@@ -5,6 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+//go:generate mockgen -destination mock/mock_IRepo.go -source loginrepo.go IRepo
 type IRepo interface {
 	LoginInfo(user, password string) (err error)
 }

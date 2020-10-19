@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"quote/pkg/constants"
 	"quote/pkg/model"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -41,12 +42,13 @@ func (s QuoteService) ValidateFormEvent(form model.EventDetailForm) error {
 
 func validateEventDate(eventDate string) error {
 	eventDate = strings.TrimSpace(eventDate)
-	if len(eventDate) < 0 {
+	if len(eventDate) <= 0 {
 		return fmt.Errorf("event date should not be empty")
 	}
 
-	if len(eventDate) != 10 || eventDate[4] != '-' || eventDate[7] != '-' {
-		return fmt.Errorf("wrong date and time format for event date. please provide date in this format yyyy-mm-dd tt:mm")
+	re := regexp.MustCompile("[0-9]{4}-[0-9]{2}-[0-9]{2}")
+	if !re.MatchString(eventDate) {
+		return fmt.Errorf("wrong date and time format for event date. given date=%s, please provide date in this format yyyy-mm-dd", eventDate)
 	}
 	_, err := time.Parse(constants.DATE_FORMAT_EVENT_DATE, eventDate)
 	if err != nil {
@@ -61,41 +63,7 @@ func validateEventType(typ string) error {
 	if len(typ) > 0 {
 		typ = strings.ToLower(typ)
 		if strings.ToLower(typ) != "same" && strings.ToLower(typ) != "different" {
-			return fmt.Errorf("invalid value for event type. expected value: same/different")
-		}
-	}
-	return nil
-}
-
-func validateCreatedAt(createdAt string) error {
-	createdAt = strings.TrimSpace(createdAt)
-	if len(createdAt) > 0 {
-		if len(createdAt) != 16 || createdAt[4] != '-' || createdAt[7] != '-' || createdAt[13] != ':' {
-			return fmt.Errorf("wrong date and time format for createdAt. given date=%s, please provide date in this format yyyy-mm-dd tt:mm", createdAt)
-		}
-		_, err := time.Parse(constants.DATE_FORMAT, createdAt)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func validateLink(link string) error {
-	link = strings.TrimSpace(link)
-	if len(link) > 0 {
-		for _, link := range strings.Split(link, "|") {
-			link = strings.TrimSpace(link)
-			if len(link) < 4 {
-				return fmt.Errorf("pipeline(|) seperated links value must start with http or https. link could not be less than 4")
-			}
-			if link[0:4] != "http" {
-				return fmt.Errorf("pipeline(|) seperated links value must start with http or https")
-			}
-
-			if link[len(link)-1] == '"' || link[len(link)-1] == '\'' || link[len(link)-1] == '.' {
-				return fmt.Errorf("pipeline(|) seperated link's value should not ended with (\", ', .)")
-			}
+			return fmt.Errorf("invalid value for event type. given type=%s expected value: same/different", typ)
 		}
 	}
 	return nil
@@ -122,7 +90,7 @@ func (s QuoteService) CreateNewEventDetail(form model.EventDetailForm) (int64, e
 	link := strings.TrimSpace(form.Link)
 	var links []string
 	if len(link) > 0 {
-		links = strings.Split(link, ",")
+		links = strings.Split(link, "|")
 	}
 	eventDetail := model.EventDetail{
 		Title:        form.Title,
@@ -153,6 +121,10 @@ func (s QuoteService) GetEventDetailByTitleOrInfo(searchTxt string) ([]model.Eve
 		return nil, err
 	}
 
+	return aggregateEventDetailByURL(eventDetailList), nil
+}
+
+func aggregateEventDetailByURL(eventDetailList []model.EventDetail) []model.EventDetail {
 	eventDetailListSorted := model.SortEventDetailByID(eventDetailList)
 
 	var distinctEventDetailList []model.EventDetail
@@ -174,7 +146,7 @@ func (s QuoteService) GetEventDetailByTitleOrInfo(searchTxt string) ([]model.Eve
 			distinctEventDetailList = append(distinctEventDetailList, eventDetailListSorted[i])
 		}
 	}
-	return distinctEventDetailList, nil
+	return distinctEventDetailList
 }
 
 func (s QuoteService) GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error) {
@@ -183,28 +155,7 @@ func (s QuoteService) GetEventDetailByMonthDay(month, day int) ([]model.EventDet
 		return nil, err
 	}
 
-	eventDetailListSorted := model.SortEventDetailByID(eventDetailList)
-
-	var distinctEventDetailList []model.EventDetail
-	var links []string
-	found := false
-	for i := 0; i < len(eventDetailListSorted); i++ {
-		if i+1 < len(eventDetailListSorted) && eventDetailListSorted[i].ID == eventDetailListSorted[i+1].ID {
-			links = append(links, eventDetailListSorted[i].URL)
-			found = true
-		} else {
-			found = false
-		}
-
-		if !found {
-			links = append(links, eventDetailListSorted[i].URL)
-			eventDetailListSorted[i].Links = make([]string, len(links))
-			copy(eventDetailListSorted[i].Links, links)
-			links = nil
-			distinctEventDetailList = append(distinctEventDetailList, eventDetailListSorted[i])
-		}
-	}
-	return distinctEventDetailList, nil
+	return aggregateEventDetailByURL(eventDetailList), nil
 }
 
 func (s QuoteService) EventsInFuture(t time.Time) ([]model.EventDetail, error) {
@@ -222,7 +173,7 @@ func (s QuoteService) EventsInFuture(t time.Time) ([]model.EventDetail, error) {
 		return true
 	}
 
-	todayEvents := model.FilterEventDetail(findTodayEvent, events)
+	eventsInFuture := model.FilterEventDetail(findTodayEvent, events)
 
-	return todayEvents, nil
+	return eventsInFuture, nil
 }

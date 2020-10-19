@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"strings"
@@ -16,32 +15,16 @@ type IInfo interface {
 
 func (s QuoteService) ValidateForm(form model.InfoForm) error {
 	createdAt := strings.TrimSpace(form.CreatedAt)
-	if len(createdAt) > 0 {
-		if len(createdAt) != 16 || createdAt[4] != '-' || createdAt[7] != '-' || createdAt[13] != ':' {
-			return fmt.Errorf("wrong date and time format. given date=%s, please provide date in this format yyyy-mm-dd tt:mm", createdAt)
-		}
-		_, err := time.Parse(constants.DATE_FORMAT, createdAt)
-		if err != nil {
-			return err
-		}
+	err := validateCreatedAt(createdAt)
+	if err != nil {
+		return err
 	}
 
-	link := strings.TrimSpace(form.Link)
-	if len(link) > 0 {
-		for _, link := range strings.Split(link, ",") {
-			link = strings.TrimSpace(link)
-			if len(link) < 4 {
-				return fmt.Errorf("pipeline(|) seperated links value must start with http or https. link could not be less than 4")
-			}
-			if link[0:4] != "http" {
-				return fmt.Errorf("pipeline(|) seperated links value must start with http or https")
-			}
-
-			if link[len(link)-1] == '"' || link[len(link)-1] == '\'' || link[len(link)-1] == '.' {
-				return fmt.Errorf("pipeline(|) seperated link's value should not ended with (\", ', .)")
-			}
-		}
+	err = validateLink(form.Link)
+	if err != nil {
+		return err
 	}
+
 	return nil
 }
 
@@ -61,7 +44,7 @@ func (s QuoteService) CreateNewInfo(form model.InfoForm) (int64, error) {
 	link := strings.TrimSpace(form.Link)
 	var links []string
 	if len(link) > 0 {
-		links = strings.Split(link, ",")
+		links = strings.Split(link, "|")
 	}
 	info := model.Info{
 		Title:        form.Title,
