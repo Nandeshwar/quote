@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"strconv"
@@ -10,14 +9,15 @@ import (
 	"time"
 
 	"github.com/gookit/color"
-
 	"github.com/logic-building/functional-go/fp"
+	"github.com/sirupsen/logrus"
+
 	"quote/pkg/api"
 	"quote/pkg/env"
 	"quote/pkg/log"
-	"quote/pkg/quote"
 	"quote/pkg/repo"
 	"quote/pkg/service"
+	"quote/pkg/service/quote"
 )
 
 func main() {
@@ -30,6 +30,8 @@ func main() {
 	var (
 		logLevel             = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
 		sessionExpireMinutes = env.GetIntWithDefault("SESSION_EXPIRE_MINUTES", 60)
+		// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
+		webSessionSecretKey = env.GetStringWithDefault("WEB_SESSION_SECRET_KEY", "super-secret-key")
 
 		serverRunTimeInMin  = env.GetIntWithDefault("SERVER_RUN_DURATION_MIN", 5)
 		serverRunTimeInHour = env.GetIntWithDefault("SERVER_RUN_DURATION_HOUR", 2)
@@ -44,9 +46,6 @@ func main() {
 	logrus.SetLevel(logLevel)
 
 	sqlite3file := env.GetStringWithDefault("SQLITE3_FILE", "./db/quote.db")
-
-	// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
-	webSessionSecretKey := env.GetStringWithDefault("WEB_SESSION_SECRET_KEY", "super-secret-key")
 
 	devotionalImageMaxWidth, devotionalImageMaxHeight, err := getImageSize(devotionalImageMaxSize, "DEVOTIONAL_IMAGE_MAX_SIZE")
 	if err != nil {
@@ -76,9 +75,10 @@ func main() {
 	//img := env.GetBoolWithDefault("IMG", false)
 	//img2 := env.GetBoolWithDefault("IMAGE", false)
 
-	quote := quote.QuoteForTheDay()
+	quoteService := quote.NewQuoteService()
+	quoteForTheDay := quoteService.QuoteForTheDay()
 
-	wordList := strings.Split(quote, " ")
+	wordList := strings.Split(quoteForTheDay, " ")
 	wordListLen := len(wordList)
 
 	red := color.FgRed.Render
@@ -116,7 +116,7 @@ func main() {
 		fmt.Println("error=", err)
 	}
 
-	quoteSerive := service.NewQuoteService(sqlite3Repo)
+	infoEventSerive := service.NewInfoEventService(sqlite3Repo)
 
 	fmt.Println("   ")
 	eventsDayList := fp.RangeInt(0, 7)
@@ -139,7 +139,7 @@ func main() {
 			fmt.Println("")
 		}
 
-		eventsInFuture, err := quoteSerive.EventsInFuture(futureTime)
+		eventsInFuture, err := infoEventSerive.EventsInFuture(futureTime)
 		if err != nil {
 			fmt.Errorf("error while getting EventsInFuture for tomorrow, error=%v", err)
 		}
@@ -163,7 +163,7 @@ func main() {
 	fmt.Printf("\n or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n")
 
 	const httpPort int = 1922
-	imageWidth := api.ImageWidth{
+	imageWidth := api.ImageSize{
 		DevotionalImageMaxWidth:    devotionalImageMaxWidth,
 		DevotionalImageMaxHeight:   devotionalImageMaxHeight,
 		DevotionalImageMinWidth:    devotionalImageMinWidth,
@@ -173,7 +173,7 @@ func main() {
 		MotivationalImageMinWidth:  motivationalImageMinWidth,
 		MotivationalImageMinHeight: motivationalImageMinHeight,
 	}
-	apiServer := api.NewServer(httpPort, imageWidth, webSessionSecretKey, sessionExpireMinutes, quoteSerive)
+	apiServer := api.NewServer(httpPort, imageWidth, webSessionSecretKey, sessionExpireMinutes, infoEventSerive, quoteService)
 	go func() {
 		apiServer.Run()
 	}()

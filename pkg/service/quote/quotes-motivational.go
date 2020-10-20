@@ -9,7 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func AllMotivationalImage() (int, []string) {
+func (qs QuoteService) AllMotivationalImage() (int, []string) {
 	quotes := []string{
 		"image/competitionWithMySelf.jpg",
 		"image/becomegood.jpg",
@@ -45,7 +45,7 @@ func AllMotivationalImage() (int, []string) {
 	return len(quotes), quotes
 }
 
-func GetQuoteMotivationalImage(allImages []string) string {
+func (qs QuoteService) GetQuoteMotivationalImage(allImages []string) string {
 
 	s2 := rand.NewSource(int64(time.Now().Nanosecond()))
 	r2 := rand.New(s2)

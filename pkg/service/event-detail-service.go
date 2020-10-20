@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+//go:generate mockgen -destination "mock/mock_eventdetail.go" -source "event-detail-service.go" IEventDetail
 type IEventDetail interface {
 	ValidateFormEvent(form model.EventDetailForm) error
 	CreateNewEventDetail(form model.EventDetailForm) (int64, error)
@@ -16,7 +17,7 @@ type IEventDetail interface {
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
 }
 
-func (s QuoteService) ValidateFormEvent(form model.EventDetailForm) error {
+func (s InfoEventService) ValidateFormEvent(form model.EventDetailForm) error {
 	err := validateEventDate(form.EventDate)
 	if err != nil {
 		return err
@@ -69,7 +70,7 @@ func validateEventType(typ string) error {
 	return nil
 }
 
-func (s QuoteService) CreateNewEventDetail(form model.EventDetailForm) (int64, error) {
+func (s InfoEventService) CreateNewEventDetail(form model.EventDetailForm) (int64, error) {
 	var createdAt time.Time
 	var err error
 
@@ -115,7 +116,7 @@ func (s QuoteService) CreateNewEventDetail(form model.EventDetailForm) (int64, e
 	return id, nil
 }
 
-func (s QuoteService) GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error) {
+func (s InfoEventService) GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error) {
 	eventDetailList, err := s.EventDetailRepo.GetEventDetailByTitleOrInfo(searchTxt)
 	if err != nil {
 		return nil, err
@@ -149,7 +150,7 @@ func aggregateEventDetailByURL(eventDetailList []model.EventDetail) []model.Even
 	return distinctEventDetailList
 }
 
-func (s QuoteService) GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error) {
+func (s InfoEventService) GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error) {
 	eventDetailList, err := s.EventDetailRepo.GetEventDetailByMonthDay(month, day)
 	if err != nil {
 		return nil, err
@@ -158,7 +159,7 @@ func (s QuoteService) GetEventDetailByMonthDay(month, day int) ([]model.EventDet
 	return aggregateEventDetailByURL(eventDetailList), nil
 }
 
-func (s QuoteService) EventsInFuture(t time.Time) ([]model.EventDetail, error) {
+func (s InfoEventService) EventsInFuture(t time.Time) ([]model.EventDetail, error) {
 	year, month, day := t.Date()
 
 	events, err := s.GetEventDetailByMonthDay(int(month), day)

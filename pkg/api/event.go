@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"quote/pkg/constants"
 	"quote/pkg/model"
@@ -14,17 +15,25 @@ import (
 func (s *Server) events(w http.ResponseWriter, r *http.Request) {
 	searchText := mux.Vars(r)["searchText"]
 
-	filteredEvents := s.findEvents(searchText)
+	filteredEvents, err := s.findEvents(searchText)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"searchText": searchText,
+			"error":      err,
+		}).Errorf("error searching events")
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 	displayEvents(filteredEvents, w)
+	w.WriteHeader(http.StatusOK)
 }
 
-func (s *Server) findEvents(searchText string) []model.EventDetail {
+func (s *Server) findEvents(searchText string) ([]model.EventDetail, error) {
 	eventDetailList, err := s.eventDetailService.GetEventDetailByTitleOrInfo(searchText)
 	if err != nil {
-		fmt.Println("error =", err)
+		return nil, err
 	}
 
-	return eventDetailList
+	return eventDetailList, nil
 }
 
 func displayEvents(filteredEvents []model.EventDetail, w http.ResponseWriter) {

@@ -14,13 +14,13 @@ import (
 func TestInfoService(t *testing.T) {
 	Convey("Test Info Service", t, func() {
 		ctrl := gomock.NewController(t)
-		iInfoCtrl := mock_repo.NewMockIInfoRepo(ctrl)
-		quoteService := QuoteService{
-			InfoRepo: iInfoCtrl,
+		infoRepo := mock_repo.NewMockIInfoRepo(ctrl)
+		quoteService := InfoEventService{
+			InfoRepo: infoRepo,
 		}
 
 		Convey("Test ValidateForm", func() {
-			quoteService := QuoteService{}
+			quoteService := InfoEventService{}
 			Convey("success: valid date 2020-10-16 13:32", func() {
 				form := model.InfoForm{
 					CreatedAt: "2020-10-16 13:32",
@@ -139,7 +139,7 @@ func TestInfoService(t *testing.T) {
 					Link:      "http://google.com, http://yahoo.com",
 				}
 
-				iInfoCtrl.EXPECT().CreateInfo(gomock.Any()).Return(int64(10), nil)
+				infoRepo.EXPECT().CreateInfo(gomock.Any()).Return(int64(10), nil)
 				id, err := quoteService.CreateNewInfo(form)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
@@ -151,7 +151,7 @@ func TestInfoService(t *testing.T) {
 					Link:  "http://google.com, http://yahoo.com",
 				}
 
-				iInfoCtrl.EXPECT().CreateInfo(gomock.Any()).Return(int64(10), nil)
+				infoRepo.EXPECT().CreateInfo(gomock.Any()).Return(int64(10), nil)
 				id, err := quoteService.CreateNewInfo(form)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
@@ -172,7 +172,7 @@ func TestInfoService(t *testing.T) {
 					Link:      "http://google.com, http://yahoo.com",
 				}
 
-				iInfoCtrl.EXPECT().CreateInfo(gomock.Any()).Return(int64(0), errors.New("db error"))
+				infoRepo.EXPECT().CreateInfo(gomock.Any()).Return(int64(0), errors.New("db error"))
 				id, err := quoteService.CreateNewInfo(form)
 				So(err, ShouldNotBeNil)
 				So(err.Error(), ShouldEqual, "db error")
@@ -188,7 +188,7 @@ func TestInfoService(t *testing.T) {
 					Info:  "Info1",
 					Link:  "www.google.com",
 				}}
-				iInfoCtrl.EXPECT().GetInfoByTitleOrInfo("abc").Return(infoList, nil)
+				infoRepo.EXPECT().GetInfoByTitleOrInfo("abc").Return(infoList, nil)
 				infoListFromDB, err := quoteService.GetInfoByTitleOrInfo("abc")
 
 				So(err, ShouldBeNil)
@@ -210,7 +210,7 @@ func TestInfoService(t *testing.T) {
 					Info:  "Info1",
 					Link:  "www.yahoo.com",
 				}}
-				iInfoCtrl.EXPECT().GetInfoByTitleOrInfo("abc").Return(infoList, nil)
+				infoRepo.EXPECT().GetInfoByTitleOrInfo("abc").Return(infoList, nil)
 				infoListFromDB, err := quoteService.GetInfoByTitleOrInfo("abc")
 
 				So(err, ShouldBeNil)
@@ -245,7 +245,7 @@ func TestInfoService(t *testing.T) {
 					Info:  "Info1",
 					Link:  "www.hotmail.com",
 				}}
-				iInfoCtrl.EXPECT().GetInfoByTitleOrInfo("abc").Return(infoList, nil)
+				infoRepo.EXPECT().GetInfoByTitleOrInfo("abc").Return(infoList, nil)
 				infoListFromDB, err := quoteService.GetInfoByTitleOrInfo("abc")
 
 				So(err, ShouldBeNil)
@@ -260,7 +260,7 @@ func TestInfoService(t *testing.T) {
 			})
 
 			Convey("failure: db error", func() {
-				iInfoCtrl.EXPECT().GetInfoByTitleOrInfo("abc").Return(nil, errors.New("db error"))
+				infoRepo.EXPECT().GetInfoByTitleOrInfo("abc").Return(nil, errors.New("db error"))
 				_, err := quoteService.GetInfoByTitleOrInfo("abc")
 
 				So(err, ShouldNotBeNil)

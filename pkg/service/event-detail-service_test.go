@@ -16,14 +16,14 @@ import (
 func TestEventDetailSerivce(t *testing.T) {
 	Convey("Test Event Detail Service", t, func() {
 		ctrl := gomock.NewController(t)
-		iEventInfoCtrl := mock_repo.NewMockIEventDetailRepo(ctrl)
+		eventInfoRepo := mock_repo.NewMockIEventDetailRepo(ctrl)
 
-		quoteService := QuoteService{
-			EventDetailRepo: iEventInfoCtrl,
+		quoteService := InfoEventService{
+			EventDetailRepo: eventInfoRepo,
 		}
 
 		Convey("Test ValidateFormEvent", func() {
-			quoteService := QuoteService{}
+			quoteService := InfoEventService{}
 			Convey("success: validate form", func() {
 				form := model.EventDetailForm{
 					EventDate: "2020-10-18",
@@ -157,7 +157,7 @@ func TestEventDetailSerivce(t *testing.T) {
 			}
 
 			Convey("success: create new event detail", func() {
-				iEventInfoCtrl.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(10), nil)
+				eventInfoRepo.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(10), nil)
 				id, err := quoteService.CreateNewEventDetail(form)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
@@ -171,7 +171,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Typ:       "same",
 				}
 
-				iEventInfoCtrl.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(10), nil)
+				eventInfoRepo.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(10), nil)
 				id, err := quoteService.CreateNewEventDetail(form2)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
@@ -184,14 +184,14 @@ func TestEventDetailSerivce(t *testing.T) {
 					Info:      "Event Detail",
 				}
 
-				iEventInfoCtrl.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(10), nil)
+				eventInfoRepo.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(10), nil)
 				id, err := quoteService.CreateNewEventDetail(form2)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
 			})
 
 			Convey("failure: create new event detail", func() {
-				iEventInfoCtrl.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(0), errors.New("db error"))
+				eventInfoRepo.EXPECT().CreateEventDetail(gomock.Any()).Return(int64(0), errors.New("db error"))
 				id, err := quoteService.CreateNewEventDetail(form)
 				So(err, ShouldNotBeNil)
 				So(id, ShouldEqual, 0)
@@ -234,7 +234,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Title: "Title1",
 					URL:   "www.google.com",
 				}}
-				iEventInfoCtrl.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(eventDetailFromDb, nil)
 				eventDetailList, err := quoteService.GetEventDetailByTitleOrInfo("abc")
 				So(err, ShouldBeNil)
 				So(len(eventDetailList), ShouldEqual, 1)
@@ -257,7 +257,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Title: "Title1",
 					URL:   "www.hotmail.com",
 				}}
-				iEventInfoCtrl.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(eventDetailFromDb, nil)
 				eventDetailList, err := quoteService.GetEventDetailByTitleOrInfo("abc")
 				So(err, ShouldBeNil)
 				So(len(eventDetailList), ShouldEqual, 1)
@@ -286,7 +286,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Title: "Title1",
 					URL:   "www.hotmail.com",
 				}}
-				iEventInfoCtrl.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(eventDetailFromDb, nil)
 				eventDetailList, err := quoteService.GetEventDetailByTitleOrInfo("abc")
 				So(err, ShouldBeNil)
 				So(len(eventDetailList), ShouldEqual, 2)
@@ -299,7 +299,7 @@ func TestEventDetailSerivce(t *testing.T) {
 			})
 
 			Convey("failure: db error", func() {
-				iEventInfoCtrl.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(nil, errors.New("db error"))
+				eventInfoRepo.EXPECT().GetEventDetailByTitleOrInfo("abc").Return(nil, errors.New("db error"))
 				_, err := quoteService.GetEventDetailByTitleOrInfo("abc")
 				So(err, ShouldNotBeNil)
 				So(err.Error(), ShouldEqual, "db error")
@@ -314,7 +314,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					URL:   "www.google.com",
 				}}
 
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(eventDetailFromDb, nil)
 				eventDetailList, err := quoteService.GetEventDetailByMonthDay(2020, 10)
 
 				So(err, ShouldBeNil)
@@ -338,7 +338,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Title: "Title1",
 					URL:   "www.hotmail.com",
 				}}
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(eventDetailFromDb, nil)
 				eventDetailList, err := quoteService.GetEventDetailByMonthDay(2020, 10)
 				So(err, ShouldBeNil)
 				So(len(eventDetailList), ShouldEqual, 1)
@@ -367,7 +367,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Title: "Title1",
 					URL:   "www.hotmail.com",
 				}}
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(eventDetailFromDb, nil)
 				eventDetailList, err := quoteService.GetEventDetailByMonthDay(2020, 10)
 				So(err, ShouldBeNil)
 				So(len(eventDetailList), ShouldEqual, 2)
@@ -380,7 +380,7 @@ func TestEventDetailSerivce(t *testing.T) {
 			})
 
 			Convey("failure: db error", func() {
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(nil, errors.New("db error"))
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(2020, 10).Return(nil, errors.New("db error"))
 				_, err := quoteService.GetEventDetailByMonthDay(2020, 10)
 				So(err, ShouldNotBeNil)
 				So(err.Error(), ShouldEqual, "db error")
@@ -401,7 +401,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Year:  year,
 				}}
 
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(int(month), day).Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(int(month), day).Return(eventDetailFromDb, nil)
 
 				todayEvents, err := quoteService.EventsInFuture(t)
 				So(err, ShouldBeNil)
@@ -427,7 +427,7 @@ func TestEventDetailSerivce(t *testing.T) {
 					Year:  year - 1,
 				}}
 
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(int(month), day).Return(eventDetailFromDb, nil)
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(int(month), day).Return(eventDetailFromDb, nil)
 
 				todayEvents, err := quoteService.EventsInFuture(t)
 				So(err, ShouldBeNil)
@@ -437,7 +437,7 @@ func TestEventDetailSerivce(t *testing.T) {
 			Convey("failure: db error", func() {
 				t := time.Now()
 				_, month, day := t.Date()
-				iEventInfoCtrl.EXPECT().GetEventDetailByMonthDay(int(month), day).Return(nil, errors.New("db error"))
+				eventInfoRepo.EXPECT().GetEventDetailByMonthDay(int(month), day).Return(nil, errors.New("db error"))
 
 				_, err := quoteService.EventsInFuture(t)
 				So(err, ShouldNotBeNil)

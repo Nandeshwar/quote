@@ -12,7 +12,7 @@ import (
 func TestLogin(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	sqliteRepo := mock_repo.NewMockIRepo(mockCtrl)
-	q := QuoteService{SQLite3Repo: sqliteRepo}
+	q := InfoEventService{SQLite3Repo: sqliteRepo}
 
 	Convey("Test login", t, func() {
 
