@@ -6,6 +6,13 @@ Display random quotes evertimes it is run:
 go run cmd/quote/main.go
 ```
 
+## To get test coverage
+```
+go test $(go list ./pkg/*) -coverprofile r.txt
+go tool cover -func r.txt
+go tool cover -html r.txt
+```
+
 ## Run using docker container (default server run duration 5 minutes)
 ```
 docker run -p 1922:1922 -t nandeshwar/quote
