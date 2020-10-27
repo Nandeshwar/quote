@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"quote/pkg/model"
 	"strings"
@@ -38,7 +39,10 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 			//if info2.Some()
 			foundList, err := s.infoService.GetInfoByTitleOrInfo(searchTxt)
 			if err != nil {
-				fmt.Println("Error in findInfo", err)
+				logrus.WithFields(logrus.Fields{
+					"searchText": searchText,
+					"error":      err,
+				}).Errorf("error searching info")
 			}
 
 			for _, foundInfo := range foundList {
@@ -65,7 +69,13 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 		var filteredEvents []model.EventDetail
 
 		for _, searchTxt := range searchTextList {
-			foundList := s.findEvents(searchTxt)
+			foundList, err := s.findEvents(searchTxt)
+			if err != nil {
+				logrus.WithFields(logrus.Fields{
+					"searchText": searchText,
+					"error":      err,
+				}).Errorf("error searching event details")
+			}
 			for _, foundEvent := range foundList {
 
 				isTitleExist := func(event model.EventDetail) bool {
@@ -110,7 +120,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 		displayEvents(filteredEvents, w)
 		displayImage(foundImages, w)
 	}(infoCh, eventCh, imageCh)
-
+	w.WriteHeader(http.StatusOK)
 }
 
 func searchIntelligence(searchStrList []string) []string {

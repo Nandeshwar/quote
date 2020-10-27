@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/pprof"
 	"quote/pkg/service"
+	"quote/pkg/service/quote"
 	"strconv"
 	"sync"
 	"time"
@@ -14,7 +15,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type ImageWidth struct {
+type ImageSize struct {
 	DevotionalImageMaxWidth  int
 	DevotionalImageMaxHeight int
 	DevotionalImageMinWidth  int
@@ -26,23 +27,42 @@ type ImageWidth struct {
 	MotivationalImageMinHeight int
 }
 
-type Server struct {
-	server     *http.Server
-	wg         sync.WaitGroup
-	imageWidth ImageWidth
-
-	loginService         service.ILogin
-	infoService          service.IInfo
-	eventDetailService   service.IEventDetail
-	sessionCookieStore   *sessions.CookieStore
-	sessionExpireSeconds int
+type Views struct {
+	Login            string
+	Admin            string
+	AdminEventDetail string
+	AdminInfo        string
 }
 
-func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, sessionExpireMinutes int, quoteService service.QuoteService) *Server {
+type Server struct {
+	server    *http.Server
+	wg        sync.WaitGroup
+	imageSize ImageSize
+
+	loginService       service.ILogin
+	infoService        service.IInfo
+	eventDetailService service.IEventDetail
+	quoteService       quote.QuoteService
+
+	cookieName           string
+	sessionCookieStore   *sessions.CookieStore
+	sessionExpireSeconds int
+
+	views Views
+}
+
+func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, sessionExpireMinutes int, infoEventService service.InfoEventService, quoteService quote.QuoteService) *Server {
 
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
+
+	views := Views{
+		Login:            "./views/login.gtpl",
+		Admin:            "./views/admin.gtpl",
+		AdminEventDetail: "./views/admin-event-detail.gtpl",
+		AdminInfo:        "./views/admin-info.gtpl",
+	}
 
 	server := &http.Server{
 		Addr:           ":" + strconv.Itoa(httpPort),
@@ -52,24 +72,30 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 		MaxHeaderBytes: 1000000,
 	}
 	s := &Server{
-		server:     server,
-		imageWidth: imageWidth,
+		server:    server,
+		imageSize: imageSize,
 
-		loginService:         quoteService,
-		infoService:          quoteService,
-		eventDetailService:   quoteService,
+		loginService:       infoEventService,
+		infoService:        infoEventService,
+		eventDetailService: infoEventService,
+		quoteService:       quoteService,
+
 		sessionExpireSeconds: sessionExpireMinutes * 60,
-		sessionCookieStore:   sessions.NewCookieStore([]byte(webSessionSecretKey)),
+
+		views: views,
+
+		cookieName:         "nandeshwar-quote-cookie",
+		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
 	}
 
-	router.HandleFunc("/quotes-devotional", s.quotesAll)
-	router.HandleFunc("/quotes-motivational", s.quotesMotivational)
-	router.HandleFunc("/events", s.events)
-	router.HandleFunc("/events/{searchText}", s.events)
-	router.HandleFunc("/info", s.info)
-	router.HandleFunc("/info/{searchText}", s.info)
-	router.HandleFunc("/search/{searchText}", s.search)
-	router.HandleFunc("/find/{searchText}", s.search)
+	router.HandleFunc("/quotes-devotional", s.quotesDevotional).Methods(http.MethodGet)
+	router.HandleFunc("/quotes-motivational", s.quotesMotivational).Methods(http.MethodGet)
+	router.HandleFunc("/events", s.events).Methods(http.MethodGet)
+	router.HandleFunc("/events/{searchText}", s.events).Methods(http.MethodGet)
+	router.HandleFunc("/info", s.info).Methods(http.MethodGet)
+	router.HandleFunc("/info/{searchText}", s.info).Methods(http.MethodGet)
+	router.HandleFunc("/search/{searchText}", s.search).Methods(http.MethodGet)
+	router.HandleFunc("/find/{searchText}", s.search).Methods(http.MethodGet)
 
 	router.HandleFunc("/debug/pprof/", pprof.Index)
 	router.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
@@ -78,11 +104,11 @@ func NewServer(httpPort int, imageWidth ImageWidth, webSessionSecretKey string, 
 
 	// Admin section
 	//router.HandleFunc("/", s.index)
-	router.HandleFunc("/login", s.login)
-	router.HandleFunc("/", s.login)
-	router.HandleFunc("/admin", s.admin)
-	router.HandleFunc("/admin-info", s.adminInfo)
-	router.HandleFunc("/admin-event-detail", s.adminEvent)
+	router.HandleFunc("/login", s.login).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc("/", s.login).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc("/admin", s.admin).Methods(http.MethodGet)
+	router.HandleFunc("/admin-info", s.adminInfo).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc("/admin-event-detail", s.adminEvent).Methods(http.MethodGet, http.MethodPost)
 
 	return s
 }

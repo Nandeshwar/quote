@@ -9,7 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func QuoteForTheDay() string {
+func (qs QuoteService) QuoteForTheDay() string {
 	quotes := []string{
 		"Time spent in love is never waste",
 		"Enjoy every moment",

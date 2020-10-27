@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"quote/pkg/constants"
 	"quote/pkg/model"
@@ -15,9 +16,14 @@ func (s *Server) info(w http.ResponseWriter, r *http.Request) {
 
 	infoList, err := s.infoService.GetInfoByTitleOrInfo(searchText)
 	if err != nil {
-		fmt.Println("Error in findInfo", err)
+		logrus.WithFields(logrus.Fields{
+			"searchText": searchText,
+			"error":      err,
+		}).Errorf("error searching events")
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 	displayInfo(infoList, w)
+	w.WriteHeader(http.StatusOK)
 }
 
 func displayInfo(filteredInfo []model.Info, w http.ResponseWriter) {

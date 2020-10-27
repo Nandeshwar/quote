@@ -3,15 +3,15 @@ package api
 import (
 	"fmt"
 	"net/http"
-	"quote/pkg/quote"
 	"strings"
 
 	image2 "quote/pkg/image"
+	"quote/pkg/service/quote"
 
 	"github.com/logic-building/functional-go/fp"
 )
 
-func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
+func (s *Server) quotesDevotional(w http.ResponseWriter, r *http.Request) {
 	allImageLen, allImages := quote.AllQuotesImage()
 
 	imageReadList, imagePath := getNonReadImage("All Image", allImageLen, quote.AllImageRead, quote.QuoteForTheDayImage, allImages)
@@ -19,23 +19,24 @@ func (s *Server) quotesAll(w http.ResponseWriter, r *http.Request) {
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	width, height = increaseImageSize(width, height, s.imageWidth.DevotionalImageMinWidth, s.imageWidth.DevotionalImageMinHeight, 100)
-	width, height = reduceImageSize(width, height, s.imageWidth.DevotionalImageMaxWidth, s.imageWidth.DevotionalImageMaxHeight, 100)
+	width, height = increaseImageSize(width, height, s.imageSize.DevotionalImageMinWidth, s.imageSize.DevotionalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.imageSize.DevotionalImageMaxWidth, s.imageSize.DevotionalImageMaxHeight, 100)
 
 	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<title>Quote</title>")
 	fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s' target='_blank'><img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'> </a>", imagePath, imagePath, width, height))
+	w.WriteHeader(http.StatusOK)
 }
 
 func (s *Server) quotesMotivational(w http.ResponseWriter, r *http.Request) {
-	allImageLen, allImages := quote.AllMotivationalImage()
-	imageReadList, imagePath := getNonReadImage("MotivationalImage", allImageLen, quote.MotivationalImageRead, quote.GetQuoteMotivationalImage, allImages)
+	allImageLen, allImages := s.quoteService.AllMotivationalImage()
+	imageReadList, imagePath := getNonReadImage("MotivationalImage", allImageLen, quote.MotivationalImageRead, s.quoteService.GetQuoteMotivationalImage, allImages)
 	quote.MotivationalImageRead = imageReadList
 
 	width, height := image2.GetImageDimension(imagePath)
 
-	width, height = increaseImageSize(width, height, s.imageWidth.MotivationalImageMinWidth, s.imageWidth.MotivationalImageMinHeight, 100)
-	width, height = reduceImageSize(width, height, s.imageWidth.MotivationalImageMaxWidth, s.imageWidth.MotivationalImageMaxHeight, 100)
+	width, height = increaseImageSize(width, height, s.imageSize.MotivationalImageMinWidth, s.imageSize.MotivationalImageMinHeight, 100)
+	width, height = reduceImageSize(width, height, s.imageSize.MotivationalImageMaxWidth, s.imageSize.MotivationalImageMaxHeight, 100)
 
 	fmt.Fprintf(w, "<head>Quote for the day! <meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<h1>Quote for the day!</h1>")

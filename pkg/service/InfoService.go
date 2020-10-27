@@ -7,13 +7,14 @@ import (
 	"time"
 )
 
+//go:generate mockgen -source "InfoService.go" -destination "mock/mock_iinfo.go" IInfo
 type IInfo interface {
 	ValidateForm(form model.InfoForm) error
 	CreateNewInfo(form model.InfoForm) (int64, error)
 	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
 }
 
-func (s QuoteService) ValidateForm(form model.InfoForm) error {
+func (s InfoEventService) ValidateForm(form model.InfoForm) error {
 	createdAt := strings.TrimSpace(form.CreatedAt)
 	err := validateCreatedAt(createdAt)
 	if err != nil {
@@ -28,7 +29,7 @@ func (s QuoteService) ValidateForm(form model.InfoForm) error {
 	return nil
 }
 
-func (s QuoteService) CreateNewInfo(form model.InfoForm) (int64, error) {
+func (s InfoEventService) CreateNewInfo(form model.InfoForm) (int64, error) {
 	var createdAt time.Time
 	var err error
 
@@ -60,7 +61,7 @@ func (s QuoteService) CreateNewInfo(form model.InfoForm) (int64, error) {
 	return id, nil
 }
 
-func (s QuoteService) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error) {
+func (s InfoEventService) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error) {
 	infoList, err := s.InfoRepo.GetInfoByTitleOrInfo(searchTxt)
 	if err != nil {
 		return nil, err
