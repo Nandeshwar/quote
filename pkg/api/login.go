@@ -1,8 +1,10 @@
 package api
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"html/template"
 	"net/http"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
@@ -54,6 +56,31 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		session.Options.MaxAge = s.sessionExpireSeconds
 		session.Save(r, w)
 
+		expirationTime := time.Now().Add(5 * time.Minute)
+		claims := &Claims{
+			Username: user[0],
+			StandardClaims: jwt.StandardClaims{
+				// In JWT, the expiry time is expressed as unix milliseconds
+				ExpiresAt: expirationTime.Unix(),
+			},
+		}
+
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		var jwtKey = []byte("my_secret_key")
+		tokenString, err := token.SignedString(jwtKey)
+		if err != nil {
+			logrus.WithError(err).Error("jwt error")
+			// If there is an error in creating the JWT return an internal server error
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		http.SetCookie(w, &http.Cookie{
+			Name:    "token",
+			Value:   tokenString,
+			Expires: expirationTime,
+		})
+
 		t, err := template.ParseFiles(s.views.Admin)
 		if err != nil {
 			logrus.Error("error executing login view", err)
@@ -66,6 +93,8 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
+
 	}
 }

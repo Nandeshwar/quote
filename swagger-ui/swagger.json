@@ -1,0 +1,100 @@
+{
+  "swagger": "2.0",
+  "info": {},
+  "paths": {
+    "/api/quote/v1/info/{id}": {
+      "get": {
+        "description": "get INFO by id",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "INFO"
+        ],
+        "operationId": "info",
+        "parameters": [
+          {
+            "type": "string",
+            "default": 100,
+            "description": "id to get info",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "description": "Put INFO by id",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "INFO"
+        ],
+        "operationId": "info",
+        "parameters": [
+          {
+            "type": "string",
+            "default": 100,
+            "description": "id to put info",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "infoRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/infoRequest"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {
+    "infoRequest": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "string",
+          "x-go-name": "Info",
+          "example": "Heart touching bhajan"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Links",
+          "example": [
+            "https://www.youtube.com/watch?v=XP9rlhzJoxc"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "x-go-name": "Title",
+          "example": "Bhajan: O Kanha ab to murli ki madhur suna do taan"
+        }
+      },
+      "x-go-name": "InfoRequest",
+      "x-go-package": "quote/pkg/api"
+    }
+  }
+}

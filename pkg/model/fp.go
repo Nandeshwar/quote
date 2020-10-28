@@ -3715,7 +3715,7 @@ func SortInfoByUpdatedDateDescPtr(list []*Info) []*Info {
 // UnionInfoByID return a set that is the union of the input sets
 // repeated value within list parameter will be ignored
 func UnionInfoByID(arrList ...[]Info) []Info {
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	var resultArr []Info
 	for _, arr := range arrList {
 		for _, v := range arr {
@@ -3732,7 +3732,7 @@ func UnionInfoByID(arrList ...[]Info) []Info {
 // Union<FTYPE>Ptr return a set that is the union of the input sets
 // repeated value within list parameter will be ignored
 func UnionInfoByIDPtr(arrList ...[]*Info) []*Info {
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	var resultArr []*Info
 	for _, arr := range arrList {
 		for _, v := range arr {
@@ -3753,7 +3753,7 @@ func IntersectionInfoByID(arrList ...[]Info) []Info {
 		return []Info{}
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	if len(arrList) == 1 {
 		var newList []Info
 		for i := 0; i < len(arrList[0]); i++ {
@@ -3800,7 +3800,7 @@ func IntersectionInfoByIDPtr(arrList ...[]*Info) []*Info {
 		return []*Info{}
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	if len(arrList) == 1 {
 		var newList []*Info
 		for i := 0; i < len(arrList[0]); i++ {
@@ -3847,7 +3847,7 @@ func DifferenceInfoByID(arrList ...[]Info) []Info {
 		return []Info{}
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	if len(arrList) == 1 {
 		var newList []Info
 		for i := 0; i < len(arrList[0]); i++ {
@@ -3894,7 +3894,7 @@ func DifferenceInfoByIDPtr(arrList ...[]*Info) []*Info {
 		return []*Info{}
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	if len(arrList) == 1 {
 		var newList []*Info
 		for i := 0; i < len(arrList[0]); i++ {
@@ -3941,7 +3941,7 @@ func SubsetInfoByID(list1, list2 []Info) bool {
 		return false
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	for i := 0; i < len(list1); i++ {
 		_, ok := resultMap[list1[i].ID]
 		if !ok {
@@ -3968,7 +3968,7 @@ func SubsetInfoByIDPtr(list1, list2 []*Info) bool {
 		return false
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	for i := 0; i < len(list1); i++ {
 		_, ok := resultMap[list1[i].ID]
 		if !ok {
@@ -3995,7 +3995,7 @@ func SupersetInfoByID(list1, list2 []Info) bool {
 		return false
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 
 	for i := 0; i < len(list2); i++ {
 		_, ok := resultMap[list2[i].ID]
@@ -4023,7 +4023,7 @@ func SupersetInfoByIDPtr(list1, list2 []*Info) bool {
 		return false
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 
 	for i := 0; i < len(list2); i++ {
 		_, ok := resultMap[list2[i].ID]
@@ -4050,7 +4050,7 @@ func SetInfoByID(list []Info) []Info {
 		return []Info{}
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	newList := []Info{}
 	for i := 0; i < len(list); i++ {
 		_, ok := resultMap[list[i].ID]
@@ -4068,7 +4068,7 @@ func SetInfoByIDPtr(list []*Info) []*Info {
 		return []*Info{}
 	}
 
-	resultMap := make(map[int]bool)
+	resultMap := make(map[int64]bool)
 	newList := []*Info{}
 	for i := 0; i < len(list); i++ {
 		_, ok := resultMap[list[i].ID]

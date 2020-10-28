@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"strings"
@@ -12,6 +13,8 @@ type IInfo interface {
 	ValidateForm(form model.InfoForm) error
 	CreateNewInfo(form model.InfoForm) (int64, error)
 	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
+	UpdateInfoByID(info model.Info) error
+	GetInfoByID(ID int64) (model.Info, error)
 }
 
 func (s InfoEventService) ValidateForm(form model.InfoForm) error {
@@ -88,4 +91,32 @@ func (s InfoEventService) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, 
 		}
 	}
 	return distinctInfoList, nil
+}
+
+func (s InfoEventService) GetInfoByID(ID int64) (model.Info, error) {
+	infoList, err := s.InfoRepo.GetInfoByID(ID)
+	if err != nil {
+		return model.Info{}, err
+	}
+
+	if len(infoList) == 0 {
+		return model.Info{}, fmt.Errorf("info id=%d not found", ID)
+	}
+
+	var links []string
+	for i := 0; i < len(infoList); i++ {
+		links = append(links, infoList[i].Link)
+	}
+	infoList[0].Links = links
+	return infoList[0], nil
+}
+
+func (s InfoEventService) UpdateInfoByID(info model.Info) error {
+	updatedAt := time.Now()
+	info.UpdatedDate = updatedAt
+	err := s.InfoRepo.UpdateInfoByID(info)
+	if err != nil {
+		return err
+	}
+	return nil
 }

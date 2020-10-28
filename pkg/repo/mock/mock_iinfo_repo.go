@@ -62,3 +62,32 @@ func (mr *MockIInfoRepoMockRecorder) GetInfoByTitleOrInfo(searchTxt interface{})
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfoByTitleOrInfo", reflect.TypeOf((*MockIInfoRepo)(nil).GetInfoByTitleOrInfo), searchTxt)
 }
+
+// UpdateInfoByID mocks base method
+func (m *MockIInfoRepo) UpdateInfoByID(info model.Info) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateInfoByID", info)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateInfoByID indicates an expected call of UpdateInfoByID
+func (mr *MockIInfoRepoMockRecorder) UpdateInfoByID(info interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateInfoByID", reflect.TypeOf((*MockIInfoRepo)(nil).UpdateInfoByID), info)
+}
+
+// GetInfoByID mocks base method
+func (m *MockIInfoRepo) GetInfoByID(ID int64) ([]model.Info, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetInfoByID", ID)
+	ret0, _ := ret[0].([]model.Info)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetInfoByID indicates an expected call of GetInfoByID
+func (mr *MockIInfoRepoMockRecorder) GetInfoByID(ID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfoByID", reflect.TypeOf((*MockIInfoRepo)(nil).GetInfoByID), ID)
+}

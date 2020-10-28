@@ -1,3 +1,12 @@
+// Package Quote QuoteAPI.
+//
+//     Consumes:
+//		- application/xml
+//     Produces:
+//      - application/json
+//
+// swagger:meta
+
 package api
 
 import (
@@ -10,10 +19,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"github.com/sirupsen/logrus"
 )
+
+//go:generate swagger generate spec -m -o ../../swagger-ui/swagger.json
 
 type ImageSize struct {
 	DevotionalImageMaxWidth  int
@@ -32,6 +44,11 @@ type Views struct {
 	Admin            string
 	AdminEventDetail string
 	AdminInfo        string
+}
+
+type Claims struct {
+	Username string `json:"username"`
+	jwt.StandardClaims
 }
 
 type Server struct {
@@ -56,6 +73,9 @@ func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, se
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
 	router.PathPrefix("/image-motivational/").Handler(http.StripPrefix("/image-motivational/", http.FileServer(http.Dir("./image-motivational"))))
+
+	sh := http.StripPrefix("/swagger-ui/", http.FileServer(http.Dir("./swagger-ui/")))
+	router.PathPrefix("/swagger-ui/").Handler(sh)
 
 	views := Views{
 		Login:            "./views/login.gtpl",
@@ -109,6 +129,10 @@ func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, se
 	router.HandleFunc("/admin", s.admin).Methods(http.MethodGet)
 	router.HandleFunc("/admin-info", s.adminInfo).Methods(http.MethodGet, http.MethodPost)
 	router.HandleFunc("/admin-event-detail", s.adminEvent).Methods(http.MethodGet, http.MethodPost)
+
+	//info api
+	router.HandleFunc("/api/quote/v1/info/{id}", s.getInfo).Methods(http.MethodGet)
+	router.HandleFunc("/api/quote/v1/info/{id}", s.putInfo).Methods(http.MethodPut)
 
 	return s
 }
