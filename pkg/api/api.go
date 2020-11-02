@@ -11,6 +11,7 @@ package api
 
 import (
 	"context"
+	"github.com/justinas/alice"
 	"net/http"
 	"net/http/pprof"
 	"quote/pkg/service"
@@ -130,9 +131,14 @@ func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, se
 	router.HandleFunc("/admin-info", s.adminInfo).Methods(http.MethodGet, http.MethodPost)
 	router.HandleFunc("/admin-event-detail", s.adminEvent).Methods(http.MethodGet, http.MethodPost)
 
+	putInfoHandler := http.HandlerFunc(s.putInfo)
+	getInfoHandler := http.HandlerFunc(s.getInfo)
+
+	aliceChain := alice.New(s.authenticationHandler)
+
 	//info api
-	router.HandleFunc("/api/quote/v1/info/{id}", s.getInfo).Methods(http.MethodGet)
-	router.HandleFunc("/api/quote/v1/info/{id}", s.putInfo).Methods(http.MethodPut)
+	router.Handle("/api/quote/v1/info/{id}", aliceChain.Then(getInfoHandler)).Methods(http.MethodGet)
+	router.Handle("/api/quote/v1/info/{id}", aliceChain.Then(putInfoHandler)).Methods(http.MethodPut)
 
 	return s
 }

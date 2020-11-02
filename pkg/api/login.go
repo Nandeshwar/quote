@@ -56,7 +56,7 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 		session.Options.MaxAge = s.sessionExpireSeconds
 		session.Save(r, w)
 
-		expirationTime := time.Now().Add(5 * time.Minute)
+		expirationTime := time.Now().Add(15 * time.Minute)
 		claims := &Claims{
 			Username: user[0],
 			StandardClaims: jwt.StandardClaims{
