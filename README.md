@@ -59,3 +59,78 @@ sqlite3 ./db/quote.db
 ```
 .tables
 ```
+
+## Swagger setup in local
+### Install go-swagger in mac
+```
+brew tap go-swagger/go-swagger
+brew install go-swagger
+```
+
+### Setup code for swagger
+```
+1. copy swagger-ui folder as it is
+
+2. change title in index.html
+
+3. api.go has following lines at top of file and should be commented as given below
+// Package Quote QuoteAPI.
+//
+//     Consumes:
+//		- application/xml
+//     Produces:
+//      - application/json
+//
+// swagger:meta
+
+4. Add line below in api.go
+//go:generate swagger generate spec -m -o ../../swagger-ui/swagger.json
+
+5. Link these 2 lines given below api.go
+sh := http.StripPrefix("/swagger-ui/", http.FileServer(http.Dir("./swagger-ui/")))
+mux.PathPrefix("/swagger-ui/").Handler(sh)
+
+6. Add swagger tag in struct like given below
+// swagger:model infoResponse
+type Info struct {
+
+7. Add swagger tag before function similar to below
+// swagger:operation GET /api/quote/v1/info/{id} INFO info
+// ---
+// description: get INFO by id
+// consumes:
+// - "application/json"
+// parameters:
+// - name: id
+//   description: id to get info
+//   in: path
+//   required: true
+//   default: 1
+//   type: string
+// Responses:
+//   '200':
+//     description: Ok
+//     schema:
+//        '$ref': '#/definitions/infoResponse'
+//   '400':
+//     description: Bad request
+//   '404':
+//     description: Not found
+//   '500':
+//     description: Internal server error
+```
+
+### Generate Swagger documentation
+```
+go generate ./...
+```
+
+### Local Swagger UI URL
+```
+http://localhost:1922/swagger-ui/
+```
+
+### Docker compose Swagger UI URL
+```
+http://localhost:1922/swagger-ui/
+```

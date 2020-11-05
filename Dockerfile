@@ -16,6 +16,8 @@ COPY image-motivational /image-motivational
 COPY db /db
 COPY views /views
 
+COPY swagger-ui /swagger-ui
+
 #RUN apk add --no-cache tzdata
 RUN apt-get install -y tzdata
 ENV TZ=America/Denver
