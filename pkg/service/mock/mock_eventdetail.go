@@ -91,3 +91,32 @@ func (mr *MockIEventDetailMockRecorder) GetEventDetailByMonthDay(month, day inte
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailByMonthDay", reflect.TypeOf((*MockIEventDetail)(nil).GetEventDetailByMonthDay), month, day)
 }
+
+// GetEventDetailByID mocks base method
+func (m *MockIEventDetail) GetEventDetailByID(ID int64) (model.EventDetail, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetEventDetailByID", ID)
+	ret0, _ := ret[0].(model.EventDetail)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetEventDetailByID indicates an expected call of GetEventDetailByID
+func (mr *MockIEventDetailMockRecorder) GetEventDetailByID(ID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailByID", reflect.TypeOf((*MockIEventDetail)(nil).GetEventDetailByID), ID)
+}
+
+// UpdateEventDetailByID mocks base method
+func (m *MockIEventDetail) UpdateEventDetailByID(eventDetail model.EventDetail) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateEventDetailByID", eventDetail)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateEventDetailByID indicates an expected call of UpdateEventDetailByID
+func (mr *MockIEventDetailMockRecorder) UpdateEventDetailByID(eventDetail interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateEventDetailByID", reflect.TypeOf((*MockIEventDetail)(nil).UpdateEventDetailByID), eventDetail)
+}

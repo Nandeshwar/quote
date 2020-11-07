@@ -24,7 +24,7 @@ func TestApi(t *testing.T) {
 		infoServiceMock := mock_service.NewMockIInfo(ctrl)
 
 		w := httptest.NewRecorder()
-		s := NewServer(0, ImageSize{}, "abc", 1, service.InfoEventService{}, quoteService.NewQuoteService())
+		s := NewServer(0, 0, ImageSize{}, "abc", 1, service.InfoEventService{}, quoteService.NewQuoteService())
 		s.eventDetailService = eventDetailServiceMock
 		s.infoService = infoServiceMock
 

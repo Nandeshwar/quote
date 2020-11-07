@@ -19,7 +19,7 @@ import (
 func TestAdminInfo(t *testing.T) {
 	Convey("Test Admin Info API", t, func() {
 		w := httptest.NewRecorder()
-		s := NewServer(0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
+		s := NewServer(0, 0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
 		Convey("GET API", func() {
 			Convey("success: Get /admin-info", func() {
 				s.views.AdminInfo = "../../views/admin-info.gtpl"

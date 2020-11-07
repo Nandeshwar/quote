@@ -14,7 +14,7 @@ import (
 func TestAdminPage(t *testing.T) {
 	Convey("Test Admin Page", t, func() {
 		w := httptest.NewRecorder()
-		s := NewServer(0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
+		s := NewServer(0, 0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
 		Convey("success: GET API", func() {
 			req := httptest.NewRequest("GET", "/admin", nil)
 			s.views.Admin = "../../views/admin.gtpl"

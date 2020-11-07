@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package grpcQuote;
+
+import "google/protobuf/timestamp.proto";
+
+service EventDetailServiceGRPC {
+    rpc GetEventDetail(EventDetailRequest) returns (EventDetailReply) {}
+    rpc UpdateEventDetail(EventDetailUpdateRequest) returns (EventDetailUpdateReply) {}
+    rpc GetEventDetailStream(stream EventDetailRequest) returns (stream EventDetailReply){}
+}
+
+message EventDetail {
+    int64 id = 1;
+    string info = 2;
+    string eventType = 3;
+    string title = 4;
+    google.protobuf.Timestamp eventDate = 5;
+    google.protobuf.Timestamp createdAt = 6;
+    google.protobuf.Timestamp updatedAt = 7;
+    repeated string links = 8;
+}
+
+message EventDetailRequest {
+    int64 id = 1;
+}
+
+message EventDetailUpdateRequest {
+    EventDetail eventDetail = 1;
+    int32 dd = 2;
+    int32 mm = 3;
+    int32 yyyy = 4;
+}
+
+message EventDetailReply {
+    EventDetail eventDetail = 1;
+}
+
+message EventDetailUpdateReply {
+    int64 id = 1;
+}
+
+message Error {
+    string id = 1;
+    string errMsg = 2;
+}

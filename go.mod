@@ -5,6 +5,7 @@ go 1.12
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/mock v1.4.4
+	github.com/golang/protobuf v1.4.3
 	github.com/gookit/color v1.2.1
 	github.com/gorilla/mux v1.7.3
 	github.com/gorilla/sessions v1.2.1
@@ -15,5 +16,10 @@ require (
 	github.com/smartystreets/goconvey v1.6.4
 	golang.org/x/exp v0.0.0-20191227195350-da58074b4299
 	golang.org/x/image v0.0.0-20191214001246-9130b4cfad52
-	golang.org/x/sys v0.0.0-20201016160150-f659759dc4ca // indirect
+	golang.org/x/net v0.0.0-20201031054903-ff519b6c9102 // indirect
+	golang.org/x/sys v0.0.0-20201106081118-db71ae66460a // indirect
+	golang.org/x/text v0.3.4 // indirect
+	google.golang.org/genproto v0.0.0-20201106154455-f9bfe239b0ba // indirect
+	google.golang.org/grpc v1.33.2
+	google.golang.org/protobuf v1.25.0
 )
