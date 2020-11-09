@@ -11,19 +11,27 @@ package api
 
 import (
 	"context"
-	"github.com/justinas/alice"
+	"fmt"
+	"log"
+	"net"
 	"net/http"
 	"net/http/pprof"
-	"quote/pkg/service"
-	"quote/pkg/service/quote"
 	"strconv"
 	"sync"
 	"time"
 
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/justinas/alice"
 	"github.com/sirupsen/logrus"
+
+	grpc2 "quote/pkg/grpcquote"
+	"quote/pkg/service"
+	"quote/pkg/service/quote"
 )
 
 //go:generate swagger generate spec -m -o ../../swagger-ui/swagger.json
@@ -66,10 +74,12 @@ type Server struct {
 	sessionCookieStore   *sessions.CookieStore
 	sessionExpireSeconds int
 
-	views Views
+	views    Views
+	grpc     *grpc.Server
+	grpcPort int
 }
 
-func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, sessionExpireMinutes int, infoEventService service.InfoEventService, quoteService quote.QuoteService) *Server {
+func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecretKey string, sessionExpireMinutes int, infoEventService service.InfoEventService, quoteService quote.QuoteService) *Server {
 
 	router := mux.NewRouter()
 	router.PathPrefix("/image/").Handler(http.StripPrefix("/image/", http.FileServer(http.Dir("./image"))))
@@ -107,6 +117,7 @@ func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, se
 
 		cookieName:         "nandeshwar-quote-cookie",
 		sessionCookieStore: sessions.NewCookieStore([]byte(webSessionSecretKey)),
+		grpcPort:           grpcPort,
 	}
 
 	router.HandleFunc("/quotes-devotional", s.quotesDevotional).Methods(http.MethodGet)
@@ -143,6 +154,26 @@ func NewServer(httpPort int, imageSize ImageSize, webSessionSecretKey string, se
 	return s
 }
 
+func (s *Server) ServeGRPC(ready chan bool) error {
+	listener, err := net.Listen("tcp", ":"+strconv.Itoa(s.grpcPort))
+	if err != nil {
+		log.Printf("failed to listen: %v\n", err)
+		return fmt.Errorf("Failed to open listening port for catalog grpc on address=%d", s.grpcPort)
+	}
+	s.grpc = grpc.NewServer()
+	grpc2.RegisterEventDetailServiceGRPCServer(s.grpc, s)
+	// Register reflection service on gRPC server.`
+	reflection.Register(s.grpc)
+	if ready != nil {
+		ready <- true
+	}
+	if err := s.grpc.Serve(listener); err != nil {
+		return fmt.Errorf("failed to start catalog server: %v", err)
+	}
+
+	return nil
+}
+
 func (s *Server) Run() error {
 	s.wg.Add(1)
 	var err error
@@ -153,6 +184,12 @@ func (s *Server) Run() error {
 		}
 		s.wg.Done()
 	}()
+
+	err = s.ServeGRPC(nil)
+	if err != nil {
+		log.Fatalln("Failed to serve grpc: ", err)
+	}
+
 	s.wg.Wait()
 	return err
 }
@@ -190,5 +227,11 @@ func increaseImageSize(width, height, minAllowedWidth, minAllowedHeight, reduceF
 		} else {
 			return width, height
 		}
+	}
+}
+
+func (s *Server) GracefulStop() {
+	if s.grpc != nil {
+		s.grpc.GracefulStop()
 	}
 }

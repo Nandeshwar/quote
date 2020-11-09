@@ -1,12 +1,14 @@
 package repo
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"regexp"
 	"strings"
+	"time"
 )
 
 // Regex for 1 and more white space
@@ -17,6 +19,8 @@ type IEventDetailRepo interface {
 	CreateEventDetail(eventDetail model.EventDetail) (int64, error)
 	GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error)
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
+	GetEventDetailByID(ID int64) ([]model.EventDetail, error)
+	UpdateEventDetailByID(eventDetail model.EventDetail) error
 }
 
 func (s SQLite3Repo) CreateEventDetail(eventDetail model.EventDetail) (int64, error) {
@@ -202,4 +206,172 @@ func (s SQLite3Repo) GetEventDetailByMonthDay(month, day int) ([]model.EventDeta
 	}
 
 	return eventDetailList, nil
+}
+
+func (s SQLite3Repo) GetEventDetailByID(ID int64) ([]model.EventDetail, error) {
+	var eventList []model.EventDetail
+	query := `SELECT i.id,
+						i.day,
+						i.month,
+						i.year,
+						i.title,
+						i.info,
+						i.type,
+						i.created_at,
+						i.updated_at,
+						l.link
+				FROM event_detail i, event_detail_link l
+				WHERE i.id = l.link_id AND i.id = ? ORDER BY i.id, l.link_id`
+
+	logrus.WithFields(logrus.Fields{
+		"query": space.ReplaceAllString(query, " "),
+		"arg":   ID,
+	}).Debugf("fetching data from db")
+
+	rows, err := s.DB.Query(query, ID)
+	if err != nil {
+		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
+	}
+
+	var eventDetailDB model.EventDetail
+	for rows.Next() {
+		err = rows.Scan(&eventDetailDB.ID, &eventDetailDB.Day, &eventDetailDB.Month, &eventDetailDB.Year, &eventDetailDB.Title, &eventDetailDB.Info, &eventDetailDB.Type, &eventDetailDB.CreationDate, &eventDetailDB.UpdatedAt, &eventDetailDB.URL)
+		if err != nil {
+			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
+		}
+		eventList = append(eventList, eventDetailDB)
+	}
+
+	logrus.Debugf("data fetch from database=%v", eventList)
+
+	return eventList, nil
+}
+
+func (s SQLite3Repo) findEventDetailID(ID int64, tx *sql.Tx) error {
+	query := `SELECT id
+				FROM event_detail
+				WHERE id = ?`
+
+	logrus.WithFields(logrus.Fields{
+		"query": space.ReplaceAllString(query, " "),
+		"arg":   ID,
+	}).Debugf("fetching data from db")
+
+	rows, err := tx.Query(query, ID)
+	if err != nil {
+		tx.Rollback()
+		return fmt.Errorf("error querying db. query=%s, error=%v", query, err)
+	}
+
+	if !rows.Next() {
+		tx.Rollback()
+		logrus.WithError(err).WithField("ID", ID).Errorf("id does not exist in database")
+		return fmt.Errorf("id=%d does not exist in database", ID)
+	}
+
+	return nil
+}
+
+func (s SQLite3Repo) updateEventDetail(eventDetail model.EventDetail, tx *sql.Tx) error {
+	query := `UPDATE event_detail 
+						SET day = ?, month = ?, year = ?, title = ?, info = ?, type = ?, updated_at = ?
+						WHERE ID = ?`
+
+	logrus.WithFields(logrus.Fields{
+		"Query":       space.ReplaceAllString(query, " "),
+		"ID":          eventDetail.ID,
+		"title":       eventDetail.Title,
+		"eventDetail": eventDetail.Info,
+		"updated_at":  eventDetail.UpdatedAt.Format(constants.DATE_FORMAT),
+	}).Debugf("updating data")
+
+	statement, err := tx.Prepare(query)
+	_, err = tx.Stmt(statement).Exec(
+		eventDetail.Day,
+		eventDetail.Month,
+		eventDetail.Year,
+		eventDetail.Title,
+		eventDetail.Info,
+		eventDetail.Type,
+		eventDetail.UpdatedAt.Format(constants.DATE_FORMAT),
+		eventDetail.ID)
+
+	if err != nil {
+		tx.Rollback()
+		return fmt.Errorf("error preparing statements. query=%s, error=%v", query, err)
+	}
+	statement.Close()
+
+	return nil
+}
+
+func (s SQLite3Repo) insertEventDetailLinks(eventDetailID int64, links []string, updatedAt time.Time, tx *sql.Tx) error {
+	query := `INSERT INTO event_detail_link (link_id, link, updated_at) 
+				VALUES(?, ?, ?)`
+	qry := query
+
+	stmt, err := tx.Prepare(qry)
+	if err != nil {
+		tx.Rollback()
+		return fmt.Errorf("error preparing statement. query=%s, error=%v", qry, err)
+	}
+
+	for _, link := range links {
+		_, err := stmt.Exec(eventDetailID, link, updatedAt)
+		if err != nil {
+			return fmt.Errorf("error executing statement. query=%s, error=%v", qry, err)
+		}
+	}
+	stmt.Close()
+	return nil
+}
+
+func (s SQLite3Repo) deleteEventDetailLinks(eventDetailID int64, tx *sql.Tx) error {
+	query := `DELETE FROM event_detail_link 
+				WHERE link_id = ?`
+	qry := query
+
+	stmt, err := tx.Prepare(qry)
+	if err != nil {
+		tx.Rollback()
+		return fmt.Errorf("error preparing statement. query=%s, error=%v", qry, err)
+	}
+
+	_, err = stmt.Exec(eventDetailID)
+	if err != nil {
+		return fmt.Errorf("error executing statement. query=%s, error=%v", qry, err)
+	}
+	stmt.Close()
+	return nil
+}
+
+func (s SQLite3Repo) UpdateEventDetailByID(eventDetail model.EventDetail) error {
+	tx, err := s.DB.Begin()
+
+	if err != nil {
+		return fmt.Errorf("error starting transaction for query while updating eventDetail=%v", err)
+	}
+	defer tx.Commit()
+
+	err = s.findEventDetailID(eventDetail.ID, tx)
+	if err != nil {
+		return err
+	}
+
+	err = s.updateEventDetail(eventDetail, tx)
+	if err != nil {
+		return err
+	}
+
+	err = s.deleteEventDetailLinks(eventDetail.ID, tx)
+	if err != nil {
+		return err
+	}
+
+	err = s.insertEventDetailLinks(eventDetail.ID, eventDetail.Links, eventDetail.UpdatedAt, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

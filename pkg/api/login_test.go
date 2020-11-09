@@ -22,7 +22,7 @@ func TestLogin(t *testing.T) {
 		loginService := mock_service.NewMockILogin(ctrl)
 
 		w := httptest.NewRecorder()
-		s := NewServer(0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
+		s := NewServer(0, 0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
 		s.loginService = loginService
 
 		Convey("success: Get", func() {

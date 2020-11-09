@@ -134,3 +134,47 @@ http://localhost:1922/swagger-ui/
 ```
 http://localhost:1922/swagger-ui/
 ```
+
+### Install grpc related utility
+```
+go get google.golang.org/protobuf/cmd/protoc-gen-go
+go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
+
+go get -u google.golang.org/grpc
+
+```
+### go generate pb file grpc - EventDetail
+```
+protoc -I=./pkg/grpcquote/ --go_out=./pkg/grpcquote/ --go-grpc_out=./pkg/grpcquote/ ./pkg/grpcquote/event-detail.proto
+```
+
+# Development setup for grpc
+https://grpc.io/docs/quickstart/go.html
+
+Look "Before you begin" section
+## For endpoints using grpc
+https://github.com/phuongdo/go-grpc-tutorial
+```
+go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+```
+
+### run grpc client to get & update record for event-detail
+#### default get request
+```
+go run cmd/grpc_client/eventDetailClient.go
+```
+
+#### get event detail
+```
+go run cmd/grpc_client/eventDetailClient.go get 41
+```
+
+#### update event detail
+```
+go run cmd/grpc_client/eventDetailClient.go put event.json
+```
+
+#### get multiple event detail - grpc stream
+```
+go run cmd/grpc_client/eventDetailClient.go gets "1, 2, 3, 4, 5"
+```

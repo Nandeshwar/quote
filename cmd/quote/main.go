@@ -28,7 +28,11 @@ func main() {
 	go http.ListenAndServe(":8080", nil)
 
 	var (
-		logLevel             = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
+		httpPort = env.GetIntWithDefault("HTTP_PORT", 1922)
+		grpcPort = env.GetIntWithDefault("GRPC_PORT", 1923)
+
+		logLevel = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
+
 		sessionExpireMinutes = env.GetIntWithDefault("SESSION_EXPIRE_MINUTES", 60)
 		// key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
 		webSessionSecretKey = env.GetStringWithDefault("WEB_SESSION_SECRET_KEY", "super-secret-key")
@@ -162,7 +166,6 @@ func main() {
 	fmt.Printf("\n\nServer will be quit in %d hour and %d minutes at %v", serverRunTimeInHour, serverRunTimeInMin, currentTime.Format(layout))
 	fmt.Printf("\n or press CTRL+C or CTRL +D to exit and stop docker container - 'quote' using commands- docker ps and docker stop \n")
 
-	const httpPort int = 1922
 	imageWidth := api.ImageSize{
 		DevotionalImageMaxWidth:    devotionalImageMaxWidth,
 		DevotionalImageMaxHeight:   devotionalImageMaxHeight,
@@ -173,7 +176,7 @@ func main() {
 		MotivationalImageMinWidth:  motivationalImageMinWidth,
 		MotivationalImageMinHeight: motivationalImageMinHeight,
 	}
-	apiServer := api.NewServer(httpPort, imageWidth, webSessionSecretKey, sessionExpireMinutes, infoEventSerive, quoteService)
+	apiServer := api.NewServer(httpPort, grpcPort, imageWidth, webSessionSecretKey, sessionExpireMinutes, infoEventSerive, quoteService)
 	go func() {
 		apiServer.Run()
 	}()

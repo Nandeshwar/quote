@@ -15,6 +15,8 @@ type IEventDetail interface {
 	CreateNewEventDetail(form model.EventDetailForm) (int64, error)
 	GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error)
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
+	GetEventDetailByID(ID int64) (model.EventDetail, error)
+	UpdateEventDetailByID(eventDetail model.EventDetail) error
 }
 
 func (s InfoEventService) ValidateFormEvent(form model.EventDetailForm) error {
@@ -177,4 +179,32 @@ func (s InfoEventService) EventsInFuture(t time.Time) ([]model.EventDetail, erro
 	eventsInFuture := model.FilterEventDetail(findTodayEvent, events)
 
 	return eventsInFuture, nil
+}
+
+func (s InfoEventService) GetEventDetailByID(ID int64) (model.EventDetail, error) {
+	evenDetailList, err := s.EventDetailRepo.GetEventDetailByID(ID)
+	if err != nil {
+		return model.EventDetail{}, err
+	}
+
+	if len(evenDetailList) == 0 {
+		return model.EventDetail{}, fmt.Errorf("event detail id=%d not found", ID)
+	}
+
+	var links []string
+	for i := 0; i < len(evenDetailList); i++ {
+		links = append(links, evenDetailList[i].URL)
+	}
+	evenDetailList[0].Links = links
+	return evenDetailList[0], nil
+}
+
+func (s InfoEventService) UpdateEventDetailByID(eventDetail model.EventDetail) error {
+	updatedAt := time.Now()
+	eventDetail.UpdatedAt = updatedAt
+	err := s.EventDetailRepo.UpdateEventDetailByID(eventDetail)
+	if err != nil {
+		return err
+	}
+	return nil
 }

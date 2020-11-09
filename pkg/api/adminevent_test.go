@@ -20,7 +20,7 @@ import (
 func TestAdminEvent(t *testing.T) {
 	Convey("Test Admin Event API", t, func() {
 		w := httptest.NewRecorder()
-		s := NewServer(0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
+		s := NewServer(0, 0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
 		Convey("GET API", func() {
 			Convey("success: Get /admin-event-detail", func() {
 				s.views.AdminEventDetail = "../../views/admin-event-detail.gtpl"
