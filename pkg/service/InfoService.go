@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"github.com/logic-building/functional-go/fp"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"strings"
@@ -15,6 +16,7 @@ type IInfo interface {
 	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
 	UpdateInfoByID(info model.Info) error
 	GetInfoByID(ID int64) (model.Info, error)
+	GetInfoLinkIDs(link string) ([]int64, error)
 }
 
 func (s InfoEventService) ValidateForm(form model.InfoForm) error {
@@ -109,6 +111,22 @@ func (s InfoEventService) GetInfoByID(ID int64) (model.Info, error) {
 	}
 	infoList[0].Links = links
 	return infoList[0], nil
+}
+
+func (s InfoEventService) GetInfoLinkIDs(link string) ([]int64, error) {
+	link = strings.TrimSpace(link)
+	var links []string
+	if len(link) > 0 {
+		links = strings.Split(link, "|")
+	}
+
+	links = fp.MapStr(strings.TrimSpace, links)
+
+	linkIds, err := s.InfoRepo.GetInfoLinkIDs(links)
+	if err != nil {
+		return nil, err
+	}
+	return linkIds, nil
 }
 
 func (s InfoEventService) UpdateInfoByID(info model.Info) error {

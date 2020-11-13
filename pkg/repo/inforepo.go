@@ -16,6 +16,7 @@ type IInfoRepo interface {
 	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
 	UpdateInfoByID(info model.Info) error
 	GetInfoByID(ID int64) ([]model.Info, error)
+	GetInfoLinkIDs(links []string) ([]int64, error)
 }
 
 func (s SQLite3Repo) CreateInfo(info model.Info) (int64, error) {
@@ -123,6 +124,37 @@ func (s SQLite3Repo) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error
 	logrus.Debugf("data fetch from database=%v", infoList)
 
 	return infoList, nil
+}
+
+func (s SQLite3Repo) GetInfoLinkIDs(links []string) ([]int64, error) {
+	query := `SELECT link_id
+				FROM info_link
+				WHERE link in (?)`
+
+	logrus.WithFields(logrus.Fields{
+		"query": space.ReplaceAllString(query, " "),
+		"arg1":  links,
+	}).Debugf("fetching data from db")
+
+	rows, err := s.DB.Query(query, strings.Join(links, ","))
+	if err != nil {
+		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
+	}
+
+	var linkID int64
+	var linkIDs []int64
+
+	for rows.Next() {
+		err = rows.Scan(&linkID)
+		if err != nil {
+			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
+		}
+		linkIDs = append(linkIDs, linkID)
+	}
+
+	logrus.Debugf("data fetch from database=%v", linkIDs)
+
+	return linkIDs, nil
 }
 
 func (s SQLite3Repo) GetInfoByID(ID int64) ([]model.Info, error) {

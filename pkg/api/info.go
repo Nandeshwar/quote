@@ -143,7 +143,6 @@ func (s *Server) getInfo(w http.ResponseWriter, r *http.Request) {
 //  200: noContent
 func (s *Server) putInfo(w http.ResponseWriter, r *http.Request) {
 	// We can obtain the session token from the requests cookies, which come with every request
-
 	idStr := mux.Vars(r)["id"]
 	id, err := strconv.Atoi(idStr)
 	if err != nil {

@@ -73,6 +73,12 @@ func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
+
+		IDs, err := s.infoService.GetInfoLinkIDs(infoForm.Link)
+		if err != nil {
+			logrus.Errorf("error checking existence of links=%v", err)
+		}
+
 		id, err := s.infoService.CreateNewInfo(infoForm)
 		if err != nil {
 			logrus.WithError(err).Error("error creating info")
@@ -90,7 +96,7 @@ func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
 
 		logrus.WithField("id", id).Info("created info")
 
-		status := map[string]interface{}{"Status": fmt.Sprintf("SUCCESS. ID=%d", id)}
+		status := map[string]interface{}{"Status": fmt.Sprintf("SUCCESS. ID=%d. Link IDs=%v", id, IDs)}
 		err = t.Execute(w, status)
 		if err != nil {
 			logrus.Error("error executing view AdminInfo", err)

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/newrelic/go-agent/_integrations/nrgrpc"
 	"io"
 	"io/ioutil"
 	"os"
@@ -119,7 +120,9 @@ func main() {
 	// 5. Run the client
 	// 6. record updated successful.
 
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	conn, err := grpc.Dial(address, grpc.WithInsecure(),
+		grpc.WithUnaryInterceptor(nrgrpc.UnaryClientInterceptor),
+		grpc.WithStreamInterceptor(nrgrpc.StreamClientInterceptor))
 	if err != nil {
 		fmt.Println("error connecting grpc", err)
 	}

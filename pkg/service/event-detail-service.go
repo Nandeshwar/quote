@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"github.com/logic-building/functional-go/fp"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"regexp"
@@ -17,6 +18,23 @@ type IEventDetail interface {
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
 	GetEventDetailByID(ID int64) (model.EventDetail, error)
 	UpdateEventDetailByID(eventDetail model.EventDetail) error
+	GetEventDetailLinkIDs(link string) ([]int64, error)
+}
+
+func (s InfoEventService) GetEventDetailLinkIDs(link string) ([]int64, error) {
+	link = strings.TrimSpace(link)
+	var links []string
+	if len(link) > 0 {
+		links = strings.Split(link, "|")
+	}
+
+	links = fp.MapStr(strings.TrimSpace, links)
+
+	linkIds, err := s.EventDetailRepo.GetEventLinkIDs(links)
+	if err != nil {
+		return nil, err
+	}
+	return linkIds, nil
 }
 
 func (s InfoEventService) ValidateFormEvent(form model.EventDetailForm) error {

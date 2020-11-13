@@ -106,3 +106,18 @@ func (mr *MockIEventDetailRepoMockRecorder) UpdateEventDetailByID(eventDetail in
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateEventDetailByID", reflect.TypeOf((*MockIEventDetailRepo)(nil).UpdateEventDetailByID), eventDetail)
 }
+
+// GetEventLinkIDs mocks base method
+func (m *MockIEventDetailRepo) GetEventLinkIDs(links []string) ([]int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetEventLinkIDs", links)
+	ret0, _ := ret[0].([]int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetEventLinkIDs indicates an expected call of GetEventLinkIDs
+func (mr *MockIEventDetailRepoMockRecorder) GetEventLinkIDs(links interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventLinkIDs", reflect.TypeOf((*MockIEventDetailRepo)(nil).GetEventLinkIDs), links)
+}

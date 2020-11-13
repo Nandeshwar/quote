@@ -127,17 +127,20 @@ func searchIntelligence(searchStrList []string) []string {
 
 	var newSearchStrList []string
 	m := map[string][]string{
-		"ram":        []string{"ram", "rama", "raam", "rama", "raaama", "ram-ji", "shree-ram-ji", "shree ram ji"},
-		"sita":       []string{"sita", "seeta", "sitaa", "seetaa", "setaa", "seeta"},
-		"krishna":    []string{"krishna", "krisna", "kirisna", "kirishna", "krishnaa", "krisna", "krishna-ji", "krishnaji"},
-		"radha":      []string{"radha", "rada", "raadha", "radhha", "radhaa", "radhe", "radhaji", "radha ji", "radha-ji"},
-		"hanuman":    []string{"hanuman", "hanumanji", "hanuman-ji", "hanumaan", "hanman", "hanmaan", "hanmanji", "hanman ji", "hanumaan-ji"},
-		"vedbyas":    []string{"ved vyas", "vedvyas", "ved byas", "vedbyas", "vyasbed", "vyas ved", "vedh vyas", "veddhvyas"},
-		"sukdev":     []string{"sukdev", "suk dev", "shukdev", "shuk dev", "sutji", "sutji maharaj", "shutji", "shut ji", "sut ji", "sut ji maharaj", "shut ji maharaj", "sut", "shut"},
-		"kripaluji":  []string{"kripalu", "kripaluji", "kripalu ji", "kripalu ji maharaj", "kripaluji maharaj", "ram kripalu", "ramkripalu", "ram kripalu tripathhi", "kripalu-ji", "maharaj ji", "mahrajji", "kripaalu", "kreepalu", "krepalu", "kirpalu", "kerpalu"},
-		"dashrathji": []string{"dasrat", "dashrath", "dashrat", "dasrath", "dasrat ji", "dashrath ji", "dashrat ji", "dasrath ji", "dasratji", "dashrathji", "dashratji", "dasrathji"},
-		"nandeshwar": []string{"nandeshwar blog", "my blog", "nandeshwar meditation", "my meditation", "my  meditation", "my  blog"},
-		"chaitnya":   []string{"chaitnya", "chaitanaya", "chaitanya", "chaitanaya", "chaitnaya"},
+		"ram":                       []string{"ram", "rama", "raam", "rama", "raaama", "ram-ji", "shree-ram-ji", "shree ram ji"},
+		"sita":                      []string{"sita", "seeta", "sitaa", "seetaa", "setaa", "seeta"},
+		"krishna":                   []string{"krishna", "krisna", "kirisna", "kirishna", "krishnaa", "krisna", "krishna-ji", "krishnaji"},
+		"radha":                     []string{"radha", "rada", "raadha", "radhha", "radhaa", "radhe", "radhaji", "radha ji", "radha-ji"},
+		"hanuman":                   []string{"hanuman", "hanumanji", "hanuman-ji", "hanumaan", "hanman", "hanmaan", "hanmanji", "hanman ji", "hanumaan-ji"},
+		"vedbyas":                   []string{"ved vyas", "vedvyas", "ved byas", "vedbyas", "vyasbed", "vyas ved", "vedh vyas", "veddhvyas"},
+		"sukdev":                    []string{"sukdev", "suk dev", "shukdev", "shuk dev", "sutji", "sutji maharaj", "shutji", "shut ji", "sut ji", "sut ji maharaj", "shut ji maharaj", "sut", "shut"},
+		"kripaluji":                 []string{"kripalu", "kripaluji", "kripalu ji", "kripalu ji maharaj", "kripaluji maharaj", "ram kripalu", "ramkripalu", "ram kripalu tripathhi", "kripalu-ji", "maharaj ji", "mahrajji", "kripaalu", "kreepalu", "krepalu", "kirpalu", "kerpalu"},
+		"dashrathji":                []string{"dasrat", "dashrath", "dashrat", "dasrath", "dasrat ji", "dashrath ji", "dashrat ji", "dasrath ji", "dasratji", "dashrathji", "dashratji", "dasrathji"},
+		"nandeshwar":                []string{"nandeshwar blog", "my blog", "nandeshwar meditation", "my meditation", "my  meditation", "my  blog"},
+		"chaitnya":                  []string{"chaitnya", "chaitanaya", "chaitanya", "chaitanaya", "chaitnaya"},
+		"diwali":                    []string{"diwali", "deepawali", "dewali", "deewali", "diwaali"},
+		"govardhan":                 []string{"govardhan", "gobardhan", "govardhan pooja", "gobardhan pooja", "govardhan puja", "gobardhan puja"},
+		"Kripalu Ji Maharaj family": []string{"Kripalu Ji Maharaj family", "kripalu ji son", "kripalu ji duaghter", "kripalu ji family", "kripalu family", "maharaj ji family", "kripalu son", "kripalu daughter"},
 	}
 
 	newSearchStrList = append(newSearchStrList, searchStrList...)
