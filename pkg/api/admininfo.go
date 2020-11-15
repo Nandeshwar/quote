@@ -79,7 +79,7 @@ func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
 			logrus.Errorf("error checking existence of links=%v", err)
 		}
 
-		id, err := s.infoService.CreateNewInfo(infoForm)
+		id, err := s.infoService.CreateNewInfo(r.Context(), infoForm)
 		if err != nil {
 			logrus.WithError(err).Error("error creating info")
 			status := map[string]interface{}{"Status": "Did not create record. error. check log"}

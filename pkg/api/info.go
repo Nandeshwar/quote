@@ -101,7 +101,7 @@ func (s *Server) getInfo(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	info, err := s.infoService.GetInfoByID(int64(idInt))
+	info, err := s.infoService.GetInfoByID(r.Context(), int64(idInt))
 	if err != nil {
 		logrus.WithError(err).Errorf("error getting info for id=%d", idInt)
 		if strings.Contains(err.Error(), "not found") {
