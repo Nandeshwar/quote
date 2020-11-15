@@ -12,6 +12,7 @@ require (
 	github.com/justinas/alice v1.2.0
 	github.com/logic-building/functional-go v8.13.1+incompatible
 	github.com/mattn/go-sqlite3 v1.14.4
+	github.com/newrelic/go-agent v3.9.0+incompatible
 	github.com/sirupsen/logrus v1.7.0
 	github.com/smartystreets/goconvey v1.6.4
 	golang.org/x/exp v0.0.0-20191227195350-da58074b4299

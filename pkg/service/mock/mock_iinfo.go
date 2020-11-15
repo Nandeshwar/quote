@@ -105,3 +105,18 @@ func (mr *MockIInfoMockRecorder) GetInfoByID(ID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfoByID", reflect.TypeOf((*MockIInfo)(nil).GetInfoByID), ID)
 }
+
+// GetInfoLinkIDs mocks base method
+func (m *MockIInfo) GetInfoLinkIDs(link string) ([]int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetInfoLinkIDs", link)
+	ret0, _ := ret[0].([]int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetInfoLinkIDs indicates an expected call of GetInfoLinkIDs
+func (mr *MockIInfoMockRecorder) GetInfoLinkIDs(link interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfoLinkIDs", reflect.TypeOf((*MockIInfo)(nil).GetInfoLinkIDs), link)
+}

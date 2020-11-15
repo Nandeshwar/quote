@@ -12,6 +12,10 @@ package api
 import (
 	"context"
 	"fmt"
+	newrelic "github.com/newrelic/go-agent"
+	"github.com/newrelic/go-agent/_integrations/nrgrpc"
+	"quote/pkg/newrelicwrapper"
+
 	"log"
 	"net"
 	"net/http"
@@ -120,14 +124,14 @@ func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecret
 		grpcPort:           grpcPort,
 	}
 
-	router.HandleFunc("/quotes-devotional", s.quotesDevotional).Methods(http.MethodGet)
-	router.HandleFunc("/quotes-motivational", s.quotesMotivational).Methods(http.MethodGet)
-	router.HandleFunc("/events", s.events).Methods(http.MethodGet)
-	router.HandleFunc("/events/{searchText}", s.events).Methods(http.MethodGet)
-	router.HandleFunc("/info", s.info).Methods(http.MethodGet)
-	router.HandleFunc("/info/{searchText}", s.info).Methods(http.MethodGet)
-	router.HandleFunc("/search/{searchText}", s.search).Methods(http.MethodGet)
-	router.HandleFunc("/find/{searchText}", s.search).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/quotes-devotional", s.quotesDevotional)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/quotes-motivational", s.quotesMotivational)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/events", s.events)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/events/{searchText}", s.events)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/info", s.info)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/info/{searchText}", s.info)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/search/{searchText}", s.search)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/find/{searchText}", s.search)).Methods(http.MethodGet)
 
 	router.HandleFunc("/debug/pprof/", pprof.Index)
 	router.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
@@ -136,20 +140,24 @@ func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecret
 
 	// Admin section
 	//router.HandleFunc("/", s.index)
-	router.HandleFunc("/login", s.login).Methods(http.MethodGet, http.MethodPost)
-	router.HandleFunc("/", s.login).Methods(http.MethodGet, http.MethodPost)
-	router.HandleFunc("/admin", s.admin).Methods(http.MethodGet)
-	router.HandleFunc("/admin-info", s.adminInfo).Methods(http.MethodGet, http.MethodPost)
-	router.HandleFunc("/admin-event-detail", s.adminEvent).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/login", s.login)).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/", s.login)).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/admin", s.admin)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/admin-info", s.adminInfo)).Methods(http.MethodGet, http.MethodPost)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/admin-event-detail", s.adminEvent)).Methods(http.MethodGet, http.MethodPost)
 
 	putInfoHandler := http.HandlerFunc(s.putInfo)
 	getInfoHandler := http.HandlerFunc(s.getInfo)
 
 	aliceChain := alice.New(s.authenticationHandler)
 
-	//info api
-	router.Handle("/api/quote/v1/info/{id}", aliceChain.Then(getInfoHandler)).Methods(http.MethodGet)
-	router.Handle("/api/quote/v1/info/{id}", aliceChain.Then(putInfoHandler)).Methods(http.MethodPut)
+	//info api using alice middleware
+	//router.Handle("/api/quote/v1/info/{id}", aliceChain.Then(getInfoHandler)).Methods(http.MethodGet)
+	//router.Handle("/api/quote/v1/info/{id}", aliceChain.Then(putInfoHandler)).Methods(http.MethodPut)
+
+	// info api using new relic and alice middleware
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/api/quote/v1/info/{id}", aliceChain.Then(getInfoHandler).ServeHTTP)).Methods(http.MethodGet)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/api/quote/v1/info/{id}", aliceChain.Then(putInfoHandler).ServeHTTP)).Methods(http.MethodPut)
 
 	return s
 }
@@ -160,7 +168,9 @@ func (s *Server) ServeGRPC(ready chan bool) error {
 		log.Printf("failed to listen: %v\n", err)
 		return fmt.Errorf("Failed to open listening port for catalog grpc on address=%d", s.grpcPort)
 	}
-	s.grpc = grpc.NewServer()
+	s.grpc = grpc.NewServer(
+		grpc.UnaryInterceptor(nrgrpc.UnaryServerInterceptor(newrelicwrapper.NewRelicApplication)),
+		grpc.StreamInterceptor(nrgrpc.StreamServerInterceptor(newrelicwrapper.NewRelicApplication)))
 	grpc2.RegisterEventDetailServiceGRPCServer(s.grpc, s)
 	// Register reflection service on gRPC server.`
 	reflection.Register(s.grpc)

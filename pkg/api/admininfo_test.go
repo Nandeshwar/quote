@@ -126,11 +126,13 @@ func TestAdminInfo(t *testing.T) {
 					CreatedAt: "2020-10-25 11:42",
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
+				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
 				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 				s.adminInfo(w, req)
 				resp := w.Result()
+
 				So(resp.StatusCode, ShouldEqual, http.StatusOK)
 				So(w.Body.String(), ShouldContainSubstring, "10")
 			})
@@ -198,6 +200,7 @@ func TestAdminInfo(t *testing.T) {
 					CreatedAt: "2020-10-25 11:42",
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
+				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
 				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(0), errors.New("db error"))
 				s.adminInfo(w, req)
 				resp := w.Result()
@@ -223,6 +226,7 @@ func TestAdminInfo(t *testing.T) {
 					CreatedAt: "2020-10-25 11:42",
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
+				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
 				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -250,6 +254,7 @@ func TestAdminInfo(t *testing.T) {
 					CreatedAt: "2020-10-25 11:42",
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
+				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
 				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(0), errors.New("db error"))
 				s.adminInfo(w, req)
 				resp := w.Result()

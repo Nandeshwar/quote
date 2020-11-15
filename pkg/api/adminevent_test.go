@@ -146,6 +146,7 @@ func TestAdminEvent(t *testing.T) {
 					CreatedAt: "2020-10-27 08:08",
 				}
 				eventDetailService.EXPECT().ValidateFormEvent(infoForm).Return(nil)
+				eventDetailService.EXPECT().GetEventDetailLinkIDs(infoForm.Link).Return([]int64{10}, nil)
 				eventDetailService.EXPECT().CreateNewEventDetail(infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -221,6 +222,8 @@ func TestAdminEvent(t *testing.T) {
 					Typ:       "same",
 				}
 				eventDetailService.EXPECT().ValidateFormEvent(eventDetailForm).Return(nil)
+				eventDetailService.EXPECT().GetEventDetailLinkIDs(eventDetailForm.Link).Return([]int64{10}, nil)
+
 				eventDetailService.EXPECT().CreateNewEventDetail(eventDetailForm).Return(int64(0), errors.New("db error"))
 				s.adminEvent(w, req)
 				resp := w.Result()
@@ -248,6 +251,7 @@ func TestAdminEvent(t *testing.T) {
 					CreatedAt: "2020-10-27 08:08",
 				}
 				eventDetailService.EXPECT().ValidateFormEvent(infoForm).Return(nil)
+				eventDetailService.EXPECT().GetEventDetailLinkIDs(infoForm.Link).Return([]int64{10}, nil)
 				eventDetailService.EXPECT().CreateNewEventDetail(infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -305,6 +309,8 @@ func TestAdminEvent(t *testing.T) {
 					Typ:       "same",
 				}
 				eventDetailService.EXPECT().ValidateFormEvent(eventDetailForm).Return(nil)
+				eventDetailService.EXPECT().GetEventDetailLinkIDs(eventDetailForm.Link).Return([]int64{10}, nil)
+
 				eventDetailService.EXPECT().CreateNewEventDetail(eventDetailForm).Return(int64(0), errors.New("db error"))
 				s.adminEvent(w, req)
 				resp := w.Result()
@@ -331,6 +337,8 @@ func TestAdminEvent(t *testing.T) {
 					CreatedAt: "2020-10-27 08:08",
 				}
 				eventDetailService.EXPECT().ValidateFormEvent(infoForm).Return(nil)
+				eventDetailService.EXPECT().GetEventDetailLinkIDs(infoForm.Link).Return([]int64{10}, nil)
+
 				eventDetailService.EXPECT().CreateNewEventDetail(infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")

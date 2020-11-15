@@ -77,6 +77,11 @@ func (s Server) adminEvent(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		IDs, err := s.eventDetailService.GetEventDetailLinkIDs(eventDetailForm.Link)
+		if err != nil {
+			logrus.Errorf("error checking existence of links=%v", err)
+		}
+
 		id, err := s.eventDetailService.CreateNewEventDetail(eventDetailForm)
 		if err != nil {
 			logrus.WithError(err).Error("error creating event detail")
@@ -91,7 +96,7 @@ func (s Server) adminEvent(w http.ResponseWriter, r *http.Request) {
 		}
 		logrus.WithField("id", id).Info("created event detail")
 
-		status := map[string]interface{}{"Status": fmt.Sprintf("SUCCESS. ID=%d", id)}
+		status := map[string]interface{}{"Status": fmt.Sprintf("SUCCESS. ID=%d. Link IDs=%v", id, IDs)}
 		t, err := template.ParseFiles(s.views.AdminEventDetail)
 		if err != nil {
 			logrus.Error("error parsing view", err)
