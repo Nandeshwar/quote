@@ -127,7 +127,7 @@ func TestAdminInfo(t *testing.T) {
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
 				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
-				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(10), nil)
+				infoService.EXPECT().CreateNewInfo(req.Context(), infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 				s.adminInfo(w, req)
@@ -201,7 +201,7 @@ func TestAdminInfo(t *testing.T) {
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
 				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
-				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(0), errors.New("db error"))
+				infoService.EXPECT().CreateNewInfo(req.Context(), infoForm).Return(int64(0), errors.New("db error"))
 				s.adminInfo(w, req)
 				resp := w.Result()
 
@@ -227,7 +227,7 @@ func TestAdminInfo(t *testing.T) {
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
 				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
-				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(10), nil)
+				infoService.EXPECT().CreateNewInfo(req.Context(), infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 				s.adminInfo(w, req)
@@ -255,7 +255,7 @@ func TestAdminInfo(t *testing.T) {
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
 				infoService.EXPECT().GetInfoLinkIDs(infoForm.Link).Return([]int64{10}, nil)
-				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(0), errors.New("db error"))
+				infoService.EXPECT().CreateNewInfo(req.Context(), infoForm).Return(int64(0), errors.New("db error"))
 				s.adminInfo(w, req)
 				resp := w.Result()
 
@@ -306,7 +306,7 @@ func TestAdminInfo(t *testing.T) {
 					CreatedAt: "2020-10-25 11:42",
 				}
 				infoService.EXPECT().ValidateForm(infoForm).Return(nil)
-				infoService.EXPECT().CreateNewInfo(infoForm).Return(int64(10), nil)
+				infoService.EXPECT().CreateNewInfo(req.Context(), infoForm).Return(int64(10), nil)
 
 				req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 				s.adminInfo(w, req)

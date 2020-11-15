@@ -1,21 +1,24 @@
 package service
 
 import (
+	"context"
 	"fmt"
-	"github.com/logic-building/functional-go/fp"
-	"quote/pkg/constants"
-	"quote/pkg/model"
 	"strings"
 	"time"
+
+	"github.com/logic-building/functional-go/fp"
+
+	"quote/pkg/constants"
+	"quote/pkg/model"
 )
 
 //go:generate mockgen -source "InfoService.go" -destination "mock/mock_iinfo.go" IInfo
 type IInfo interface {
 	ValidateForm(form model.InfoForm) error
-	CreateNewInfo(form model.InfoForm) (int64, error)
+	CreateNewInfo(ctx context.Context, form model.InfoForm) (int64, error)
 	GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error)
 	UpdateInfoByID(info model.Info) error
-	GetInfoByID(ID int64) (model.Info, error)
+	GetInfoByID(ctx context.Context, ID int64) (model.Info, error)
 	GetInfoLinkIDs(link string) ([]int64, error)
 }
 
@@ -34,7 +37,7 @@ func (s InfoEventService) ValidateForm(form model.InfoForm) error {
 	return nil
 }
 
-func (s InfoEventService) CreateNewInfo(form model.InfoForm) (int64, error) {
+func (s InfoEventService) CreateNewInfo(ctx context.Context, form model.InfoForm) (int64, error) {
 	var createdAt time.Time
 	var err error
 
@@ -59,7 +62,7 @@ func (s InfoEventService) CreateNewInfo(form model.InfoForm) (int64, error) {
 		CreationDate: createdAt,
 		UpdatedDate:  time.Now(),
 	}
-	id, err := s.InfoRepo.CreateInfo(info)
+	id, err := s.InfoRepo.CreateInfo(ctx, info)
 	if err != nil {
 		return 0, err
 	}
@@ -95,8 +98,8 @@ func (s InfoEventService) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, 
 	return distinctInfoList, nil
 }
 
-func (s InfoEventService) GetInfoByID(ID int64) (model.Info, error) {
-	infoList, err := s.InfoRepo.GetInfoByID(ID)
+func (s InfoEventService) GetInfoByID(ctx context.Context, ID int64) (model.Info, error) {
+	infoList, err := s.InfoRepo.GetInfoByID(ctx, ID)
 	if err != nil {
 		return model.Info{}, err
 	}

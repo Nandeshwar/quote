@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -139,8 +140,8 @@ func TestInfoService(t *testing.T) {
 					Link:      "http://google.com, http://yahoo.com",
 				}
 
-				infoRepo.EXPECT().CreateInfo(gomock.Any()).Return(int64(10), nil)
-				id, err := quoteService.CreateNewInfo(form)
+				infoRepo.EXPECT().CreateInfo(gomock.Any(), gomock.Any()).Return(int64(10), nil)
+				id, err := quoteService.CreateNewInfo(context.Background(), form)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
 			})
@@ -151,8 +152,8 @@ func TestInfoService(t *testing.T) {
 					Link:  "http://google.com, http://yahoo.com",
 				}
 
-				infoRepo.EXPECT().CreateInfo(gomock.Any()).Return(int64(10), nil)
-				id, err := quoteService.CreateNewInfo(form)
+				infoRepo.EXPECT().CreateInfo(context.Background(), gomock.Any()).Return(int64(10), nil)
+				id, err := quoteService.CreateNewInfo(context.Background(), form)
 				So(err, ShouldBeNil)
 				So(id, ShouldEqual, 10)
 			})
@@ -161,7 +162,7 @@ func TestInfoService(t *testing.T) {
 				form := model.InfoForm{
 					CreatedAt: "2020",
 				}
-				_, err := quoteService.CreateNewInfo(form)
+				_, err := quoteService.CreateNewInfo(context.Background(), form)
 				So(err, ShouldNotBeNil)
 			})
 
@@ -172,8 +173,8 @@ func TestInfoService(t *testing.T) {
 					Link:      "http://google.com, http://yahoo.com",
 				}
 
-				infoRepo.EXPECT().CreateInfo(gomock.Any()).Return(int64(0), errors.New("db error"))
-				id, err := quoteService.CreateNewInfo(form)
+				infoRepo.EXPECT().CreateInfo(context.Background(), gomock.Any()).Return(int64(0), errors.New("db error"))
+				id, err := quoteService.CreateNewInfo(context.Background(), form)
 				So(err, ShouldNotBeNil)
 				So(err.Error(), ShouldEqual, "db error")
 				So(id, ShouldEqual, 0)

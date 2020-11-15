@@ -5,6 +5,7 @@
 package mock_service
 
 import (
+	context "context"
 	gomock "github.com/golang/mock/gomock"
 	model "quote/pkg/model"
 	reflect "reflect"
@@ -48,18 +49,18 @@ func (mr *MockIInfoMockRecorder) ValidateForm(form interface{}) *gomock.Call {
 }
 
 // CreateNewInfo mocks base method
-func (m *MockIInfo) CreateNewInfo(form model.InfoForm) (int64, error) {
+func (m *MockIInfo) CreateNewInfo(ctx context.Context, form model.InfoForm) (int64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateNewInfo", form)
+	ret := m.ctrl.Call(m, "CreateNewInfo", ctx, form)
 	ret0, _ := ret[0].(int64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // CreateNewInfo indicates an expected call of CreateNewInfo
-func (mr *MockIInfoMockRecorder) CreateNewInfo(form interface{}) *gomock.Call {
+func (mr *MockIInfoMockRecorder) CreateNewInfo(ctx, form interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateNewInfo", reflect.TypeOf((*MockIInfo)(nil).CreateNewInfo), form)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateNewInfo", reflect.TypeOf((*MockIInfo)(nil).CreateNewInfo), ctx, form)
 }
 
 // GetInfoByTitleOrInfo mocks base method
@@ -92,18 +93,18 @@ func (mr *MockIInfoMockRecorder) UpdateInfoByID(info interface{}) *gomock.Call {
 }
 
 // GetInfoByID mocks base method
-func (m *MockIInfo) GetInfoByID(ID int64) (model.Info, error) {
+func (m *MockIInfo) GetInfoByID(ctx context.Context, ID int64) (model.Info, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetInfoByID", ID)
+	ret := m.ctrl.Call(m, "GetInfoByID", ctx, ID)
 	ret0, _ := ret[0].(model.Info)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetInfoByID indicates an expected call of GetInfoByID
-func (mr *MockIInfoMockRecorder) GetInfoByID(ID interface{}) *gomock.Call {
+func (mr *MockIInfoMockRecorder) GetInfoByID(ctx, ID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfoByID", reflect.TypeOf((*MockIInfo)(nil).GetInfoByID), ID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetInfoByID", reflect.TypeOf((*MockIInfo)(nil).GetInfoByID), ctx, ID)
 }
 
 // GetInfoLinkIDs mocks base method
