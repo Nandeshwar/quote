@@ -174,7 +174,7 @@ func main() {
 			fmt.Println("error unmarshalling json", err)
 		}
 		fmt.Println(eventDetail)
-		_, err = client.UpdateEventDetail(context.Background(), &grpc2.EventDetailUpdateRequest{
+		response, err := client.UpdateEventDetail(context.Background(), &grpc2.EventDetailUpdateRequest{
 			EventDetail: &grpc2.EventDetail{
 				Id:        eventDetail.ID,
 				Title:     eventDetail.Title,
@@ -189,7 +189,7 @@ func main() {
 		if err != nil {
 			fmt.Println("error updating event detail's data", err)
 		}
-		fmt.Println("Update successful")
+		fmt.Println(response.Msg)
 
 	case "gets":
 		stream, err := client.GetEventDetailStream(context.Background())

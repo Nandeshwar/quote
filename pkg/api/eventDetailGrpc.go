@@ -2,8 +2,11 @@ package api
 
 import (
 	"context"
+	"fmt"
+	"github.com/sirupsen/logrus"
 	"io"
 	"quote/pkg/model"
+	"strings"
 	"time"
 
 	"github.com/golang/protobuf/ptypes/timestamp"
@@ -53,12 +56,23 @@ func (s *Server) UpdateEventDetail(ctx context.Context, in *grpc.EventDetailUpda
 		Links: in.EventDetail.Links,
 	}
 
-	err := s.eventDetailService.UpdateEventDetailByID(eventDetail)
+	IDs, err := s.eventDetailService.GetEventDetailLinkIDs(strings.Join(eventDetail.Links, ","))
+	if err != nil {
+		logrus.Errorf("error checking existence of links=%v", err)
+		return nil, err
+	}
+
+	err = s.eventDetailService.UpdateEventDetailByID(eventDetail)
 	if err != nil {
 		return nil, err
 	}
 
-	eventDetailReply := &grpc.EventDetailUpdateReply{Id: eventDetail.ID}
+	msg := fmt.Sprintf("id=%v created successfully.", eventDetail.ID)
+	if len(IDs) > 0 {
+		msg += fmt.Sprintf("Link already exists for IDs=%v", IDs)
+	}
+
+	eventDetailReply := &grpc.EventDetailUpdateReply{Id: eventDetail.ID, Msg: msg}
 	return eventDetailReply, nil
 }
 

@@ -9,3 +9,9 @@ type InfoRequest struct {
 	//example: ["https://www.youtube.com/watch?v=XP9rlhzJoxc"]
 	Links []string `json:"links"`
 }
+
+// swagger:model infoPutResponse
+type ErrorResponse struct {
+	StatusCode int    `json:"statusCode"`
+	Msg        string `json:"message"`
+}
