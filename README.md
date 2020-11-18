@@ -20,15 +20,27 @@ or
 docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 -e SERVER_RUN_DURATION_HOUR=10 -t nandeshwar/quote
 ```
 
+## Run using docker compose 
+```
+docker-compose up -d
+```
+
 ### Default time zone is set to America/Denver, can be changed with env variable  TZ=America/Denver
 ```
 docker run -p 1922:1922 -e SERVER_RUN_DURATION_MIN=10 -e SERVER_RUN_DURATION_HOUR=10 -e TZ=America/Denver -t nandeshwar/quote
 ```
 
-### Push Image to docker container
+### build image and push Image to docker container
 ```
 docker build -t nandeshwar/quote .
 docker push nandeshwar/quote
+
+or
+ 
+dc -f build.yml up -d --build
+docker push nandeshwar/quote
+dc f build.yml down
+docker images -q -f "dangling=true" | xargs docker rmi
 ```
 
 ### Create image compatible for Raspberry pi
