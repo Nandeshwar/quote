@@ -64,11 +64,40 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/infoPutResponse"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/infoPutResponse"
+            }
+          }
+        }
       }
     }
   },
   "definitions": {
+    "infoPutResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "x-go-name": "Msg"
+        },
+        "statusCode": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "StatusCode"
+        }
+      },
+      "x-go-name": "ErrorResponse",
+      "x-go-package": "quote/pkg/api"
+    },
     "infoRequest": {
       "type": "object",
       "properties": {

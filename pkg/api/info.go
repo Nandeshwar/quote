@@ -140,10 +140,18 @@ func (s *Server) getInfo(w http.ResponseWriter, r *http.Request) {
 //   schema:
 //     '$ref': '#/definitions/infoRequest'
 // Responses:
-//  200: noContent
+//   '200':
+//     description: Ok
+//     schema:
+//        '$ref': '#/definitions/infoPutResponse'
+//   '404':
+//     description: Not found
+//     schema:
+//        '$ref': '#/definitions/infoPutResponse'
 func (s *Server) putInfo(w http.ResponseWriter, r *http.Request) {
 	// We can obtain the session token from the requests cookies, which come with every request
 	idStr := mux.Vars(r)["id"]
+	errResp := ErrorResponse{}
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		logrus.WithError(err).Error("error in info id conversion")
@@ -166,15 +174,39 @@ func (s *Server) putInfo(w http.ResponseWriter, r *http.Request) {
 		Links: infoReq.Links,
 	}
 
+	IDs, err := s.infoService.GetInfoLinkIDs(strings.Join(info.Links, ","))
+	if err != nil {
+		logrus.Errorf("error checking existence of links=%v", err)
+		return
+	}
+
 	err = s.infoService.UpdateInfoByID(info)
 	if err != nil {
 		logrus.WithError(err).Error("error updating info")
 		if strings.Contains(err.Error(), "does not exist in database") {
+			errResp.StatusCode = http.StatusNotFound
+			errResp.Msg = fmt.Sprintf("ID=%v does not exist", info.ID)
+			jsonBytes, _ := json.Marshal(&errResp)
 			w.WriteHeader(http.StatusNotFound)
+			w.Write(jsonBytes)
 			return
 		}
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	if len(IDs) > 0 {
+		errResp.StatusCode = 200
+		errResp.Msg = fmt.Sprintf("link already exists for IDS=%v", IDs)
+		jsonBytes, _ := json.Marshal(&errResp)
+		w.WriteHeader(http.StatusOK)
+		w.Write(jsonBytes)
+		return
+	}
+
+	errResp.StatusCode = 200
+	errResp.Msg = fmt.Sprintf("ID=%v updated successfully", IDs)
+	jsonBytes, _ := json.Marshal(&errResp)
 	w.WriteHeader(http.StatusOK)
+	w.Write(jsonBytes)
 }

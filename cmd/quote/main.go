@@ -49,6 +49,8 @@ func main() {
 	logrus.WithField("new_log_level", logLevel).Info("Setting log level")
 	logrus.SetLevel(logLevel)
 
+	logrus.Info("Welcome to the Quote App")
+
 	sqlite3file := env.GetStringWithDefault("SQLITE3_FILE", "./db/quote.db")
 
 	devotionalImageMaxWidth, devotionalImageMaxHeight, err := getImageSize(devotionalImageMaxSize, "DEVOTIONAL_IMAGE_MAX_SIZE")

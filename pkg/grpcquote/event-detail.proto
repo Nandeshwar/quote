@@ -38,6 +38,7 @@ message EventDetailReply {
 
 message EventDetailUpdateReply {
     int64 id = 1;
+    string msg = 2;
 }
 
 message Error {
