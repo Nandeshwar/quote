@@ -11,5 +11,10 @@ services:
       - SERVER_RUN_DURATION_HOUR=12
       - DEVOTIONAL_IMAGE_MAX_SIZE=1200:900
       - HTTP_PORT=1922
-    restart: always
+      - SQLITE3_FILE=/db/quote.db
 
+    volumes:
+      - ./db:/db
+#      - ./dockervol/db:/db
+
+    restart: always
