@@ -1,9 +1,11 @@
 package api
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"html/template"
 	"net/http"
+	"quote/pkg/model"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -19,12 +21,102 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
-		err = t.Execute(w, nil)
+
+		today := time.Now()
+		todayTime := today.AddDate(0, 0, 0)
+		eventsToday, err := s.eventDetailService.EventsInFuture(todayTime)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		tomorrow := today.AddDate(0, 0, 1)
+		eventsTomorrow, err := s.eventDetailService.EventsInFuture(tomorrow)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		dayAfterTomorrow := today.AddDate(0, 0, 2)
+		eventsDayAfterTomorrow, err := s.eventDetailService.EventsInFuture(dayAfterTomorrow)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		day4 := today.AddDate(0, 0, 3)
+		eventsDay4, err := s.eventDetailService.EventsInFuture(day4)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		day5 := today.AddDate(0, 0, 4)
+		eventsDay5, err := s.eventDetailService.EventsInFuture(day5)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		day6 := today.AddDate(0, 0, 5)
+		eventsDay6, err := s.eventDetailService.EventsInFuture(day6)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		day7 := today.AddDate(0, 0, 6)
+		eventsDay7, err := s.eventDetailService.EventsInFuture(day7)
+		if err != nil {
+			logrus.Errorf("error getting events in future %v", err)
+		}
+
+		type Event struct {
+			Day       string
+			EventList []model.EventDetail
+		}
+		type Data struct {
+			Events []Event
+		}
+		data := Data{
+			[]Event{
+				{
+					Day:       fmt.Sprintf("Today,  %s", todayTime.Format("Monday Jan _2, 2006")),
+					EventList: eventsToday,
+				},
+				Event{
+					Day:       fmt.Sprintf("Tomorrow,  %s", tomorrow.Format("Monday Jan _2, 2006")),
+					EventList: eventsTomorrow,
+				},
+
+				Event{
+					Day:       fmt.Sprintf("Day After Tomorrow,  %s", dayAfterTomorrow.Format("Monday Jan _2, 2006")),
+					EventList: eventsDayAfterTomorrow,
+				},
+
+				Event{
+					Day:       fmt.Sprintf("%s", day4.Format("Monday Jan _2, 2006")),
+					EventList: eventsDay4,
+				},
+
+				Event{
+					Day:       fmt.Sprintf("%s", day5.Format("Monday Jan _2, 2006")),
+					EventList: eventsDay5,
+				},
+
+				Event{
+					Day:       fmt.Sprintf("%s", day6.Format("Monday Jan _2, 2006")),
+					EventList: eventsDay6,
+				},
+
+				Event{
+					Day:       fmt.Sprintf("%s", day7.Format("Monday Jan _2, 2006")),
+					EventList: eventsDay7,
+				},
+			},
+		}
+
+		err = t.Execute(w, data)
 		if err != nil {
 			logrus.Error("error executing login view", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
 
 	case "POST":

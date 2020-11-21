@@ -8,6 +8,7 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	model "quote/pkg/model"
 	reflect "reflect"
+	time "time"
 )
 
 // MockIEventDetail is a mock of IEventDetail interface
@@ -134,4 +135,19 @@ func (m *MockIEventDetail) GetEventDetailLinkIDs(link string) ([]int64, error) {
 func (mr *MockIEventDetailMockRecorder) GetEventDetailLinkIDs(link interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailLinkIDs", reflect.TypeOf((*MockIEventDetail)(nil).GetEventDetailLinkIDs), link)
+}
+
+// EventsInFuture mocks base method
+func (m *MockIEventDetail) EventsInFuture(t time.Time) ([]model.EventDetail, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "EventsInFuture", t)
+	ret0, _ := ret[0].([]model.EventDetail)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// EventsInFuture indicates an expected call of EventsInFuture
+func (mr *MockIEventDetailMockRecorder) EventsInFuture(t interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EventsInFuture", reflect.TypeOf((*MockIEventDetail)(nil).EventsInFuture), t)
 }

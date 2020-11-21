@@ -3,11 +3,11 @@ package api
 import (
 	"errors"
 	"net/http"
+	"net/http/httptest"
+	"quote/pkg/model"
 	"quote/pkg/service/quote"
 	"strings"
 	"testing"
-
-	"net/http/httptest"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
@@ -20,13 +20,17 @@ func TestLogin(t *testing.T) {
 	Convey("Test login page", t, func() {
 		ctrl := gomock.NewController(t)
 		loginService := mock_service.NewMockILogin(ctrl)
+		eventDetailService := mock_service.NewMockIEventDetail(ctrl)
 
 		w := httptest.NewRecorder()
 		s := NewServer(0, 0, ImageSize{}, "abc", 1, service.InfoEventService{}, quote.NewQuoteService())
 		s.loginService = loginService
+		s.eventDetailService = eventDetailService
 
 		Convey("success: Get", func() {
 			s.views.Login = "../../views/login.gtpl"
+
+			eventDetailService.EXPECT().EventsInFuture(gomock.Any()).Return([]model.EventDetail{}, nil).MaxTimes(7)
 			req := httptest.NewRequest("GET", "/login", nil)
 			s.login(w, req)
 			resp := w.Result()
