@@ -37,9 +37,9 @@ docker push nandeshwar/quote
 
 or
  
-dc -f build.yml up -d --build
+docker-compose up -d --build
 docker push nandeshwar/quote
-dc f build.yml down
+docker-compose down
 docker images -q -f "dangling=true" | xargs docker rmi
 ```
 

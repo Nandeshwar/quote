@@ -3,7 +3,10 @@ version: '3'
 services:
   quote-app-run:
     image: nandeshwar/quote
-    container_name: nandeshwar-quote-run
+    container_name: quote
+    build:
+      context: ./
+      dockerfile: "Dockerfile"
     ports:
       - "1922:1922"
     environment:
@@ -15,6 +18,5 @@ services:
 
     volumes:
       - ./db:/db
-#      - ./dockervol/db:/db
 
     restart: always
