@@ -16,6 +16,7 @@ type EventDetail struct {
 	Day          int       `json:"day"`
 	Month        int       `json:"month"`
 	Year         int       `json:"year"`
+	EventDate    time.Time // newly introduced this field. Data is not getting populating for this field by service
 	Title        string    `json:"title"`
 	Info         string    `json:"info"`
 	URL          string    `json:"-"`

@@ -2198,6 +2198,81 @@ func SortEventDetailByYearDescPtr(list []*EventDetail) []*EventDetail {
 	}
 	return newListPtr
 }
+type byEventDateEventDetail []EventDetail
+
+func (a byEventDateEventDetail) Len() int           { return len(a) }
+func (a byEventDateEventDetail) Less(i, j int) bool { return a[i].EventDate.Before(a[j].EventDate) }
+func (a byEventDateEventDetail) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+
+// SortEventDetailByEventDate sort structs
+func SortEventDetailByEventDate(list []EventDetail) []EventDetail {
+	if len(list) == 0 {
+		return []EventDetail{}
+	}
+	newList := make([]EventDetail, len(list))
+	for i, item := range list {
+		newList[i] = item
+	}
+	sort.Sort(byEventDateEventDetail(newList))
+	return newList
+}
+
+// SortEventDetailByEventDatePtr sorts structs
+func SortEventDetailByEventDatePtr(list []*EventDetail) []*EventDetail {
+	if len(list) == 0 {
+		return []*EventDetail{}
+	}
+	newList := make([]EventDetail, len(list))
+	newListPtr := make([]*EventDetail, len(list))
+
+	for i, item := range list {
+		newList[i] = *item
+	}
+	sort.Sort(byEventDateEventDetail(newList))
+
+	for i := 0; i < len(newList); i++ {
+		newListPtr[i] = &newList[i]
+	}
+	return newListPtr
+}
+
+type byEventDateEventDetailDesc []EventDetail
+
+func (a byEventDateEventDetailDesc) Len() int           { return len(a) }
+func (a byEventDateEventDetailDesc) Less(i, j int) bool { return a[i].EventDate.After(a[j].EventDate) }
+func (a byEventDateEventDetailDesc) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+
+// SortEventDetailByEventDateDesc sorts structs
+func SortEventDetailByEventDateDesc(list []EventDetail) []EventDetail {
+	if len(list) == 0 {
+		return []EventDetail{}
+	}
+	newList := make([]EventDetail, len(list))
+	for i, item := range list {
+		newList[i] = item
+	}
+	sort.Sort(byEventDateEventDetailDesc(newList))
+	return newList
+}
+
+// SortEventDetailByEventDateDescPtr sorts structs
+func SortEventDetailByEventDateDescPtr(list []*EventDetail) []*EventDetail {
+	if len(list) == 0 {
+		return []*EventDetail{}
+	}
+	newList := make([]EventDetail, len(list))
+	newListPtr := make([]*EventDetail, len(list))
+
+	for i, item := range list {
+		newList[i] = *item
+	}
+	sort.Sort(byEventDateEventDetailDesc(newList))
+
+	for i := 0; i < len(newList); i++ {
+		newListPtr[i] = &newList[i]
+	}
+	return newListPtr
+}
 type byTitleEventDetail []EventDetail
 
 func (a byTitleEventDetail) Len() int           { return len(a) }
@@ -4111,6 +4186,373 @@ func SetEventDetailByYearPtr(list []*EventDetail) []*EventDetail {
 		_, ok := resultMap[list[i].Year]
 		if !ok {
 			resultMap[list[i].Year] = true
+			newList = append(newList, list[i])
+		}
+	}
+	return newList
+}
+// UnionEventDetailByEventDate return a set that is the union of the input sets
+// repeated value within list parameter will be ignored
+func UnionEventDetailByEventDate(arrList ...[]EventDetail) []EventDetail {
+	resultMap := make(map[time.Time]bool)
+	var resultArr []EventDetail
+	for _, arr := range arrList {
+		for _, v := range arr {
+			_, ok := resultMap[v.EventDate]
+			if !ok {
+				resultMap[v.EventDate] = true
+				resultArr = append(resultArr, v)
+			}
+		}
+	}
+	return resultArr
+}
+
+// Union<FTYPE>Ptr return a set that is the union of the input sets
+// repeated value within list parameter will be ignored
+func UnionEventDetailByEventDatePtr(arrList ...[]*EventDetail) []*EventDetail {
+	resultMap := make(map[time.Time]bool)
+	var resultArr []*EventDetail
+	for _, arr := range arrList {
+		for _, v := range arr {
+			_, ok := resultMap[v.EventDate]
+			if !ok {
+				resultMap[v.EventDate] = true
+				resultArr = append(resultArr, v)
+			}
+		}
+	}
+	return resultArr
+}
+
+// IntersectionEventDetailByEventDate return a set that is the intersection of the input sets
+// repeated value within list parameter will be ignored
+func IntersectionEventDetailByEventDate(arrList ...[]EventDetail) []EventDetail {
+	if arrList == nil {
+		return []EventDetail{}
+	}
+
+	resultMap := make(map[time.Time]bool)
+	if len(arrList) == 1 {
+		var newList []EventDetail
+		for i := 0; i < len(arrList[0]); i++ {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				newList = append(newList, arrList[0][i])
+				resultMap[arrList[0][i].EventDate] = true
+			}
+		}
+		return newList
+	}
+
+	var newList []EventDetail
+	// 1st loop iterates items in 1st array
+	// 2nd loop iterates all the rest of the arrays
+	// 3rd loop iterates items in the rest of the arrays
+	for i := 0; i < len(arrList[0]); i++ {
+
+		matchCount := 0
+		for j := 1; j < len(arrList); j++ {
+			for _, v := range arrList[j] {
+				// compare every items in 1st array to every items in the rest of the arrays
+				if arrList[0][i].EventDate == v.EventDate {
+					matchCount++
+					break
+				}
+			}
+		}
+		if matchCount == len(arrList)-1 {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				newList = append(newList, arrList[0][i])
+				resultMap[arrList[0][i].EventDate] = true
+			}
+		}
+	}
+	return newList
+}
+
+// IntersectionEventDetailByEventDatePtr return a set that is the intersection of the input sets
+// repeated value within list parameter will be ignored
+func IntersectionEventDetailByEventDatePtr(arrList ...[]*EventDetail) []*EventDetail {
+	if arrList == nil {
+		return []*EventDetail{}
+	}
+
+	resultMap := make(map[time.Time]bool)
+	if len(arrList) == 1 {
+		var newList []*EventDetail
+		for i := 0; i < len(arrList[0]); i++ {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				resultMap[arrList[0][i].EventDate] = true
+				newList = append(newList, arrList[0][i])
+			}
+		}
+		return newList
+	}
+
+	var newList []*EventDetail
+	// 1st loop iterates items in 1st array
+	// 2nd loop iterates all the rest of the arrays
+	// 3rd loop iterates items in the rest of the arrays
+	for i := 0; i < len(arrList[0]); i++ {
+
+		matchCount := 0
+		for j := 1; j < len(arrList); j++ {
+			for _, v := range arrList[j] {
+				// compare every items in 1st array to every items in the rest of the arrays
+				if arrList[0][i].EventDate == v.EventDate {
+					matchCount++
+					break
+				}
+			}
+		}
+		if matchCount == len(arrList)-1 {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				newList = append(newList, arrList[0][i])
+				resultMap[arrList[0][i].EventDate] = true
+			}
+		}
+	}
+	return newList
+}
+
+// DifferenceEventDetailByEventDate returns a set that is the first set without elements of the remaining sets
+// repeated value within list parameter will be ignored
+func DifferenceEventDetailByEventDate(arrList ...[]EventDetail) []EventDetail {
+	if arrList == nil {
+		return []EventDetail{}
+	}
+
+	resultMap := make(map[time.Time]bool)
+	if len(arrList) == 1 {
+		var newList []EventDetail
+		for i := 0; i < len(arrList[0]); i++ {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				newList = append(newList, arrList[0][i])
+				resultMap[arrList[0][i].EventDate] = true
+			}
+		}
+		return newList
+	}
+
+	var newList []EventDetail
+	// 1st loop iterates items in 1st array
+	// 2nd loop iterates all the rest of the arrays
+	// 3rd loop iterates items in the rest of the arrays
+	for i := 0; i < len(arrList[0]); i++ {
+
+		matchCount := 0
+		for j := 1; j < len(arrList); j++ {
+			for _, v := range arrList[j] {
+				// compare every items in 1st array to every items in the rest of the arrays
+				if arrList[0][i].EventDate == v.EventDate {
+					matchCount++
+					break
+				}
+			}
+		}
+		if matchCount == 0 {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				newList = append(newList, arrList[0][i])
+				resultMap[arrList[0][i].EventDate] = true
+			}
+		}
+	}
+	return newList
+}
+
+// DifferenceEventDetailByEventDatePtr returns a set that is the first set without elements of the remaining sets
+// repeated value within list parameter will be ignored
+func DifferenceEventDetailByEventDatePtr(arrList ...[]*EventDetail) []*EventDetail {
+	if arrList == nil {
+		return []*EventDetail{}
+	}
+
+	resultMap := make(map[time.Time]bool)
+	if len(arrList) == 1 {
+		var newList []*EventDetail
+		for i := 0; i < len(arrList[0]); i++ {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				resultMap[arrList[0][i].EventDate] = true
+				newList = append(newList, arrList[0][i])
+			}
+		}
+		return newList
+	}
+
+	var newList []*EventDetail
+	// 1st loop iterates items in 1st array
+	// 2nd loop iterates all the rest of the arrays
+	// 3rd loop iterates items in the rest of the arrays
+	for i := 0; i < len(arrList[0]); i++ {
+
+		matchCount := 0
+		for j := 1; j < len(arrList); j++ {
+			for _, v := range arrList[j] {
+				// compare every items in 1st array to every items in the rest of the arrays
+				if arrList[0][i].EventDate == v.EventDate {
+					matchCount++
+					break
+				}
+			}
+		}
+		if matchCount == 0 {
+			_, ok := resultMap[arrList[0][i].EventDate]
+			if !ok {
+				newList = append(newList, arrList[0][i])
+				resultMap[arrList[0][i].EventDate] = true
+			}
+		}
+	}
+	return newList
+}
+
+// SubsetEventDetailByEventDate returns true or false by checking if set1 is a subset of set2
+// repeated value within list parameter will be ignored
+func SubsetEventDetailByEventDate(list1, list2 []EventDetail) bool {
+	if list1 == nil || len(list1) == 0 || list2 == nil || len(list2) == 0 {
+		return false
+	}
+
+	resultMap := make(map[time.Time]bool)
+	for i := 0; i < len(list1); i++ {
+		_, ok := resultMap[list1[i].EventDate]
+		if !ok {
+			found := false
+			resultMap[list1[i].EventDate] = true
+			for j := 0; j < len(list2); j++ {
+				if list1[i].EventDate == list2[j].EventDate {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// SubsetEventDetailByEventDatePtr returns true or false by checking if set1 is a subset of set2
+// repeated value within list parameter will be ignored
+func SubsetEventDetailByEventDatePtr(list1, list2 []*EventDetail) bool {
+	if list1 == nil || len(list1) == 0 || list2 == nil || len(list2) == 0 {
+		return false
+	}
+
+	resultMap := make(map[time.Time]bool)
+	for i := 0; i < len(list1); i++ {
+		_, ok := resultMap[list1[i].EventDate]
+		if !ok {
+			found := false
+			resultMap[list1[i].EventDate] = true
+			for j := 0; j < len(list2); j++ {
+				if list1[i].EventDate == list2[j].EventDate {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// SupersetEventDetailByEventDate returns true or false by checking if set1 is a superset of set2
+// repeated value within list parameter will be ignored
+func SupersetEventDetailByEventDate(list1, list2 []EventDetail) bool {
+	if list1 == nil || len(list1) == 0 || list2 == nil || len(list2) == 0 {
+		return false
+	}
+
+	resultMap := make(map[time.Time]bool)
+
+	for i := 0; i < len(list2); i++ {
+		_, ok := resultMap[list2[i].EventDate]
+		if !ok {
+			found := false
+			resultMap[list2[i].EventDate] = true
+			for j := 0; j < len(list1); j++ {
+				if list2[i].EventDate == list1[j].EventDate {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// SupersetEventDetailByEventDatePtr returns true or false by checking if set1 is a superset of set2
+// repeated value within list parameter will be ignored
+func SupersetEventDetailByEventDatePtr(list1, list2 []*EventDetail) bool {
+	if list1 == nil || len(list1) == 0 || list2 == nil || len(list2) == 0 {
+		return false
+	}
+
+	resultMap := make(map[time.Time]bool)
+
+	for i := 0; i < len(list2); i++ {
+		_, ok := resultMap[list2[i].EventDate]
+		if !ok {
+			found := false
+			resultMap[list2[i].EventDate] = true
+			for j := 0; j < len(list1); j++ {
+				if list2[i].EventDate == list1[j].EventDate {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// SetEventDetailByEventDate returns a set of the distinct elements of coll.
+func SetEventDetailByEventDate(list []EventDetail) []EventDetail {
+	if list == nil || len(list) == 0 {
+		return []EventDetail{}
+	}
+
+	resultMap := make(map[time.Time]bool)
+	newList := []EventDetail{}
+	for i := 0; i < len(list); i++ {
+		_, ok := resultMap[list[i].EventDate]
+		if !ok {
+			resultMap[list[i].EventDate] = true
+			newList = append(newList, list[i])
+		}
+	}
+	return newList
+}
+
+// SetEventDetailByEventDatePtr returns a set of the distinct elements of coll.
+func SetEventDetailByEventDatePtr(list []*EventDetail) []*EventDetail {
+	if list == nil || len(list) == 0 {
+		return []*EventDetail{}
+	}
+
+	resultMap := make(map[time.Time]bool)
+	newList := []*EventDetail{}
+	for i := 0; i < len(list); i++ {
+		_, ok := resultMap[list[i].EventDate]
+		if !ok {
+			resultMap[list[i].EventDate] = true
 			newList = append(newList, list[i])
 		}
 	}

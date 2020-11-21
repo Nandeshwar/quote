@@ -234,6 +234,7 @@ func (s SQLite3Repo) GetEventDetailByMonthDay(month, day int) ([]model.EventDeta
 			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
 		}
 		logrus.Debugf("data fetched from database=%v", eventDetailList)
+		eventDetailDB.EventDate = time.Date(eventDetailDB.Year, time.Month((eventDetailDB.Month)), eventDetailDB.Day, 0, 0, 0, 0, time.Local)
 		eventDetailList = append(eventDetailList, eventDetailDB)
 	}
 

@@ -36,6 +36,10 @@
                         <td>{{.Info}}</td>
                     </tr>
 
+                    <tr>
+                        <td>Date</td>
+                        <td>{{.EventDate.Format "Monday Jan 2006"}}</td>
+                    </tr>
                      <tr>
                         <td>Links</td>
                         <td>{{.Links}}</td>
