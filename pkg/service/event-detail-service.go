@@ -19,6 +19,7 @@ type IEventDetail interface {
 	GetEventDetailByID(ID int64) (model.EventDetail, error)
 	UpdateEventDetailByID(eventDetail model.EventDetail) error
 	GetEventDetailLinkIDs(link string) ([]int64, error)
+	EventsInFuture(t time.Time) ([]model.EventDetail, error)
 }
 
 func (s InfoEventService) GetEventDetailLinkIDs(link string) ([]int64, error) {
