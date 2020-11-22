@@ -48,7 +48,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 			for _, foundInfo := range foundList {
 
 				isSame := func(info model.Info) bool {
-					if foundInfo.Title == info.Title && foundInfo.CreationDate == info.CreationDate {
+					if foundInfo.Title == info.Title && foundInfo.CreatedAt == info.CreatedAt {
 						return true
 					}
 					return false

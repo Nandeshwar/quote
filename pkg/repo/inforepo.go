@@ -22,6 +22,7 @@ type IInfoRepo interface {
 	GetInfoLinkIDs(links []string) ([]int64, error)
 }
 
+/*
 func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, error) {
 	query := `INSERT INTO info (title, info, created_at, updated_at) VALUES (?, ?, ?, ?)`
 	tx, _ := s.DB.Begin()
@@ -33,15 +34,15 @@ func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, er
 		"Query":     space.ReplaceAllString(query, " "),
 		"title":     info.Title,
 		"info":      info.Info,
-		"create_at": info.CreationDate.Format(constants.DATE_FORMAT),
-		"update_at": info.UpdatedDate.Format(constants.DATE_FORMAT),
+		"create_at": info.CreatedAt.Format(constants.DATE_FORMAT),
+		"update_at": info.UpdatedAt.Format(constants.DATE_FORMAT),
 	}).Debugf("inserting data")
 	statement, err := tx.Prepare(qry)
 	if err != nil {
 		tx.Rollback()
 		return 0, fmt.Errorf("error preparing statements. query=%s, error=%v", query, err)
 	}
-	result, err := statement.ExecContext(ctx, info.Title, info.Info, info.CreationDate.Format(constants.DATE_FORMAT), info.UpdatedDate.Format(constants.DATE_FORMAT))
+	result, err := statement.ExecContext(ctx, info.Title, info.Info, info.CreatedAt.Format(constants.DATE_FORMAT), info.UpdatedAt.Format(constants.DATE_FORMAT))
 	if err != nil {
 		tx.Rollback()
 		return 0, fmt.Errorf("error executing statements. query=%s, error=%v", query, err)
@@ -58,8 +59,8 @@ func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, er
 			"Query":     space.ReplaceAllString(query, " "),
 			"link_id":   id,
 			"link":      strings.TrimSpace(l),
-			"create_at": info.CreationDate.Format(constants.DATE_FORMAT),
-			"update_at": info.UpdatedDate.Format(constants.DATE_FORMAT),
+			"create_at": info.CreatedAt.Format(constants.DATE_FORMAT),
+			"update_at": info.UpdatedAt.Format(constants.DATE_FORMAT),
 		}).Debugf("inserting data")
 
 		statement, err := tx.PrepareContext(ctx, query)
@@ -67,7 +68,7 @@ func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, er
 			tx.Rollback()
 			return 0, fmt.Errorf("error preparing statements. query=%s, error=%v", query, err)
 		}
-		_, err = statement.ExecContext(ctx, id, strings.TrimSpace(l), info.CreationDate.Format(constants.DATE_FORMAT), info.UpdatedDate.Format(constants.DATE_FORMAT))
+		_, err = statement.ExecContext(ctx, id, strings.TrimSpace(l), info.CreatedAt.Format(constants.DATE_FORMAT), info.UpdatedAt.Format(constants.DATE_FORMAT))
 		if err != nil {
 			tx.Rollback()
 			return 0, fmt.Errorf("error executing statements. query=%s, error=%v", query, err)
@@ -80,7 +81,7 @@ func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, er
 			tx.Rollback()
 			return 0, fmt.Errorf("error preparing statements. query=%s, error=%v", query, err)
 		}
-		_, err = statement.ExecContext(ctx, id, "no-link", info.CreationDate.Format(constants.DATE_FORMAT), info.UpdatedDate.Format(constants.DATE_FORMAT))
+		_, err = statement.ExecContext(ctx, id, "no-link", info.CreatedAt.Format(constants.DATE_FORMAT), info.UpdatedAt.Format(constants.DATE_FORMAT))
 		if err != nil {
 			tx.Rollback()
 			return 0, fmt.Errorf("error executing statements. query=%s, error=%v", query, err)
@@ -91,6 +92,34 @@ func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, er
 		"id": id,
 	}).Debug("event detail  record inserted to db successfully")
 	return id, nil
+}
+*/
+
+func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, error) {
+
+	infoGORM := model.InfoGORM{
+		Title: info.Title,
+		Info:  info.Info,
+	}
+
+	if len(info.Links) == 0 {
+		info.Links = []string{"no-link"}
+	}
+
+	for _, link := range info.Links {
+		infoGORM.InfoLinks = append(infoGORM.InfoLinks, model.InfoLinkGORM{
+			Link: strings.TrimSpace(link),
+		})
+	}
+
+	tx := s.GORMDB.WithContext(ctx).Create(&infoGORM).Debug()
+
+	if tx.Error != nil {
+		return 0, tx.Error
+	}
+
+	return infoGORM.ID, nil
+
 }
 
 func (s SQLite3Repo) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error) {
@@ -117,7 +146,7 @@ func (s SQLite3Repo) GetInfoByTitleOrInfo(searchTxt string) ([]model.Info, error
 
 	var infoDB model.Info
 	for rows.Next() {
-		err = rows.Scan(&infoDB.ID, &infoDB.Title, &infoDB.Info, &infoDB.CreationDate, &infoDB.UpdatedDate, &infoDB.Link)
+		err = rows.Scan(&infoDB.ID, &infoDB.Title, &infoDB.Info, &infoDB.CreatedAt, &infoDB.UpdatedAt, &infoDB.Link)
 		if err != nil {
 			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
 		}
@@ -183,7 +212,7 @@ func (s SQLite3Repo) GetInfoByID(ctx context.Context, ID int64) ([]model.Info, e
 
 	var infoDB model.Info
 	for rows.Next() {
-		err = rows.Scan(&infoDB.ID, &infoDB.Title, &infoDB.Info, &infoDB.CreationDate, &infoDB.UpdatedDate, &infoDB.Link)
+		err = rows.Scan(&infoDB.ID, &infoDB.Title, &infoDB.Info, &infoDB.CreatedAt, &infoDB.UpdatedAt, &infoDB.Link)
 		if err != nil {
 			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
 		}
@@ -230,11 +259,11 @@ func (s SQLite3Repo) updateInfo(info model.Info, tx *sql.Tx) error {
 		"ID":         info.ID,
 		"title":      info.Title,
 		"info":       info.Info,
-		"updated_at": info.UpdatedDate.Format(constants.DATE_FORMAT),
+		"updated_at": info.UpdatedAt.Format(constants.DATE_FORMAT),
 	}).Debugf("updating data")
 
 	statement, err := tx.Prepare(updateInfoQuery)
-	_, err = tx.Stmt(statement).Exec(info.Title, info.Info, info.UpdatedDate.Format(constants.DATE_FORMAT), info.ID)
+	_, err = tx.Stmt(statement).Exec(info.Title, info.Info, info.UpdatedAt.Format(constants.DATE_FORMAT), info.ID)
 	if err != nil {
 		tx.Rollback()
 		return fmt.Errorf("error preparing statements. query=%s, error=%v", updateInfoQuery, err)
@@ -307,7 +336,7 @@ func (s SQLite3Repo) UpdateInfoByID(info model.Info) error {
 		return err
 	}
 
-	err = s.insertLinks(info.ID, info.Links, info.UpdatedDate, tx)
+	err = s.insertLinks(info.ID, info.Links, info.UpdatedAt, tx)
 	if err != nil {
 		return err
 	}
