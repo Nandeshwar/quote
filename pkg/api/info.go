@@ -66,7 +66,7 @@ func displayInfo(filteredInfo []model.Info, w http.ResponseWriter) {
 		fmt.Fprintf(w, fmt.Sprintf("<pre>%s</pre>", info.Info))
 		fmt.Fprintf(w, fmt.Sprintf("</td>"))
 
-		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", info.CreationDate.Format(constants.DATE_FORMAT_INFO)))
+		fmt.Fprintf(w, fmt.Sprintf("<td>%v</td>", info.CreatedAt.Format(constants.DATE_FORMAT_INFO)))
 		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
 	}
 	fmt.Fprintf(w, fmt.Sprintf("</table>"))

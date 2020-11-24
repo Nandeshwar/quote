@@ -56,11 +56,11 @@ func (s InfoEventService) CreateNewInfo(ctx context.Context, form model.InfoForm
 		links = strings.Split(link, "|")
 	}
 	info := model.Info{
-		Title:        form.Title,
-		Info:         form.Info,
-		Links:        links,
-		CreationDate: createdAt,
-		UpdatedDate:  time.Now(),
+		Title:     form.Title,
+		Info:      form.Info,
+		Links:     links,
+		CreatedAt: createdAt,
+		UpdatedAt: time.Now(),
 	}
 	id, err := s.InfoRepo.CreateInfo(ctx, info)
 	if err != nil {
@@ -134,7 +134,7 @@ func (s InfoEventService) GetInfoLinkIDs(link string) ([]int64, error) {
 
 func (s InfoEventService) UpdateInfoByID(info model.Info) error {
 	updatedAt := time.Now()
-	info.UpdatedDate = updatedAt
+	info.UpdatedAt = updatedAt
 	err := s.InfoRepo.UpdateInfoByID(info)
 	if err != nil {
 		return err
