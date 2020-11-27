@@ -2,11 +2,12 @@ package api
 
 import (
 	"fmt"
-	"github.com/gorilla/schema"
-	_ "github.com/gorilla/schema"
-	"github.com/sirupsen/logrus"
 	"html/template"
 	"net/http"
+
+	"github.com/gorilla/schema"
+	"github.com/sirupsen/logrus"
+
 	"quote/pkg/model"
 )
 

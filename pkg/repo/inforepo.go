@@ -98,8 +98,9 @@ func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, er
 func (s SQLite3Repo) CreateInfo(ctx context.Context, info model.Info) (int64, error) {
 
 	infoGORM := model.InfoGORM{
-		Title: info.Title,
-		Info:  info.Info,
+		Title:     info.Title,
+		Info:      info.Info,
+		CreatedAt: info.CreatedAt,
 	}
 
 	if len(info.Links) == 0 {
