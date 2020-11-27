@@ -8,6 +8,7 @@ require (
 	github.com/golang/protobuf v1.4.3
 	github.com/gookit/color v1.2.1
 	github.com/gorilla/mux v1.7.3
+	github.com/gorilla/schema v1.2.0
 	github.com/gorilla/sessions v1.2.1
 	github.com/justinas/alice v1.2.0
 	github.com/logic-building/functional-go v8.13.1+incompatible
