@@ -2,9 +2,12 @@ package api
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"html/template"
 	"net/http"
+
+	"github.com/gorilla/schema"
+	"github.com/sirupsen/logrus"
+
 	"quote/pkg/model"
 )
 
@@ -53,12 +56,24 @@ func (s Server) adminInfo(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
-		infoForm := model.InfoForm{
-			Title:     r.Form["title"][0],
-			Info:      r.Form["info"][0],
-			Link:      r.Form["link"][0],
-			CreatedAt: r.Form["createdAt"][0],
+
+		var infoForm model.InfoForm
+		decoder := schema.NewDecoder()
+		err = decoder.Decode(&infoForm, r.PostForm)
+		if err != nil {
+			logrus.WithError(err).Error("error decoding form values")
+			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
+
+		/*
+			infoForm := model.InfoForm{
+				Title:     r.Form["title"][0],
+				Info:      r.Form["info"][0],
+				Link:      r.Form["link"][0],
+				CreatedAt: r.Form["createdAt"][0],
+			}
+		*/
 
 		err = s.infoService.ValidateForm(infoForm)
 		if err != nil {
