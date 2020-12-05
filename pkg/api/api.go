@@ -162,6 +162,20 @@ func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecret
 	return s
 }
 
+// https://dev.to/techschoolguru/use-grpc-interceptor-for-authorization-with-jwt-1c5h
+func unaryInterceptor(
+	ctx context.Context,
+	req interface{},
+	info *grpc.UnaryServerInfo,
+	handler grpc.UnaryHandler,
+
+) (interface{}, error) {
+	fmt.Println(" Unary Interceptor Nandeshwar here......", info.FullMethod)
+	f := nrgrpc.UnaryServerInterceptor(newrelicwrapper.NewRelicApplication)
+	f(ctx, req, info, handler)
+	return handler(ctx, req)
+}
+
 func (s *Server) ServeGRPC(ready chan bool) error {
 	listener, err := net.Listen("tcp", ":"+strconv.Itoa(s.grpcPort))
 	if err != nil {
@@ -169,7 +183,8 @@ func (s *Server) ServeGRPC(ready chan bool) error {
 		return fmt.Errorf("Failed to open listening port for catalog grpc on address=%d", s.grpcPort)
 	}
 	s.grpc = grpc.NewServer(
-		grpc.UnaryInterceptor(nrgrpc.UnaryServerInterceptor(newrelicwrapper.NewRelicApplication)),
+		grpc.UnaryInterceptor(unaryInterceptor),
+		//grpc.UnaryInterceptor(nrgrpc.UnaryServerInterceptor(newrelicwrapper.NewRelicApplication)),
 		grpc.StreamInterceptor(nrgrpc.StreamServerInterceptor(newrelicwrapper.NewRelicApplication)))
 	grpc2.RegisterEventDetailServiceGRPCServer(s.grpc, s)
 	// Register reflection service on gRPC server.`
