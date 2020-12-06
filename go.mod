@@ -3,6 +3,7 @@ module quote
 go 1.12
 
 require (
+	github.com/Shopify/sarama v1.27.2
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.3
