@@ -3,10 +3,13 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"time"
+
+	"github.com/Shopify/sarama"
 	"github.com/sirupsen/logrus"
+
 	"quote/pkg/binaryinfo"
 	"quote/pkg/kafka"
-	"time"
 )
 
 func main() {
@@ -18,16 +21,13 @@ func SendMessageToKafka() {
 	ticker := time.NewTicker(1 * time.Minute)
 	done := make(chan bool)
 	go func() {
+		procudeMsg(producer)
 		for {
 			select {
 			case <-done:
 				return
 			case _ = <-ticker.C:
-				buf := new(bytes.Buffer)
-				info := newInfo()
-				toTLVBytes(buf, binaryinfo.INFO_TYPE, binaryinfo.INFO_LEN, info)
-				kafka.ProduceBinaryMessage(producer, buf.Bytes())
-				logrus.Info("message sent to kafka successfully")
+				procudeMsg(producer)
 
 			}
 		}
@@ -38,13 +38,28 @@ func SendMessageToKafka() {
 	done <- true
 }
 
-func newInfo() binaryinfo.Info {
+func procudeMsg(producer sarama.AsyncProducer) {
+	buf := new(bytes.Buffer)
+	info := newInfo()
+	toTLVBytes(buf, binaryinfo.INFO_TYPE, binaryinfo.INFO_LEN, &info)
+	kafka.ProduceBinaryMessage(producer, buf.Bytes())
+	logrus.Info("message sent to kafka successfully")
+}
+
+func newInfo() binaryinfo.InfoMohan {
+
+	var name [10]byte
+	copy(name[:], "Mohan")
+
 	now := time.Now()
-	return binaryinfo.Info{
-		Id:        1,
-		Name:      "Mohan",
+	var createdAt [25]byte
+	copy(createdAt[:], now.Format(time.RFC3339))
+
+	return binaryinfo.InfoMohan{
+		Id:        100,
+		Name:      name,
 		Fee:       120.20,
-		CreatedAt: now.Format(time.RFC3339),
+		CreatedAt: createdAt,
 	}
 }
 

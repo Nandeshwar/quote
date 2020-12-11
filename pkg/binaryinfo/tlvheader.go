@@ -7,3 +7,7 @@ type Header struct {
 	Type   HeaderType
 	Length HeaderLength
 }
+
+const (
+	Mohan HeaderType = 1
+)

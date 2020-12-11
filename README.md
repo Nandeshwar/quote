@@ -190,3 +190,13 @@ go run cmd/grpc_client/eventDetailClient.go put event.json
 ```
 go run cmd/grpc_client/eventDetailClient.go gets "1, 2, 3, 4, 5"
 ```
+
+#### Run Kafka producer
+```
+go run cmd/binaryclient/kafka/producer/kafkaproducer.go
+```
+
+#### Run Kafka Consumer
+```
+go run cmd/binaryclient/kafka/consumer/kafkaconsumer.go
+```

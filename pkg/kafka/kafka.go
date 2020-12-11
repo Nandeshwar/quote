@@ -2,15 +2,19 @@ package kafka
 
 import (
 	"bytes"
+	"context"
 	"encoding/binary"
 	"fmt"
 	"github.com/Shopify/sarama"
 	"github.com/sirupsen/logrus"
 	"io"
+	"log"
 	"os"
 	"os/signal"
 	"quote/pkg/binaryinfo"
 	"strings"
+	"sync"
+	"syscall"
 	"time"
 )
 
@@ -148,4 +152,143 @@ func consume(topics []string, master sarama.Consumer) (chan *sarama.ConsumerMess
 	}
 
 	return consumers, errors
+}
+
+// Consumer Group logic---------------------
+//https://github.com/Shopify/sarama/blob/master/examples/consumergroup/main.go
+type Consumer struct {
+	ready   chan bool
+	Topics  []string
+	Config  *sarama.Config
+	Hosts   []string
+	GroupID string
+
+	ParseBinaryDataFunc func([]byte)
+}
+
+// topics: comma separated topics
+func NewConsumer(hosts []string, topics []string, groupID string, config *sarama.Config) *Consumer {
+	version, err := sarama.ParseKafkaVersion("2.1.1")
+	if err != nil {
+		logrus.Panicf("Error parsing Kafka version: %v", err)
+	}
+
+	if config == nil {
+		config = sarama.NewConfig()
+	}
+
+	if groupID == "" {
+		groupID = "Kafka-Group-Quote"
+	}
+
+	if hosts == nil {
+		hosts = []string{"localhost:9092"}
+	}
+
+	config.Version = version
+	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+
+	assignor := "range"
+
+	switch assignor {
+	case "sticky":
+		config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategySticky
+	case "roundrobin":
+		config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRoundRobin
+	case "range":
+		config.Consumer.Group.Rebalance.Strategy = sarama.BalanceStrategyRange
+	default:
+		log.Panicf("Unrecognized consumer group partition assignor: %s", assignor)
+	}
+
+	return &Consumer{
+		ready:   make(chan bool),
+		Topics:  topics,
+		Config:  config,
+		Hosts:   hosts,
+		GroupID: groupID,
+	}
+}
+
+func (c *Consumer) consumeMsgStarter() {
+	var wg sync.WaitGroup
+
+	ctx, cancel := context.WithCancel(context.Background())
+	client, err := sarama.NewConsumerGroup(c.Hosts, c.GroupID, c.Config)
+	if err != nil {
+		panic(err)
+	}
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for {
+			// `Consume` should be called inside an infinite loop, when a
+			// server-side rebalance happens, the consumer session will need to be
+			// recreated to get the new claims
+			err := client.Consume(ctx, c.Topics, c)
+			if err != nil {
+				logrus.Panicf("Error from consumer: %v", err)
+			}
+
+			// check if context was cancelled, signaling that the consumer should stop
+			if ctx.Err() != nil {
+				return
+			}
+			c.ready = make(chan bool)
+		}
+	}()
+
+	<-c.ready // Await till the consumer has been set up
+	logrus.Println("Sarama consumer up and running!...")
+
+	sigterm := make(chan os.Signal, 1)
+	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)
+	select {
+	case <-ctx.Done():
+		log.Println("terminating: context cancelled")
+	case <-sigterm:
+		log.Println("terminating: via signal")
+	}
+	cancel()
+	wg.Wait()
+	if err = client.Close(); err != nil {
+		log.Panicf("Error closing client: %v", err)
+	}
+}
+
+func (c *Consumer) ConsumeKafkaMessage(f func(msgBytes []byte)) {
+	c.ParseBinaryDataFunc = f
+	c.consumeMsgStarter()
+
+}
+
+// Setup is run at the beginning of a new session, before ConsumeClaim
+func (consumer *Consumer) Setup(sarama.ConsumerGroupSession) error {
+	// Mark the consumer as ready
+	close(consumer.ready)
+	return nil
+}
+
+// Cleanup is run at the end of a session, once all ConsumeClaim goroutines have exited
+func (consumer *Consumer) Cleanup(sarama.ConsumerGroupSession) error {
+	return nil
+}
+
+// ConsumeClaim must start a consumer loop of ConsumerGroupClaim's Messages().
+func (consumer *Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
+
+	// NOTE:
+	// Do not move the code below to a goroutine.
+	// The `ConsumeClaim` itself is called within a goroutine, see:
+	// https://github.com/Shopify/sarama/blob/master/consumer_group.go#L27-L29
+	for message := range claim.Messages() {
+
+		log.Printf("Message claimed: value = %s, timestamp = %v, topic = %s", string(message.Value), message.Timestamp, message.Topic)
+		m := message.Value
+		consumer.ParseBinaryDataFunc(m)
+		session.MarkMessage(message, "")
+	}
+
+	return nil
 }
