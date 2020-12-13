@@ -20,3 +20,66 @@ services:
       - ./db:/db
 
     restart: always
+
+  quote-zookeeper:
+    image: confluentinc/cp-zookeeper:5.1.0
+    container_name: quote-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  quote-kafka:
+    image: confluentinc/cp-kafka:5.1.0
+    container_name: quote-kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - quote-zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: quote-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://quote-kafka:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-create-topics:
+    image: confluentinc/cp-kafka:5.1.0
+    depends_on:
+      - quote-kafka
+
+    command: |
+      bash -c 'echo Waiting for Kafka to be ready... && \
+      cub kafka-ready -b quote-kafka:9092 1 20 && \
+      kafka-topics --create --topic quote-topic --partitions 10 --replication-factor 1 --if-not-exists --zookeeper quote-zookeeper:2181 && \
+            sleep infinity'
+    environment:
+      KAFKA_BROKER_ID: ignored
+      KAFKA_ZOOKEEPER_CONNECT: ignored
+
+
+  quote-kafka-rest:
+    image: confluentinc/cp-kafka-rest:5.1.0
+    container_name: quote-kafka-rest
+    ports:
+      - "8082:8082"
+    depends_on:
+      - quote-zookeeper
+      - quote-kafka
+    environment:
+      KAFKA_REST_ZOOKEEPER_CONNECT: quote-zookeeper:2181
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+      KAFKA_REST_HOST_NAME: quote-kafka-rest
+
+  quote-kafka-topics-ui:
+    image: landoop/kafka-topics-ui:0.9.4
+    container_name: quote-kafka-topics-ui
+    ports:
+      - "8000:8000"
+    depends_on:
+      - quote-kafka-rest
+    environment:
+      KAFKA_REST_PROXY_URL: http://quote-kafka-rest:8082
+      PROXY: "true"
+

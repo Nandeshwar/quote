@@ -38,11 +38,19 @@
 
                     <tr>
                         <td>Date</td>
-                        <td>{{.EventDate.Format "Monday Jan 2006"}}</td>
+                        <td>{{.EventDate.Format "Monday Jan 02, 2006"}}</td>
                     </tr>
                      <tr>
                         <td>Links</td>
-                        <td>{{.Links}}</td>
+                        <td>
+                            <table>
+                            {{ range $link := .Links}}
+                               <tr>
+                                    <td><a href={{$link}} target="_blank">Click Me</a></td>
+                               </tr>
+                            {{end}}
+                            </table>
+                        </td>
                      </tr>
                 {{end}}
             </table>
