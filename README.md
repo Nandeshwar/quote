@@ -216,3 +216,13 @@ sudo go run cmd/binaryclient/rabbitmq/producer/producer.go
 ```
 sudo go run cmd/binaryclient/rabbitmq/consumer/consumer.go
 ```
+
+#### Email Server setting
+```
+export EMAIL_SERVER="smtp.gmail.com"
+export EMAIL_SERVER_PORT=587
+export EMAIL_FROM="abc@gmail.com"
+export EMAIL_FROM_PWD="****"
+export EMAIL_TO="abc@gmail.com, xyz@gmail.com"
+
+```

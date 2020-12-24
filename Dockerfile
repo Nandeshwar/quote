@@ -31,4 +31,5 @@ RUN yum -y install tzdata
 ENV TZ=America/Denver
 
 EXPOSE 1922
+EXPOSE 1923
 ENTRYPOINT ["/quote"]
