@@ -15,8 +15,10 @@ require (
 	github.com/logic-building/functional-go v8.13.1+incompatible
 	github.com/mattn/go-sqlite3 v1.14.4
 	github.com/newrelic/go-agent v3.9.0+incompatible
+	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.7.0
 	github.com/smartystreets/goconvey v1.6.4
+	github.com/streadway/amqp v1.0.0
 	golang.org/x/exp v0.0.0-20191227195350-da58074b4299
 	golang.org/x/image v0.0.0-20191214001246-9130b4cfad52
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect

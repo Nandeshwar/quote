@@ -83,3 +83,14 @@ services:
       KAFKA_REST_PROXY_URL: http://quote-kafka-rest:8082
       PROXY: "true"
 
+  quote-rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: quote-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
