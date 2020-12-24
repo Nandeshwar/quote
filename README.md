@@ -200,7 +200,10 @@ go run cmd/binaryclient/kafka/producer/kafkaproducer.go
 ```
 go run cmd/binaryclient/kafka/consumer/kafkaconsumer.go
 ```
-
+#### RabbitMQ UI - user: rabbitmq, password: rabbitmq
+```
+http://localhost:15672/
+```
 #### RabbitMQ Producer
 ```
 sudo go run cmd/binaryclient/rabbitmq/producer/producer.go
