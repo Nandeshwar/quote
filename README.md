@@ -191,6 +191,10 @@ go run cmd/grpc_client/eventDetailClient.go put event.json
 go run cmd/grpc_client/eventDetailClient.go gets "1, 2, 3, 4, 5"
 ```
 
+#### Kafka UI
+```
+http://localhost:8000/
+```
 #### Run Kafka producer
 ```
 go run cmd/binaryclient/kafka/producer/kafkaproducer.go
