@@ -16,6 +16,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.4
 	github.com/newrelic/go-agent v3.9.0+incompatible
 	github.com/pkg/errors v0.9.1
+	github.com/robfig/cron/v3 v3.0.0
 	github.com/sirupsen/logrus v1.7.0
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/streadway/amqp v1.0.0
@@ -27,6 +28,8 @@ require (
 	google.golang.org/genproto v0.0.0-20201117123952-62d171c70ae1 // indirect
 	google.golang.org/grpc v1.33.2
 	google.golang.org/protobuf v1.25.0
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/mail.v2 v2.3.1
 	gorm.io/driver/sqlite v1.1.3
 	gorm.io/gorm v1.20.7
 )

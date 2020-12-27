@@ -1,15 +1,18 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
+	"quote/pkg/service/emailservice"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gookit/color"
 	"github.com/logic-building/functional-go/fp"
+	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
 
 	"quote/pkg/api"
@@ -44,7 +47,15 @@ func main() {
 		devotionalImageMinSize   = env.GetStringWithDefault("DEVOTIONAL_IMAGE_MIN_SIZE", "700:700")
 		motivationalImageMaxSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MAX_SIZE", "2800:1700")
 		motivationalImageMinSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
+
+		emailServer     = env.GetStringWithDefault("EMAIL_SERVER", "smtp.gmail.com")
+		emailServerPort = env.GetIntWithDefault("EMAIL_SERVER_PORT", 587)
+		emailFrom       = env.GetStringWithDefault("EMAIL_FROM", "abc@gmail.com")
+		emailFromPwd    = env.GetStringWithDefault("EMAIL_FROM_PWD", "***")
+		emailToList     = strings.Split(env.GetStringWithDefault("EMAIL_TO", "abcdef@gmail.com, xyz@gmail.com"), ",")
 	)
+
+	emailToList = fp.MapStr(strings.TrimSpace, emailToList)
 
 	logrus.WithField("new_log_level", logLevel).Info("Setting log level")
 	logrus.SetLevel(logLevel)
@@ -125,6 +136,7 @@ func main() {
 	infoEventSerive := service.NewInfoEventService(sqlite3Repo)
 
 	fmt.Println("   ")
+
 	eventsDayList := fp.RangeInt(0, 7)
 	for _, day := range eventsDayList {
 		today := time.Now()
@@ -158,6 +170,19 @@ func main() {
 	//	listDir("/image")
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
+
+	ctx := context.Background()
+	// check every hour if email has already not been sent.
+	// send email of events lists
+	emailService := emailservice.NewEmailQuote(sqlite3Repo, infoEventSerive, emailServer, emailServerPort, emailFrom, emailFromPwd, emailToList)
+	c := cron.New()
+	// hourly
+	//c.AddFunc("@hourly", func() { emailService.SendEmailForEventDetail(ctx) })
+	//every minute
+	//c.AddFunc("* * * * *", func() { emailService.SendEmailForEventDetail(ctx) })
+	// every 5 minutes
+	c.AddFunc("*/5 * * * *", func() { emailService.SendEmailForEventDetail(ctx) })
+	c.Start()
 
 	currentTime := time.Now()
 	currentTime = currentTime.Add(time.Duration(serverRunTimeInHour) * time.Hour)

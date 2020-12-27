@@ -42,4 +42,13 @@ CREATE TABLE `event_detail_link` (
     FOREIGN KEY(link_id) REFERENCES event_detail(ID)
 );
 
+CREATE TABLE `email_status` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `status` VARCHAR(50),
+    `type` VARCHAR(50),
+    `sent_at` DATE DEFAULT CURRENT_TIMESTAMP,
+    `created_at` DATE DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATE DEFAULT CURRENT_TIMESTAMP
+);
+
 
