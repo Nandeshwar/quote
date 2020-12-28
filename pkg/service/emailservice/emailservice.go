@@ -4,11 +4,15 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
+	"fmt"
 	"github.com/logic-building/functional-go/fp"
 	gomail "gopkg.in/mail.v2"
 	"html/template"
+	"math/rand"
 	"quote/pkg/model"
 	"quote/pkg/service"
+	"quote/pkg/service/quote"
+	"strings"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -21,13 +25,14 @@ type IEmailQuote interface {
 }
 
 type EmailQuote struct {
-	emailStatusRepo    repo.IEmailStatusRepo
-	eventDetailService service.IEventDetail
-	emailServer        string
-	emailServerPort    int
-	emailFrom          string
-	emailFromPwd       string
-	emailToList        []string
+	emailStatusRepo       repo.IEmailStatusRepo
+	eventDetailService    service.IEventDetail
+	emailServer           string
+	emailServerPort       int
+	emailFrom             string
+	emailFromPwd          string
+	emailToForEvents      []string
+	emailToForImageQuotes []string
 }
 
 func NewEmailQuote(
@@ -37,16 +42,18 @@ func NewEmailQuote(
 	emailServerPort int,
 	emailFrom string,
 	emailFromPwd string,
-	emailToList []string,
+	emailToForEvents []string,
+	emailToForImageQuotes []string,
 ) EmailQuote {
 	return EmailQuote{
-		emailStatusRepo:    sqlite3DB,
-		eventDetailService: eventDetailService,
-		emailServer:        emailServer,
-		emailServerPort:    emailServerPort,
-		emailFrom:          emailFrom,
-		emailFromPwd:       emailFromPwd,
-		emailToList:        emailToList,
+		emailStatusRepo:       sqlite3DB,
+		eventDetailService:    eventDetailService,
+		emailServer:           emailServer,
+		emailServerPort:       emailServerPort,
+		emailFrom:             emailFrom,
+		emailFromPwd:          emailFromPwd,
+		emailToForEvents:      emailToForEvents,
+		emailToForImageQuotes: emailToForImageQuotes,
 	}
 }
 
@@ -72,7 +79,7 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 	found := e.emailStatusRepo.EmailSentForEvents(ctx, now, typ)
 
 	if found {
-		logrus.Infof("email is already sent")
+		logrus.Infof("email is already sent for events")
 		return
 	}
 
@@ -114,7 +121,7 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 	// Set E-Mail sender
 	m.SetHeader("From", e.emailFrom)
 
-	m.SetHeader("To", e.emailToList...)
+	m.SetHeader("To", e.emailToForEvents...)
 
 	// Set E-Mail subject
 	m.SetHeader("Subject", subject)
@@ -140,7 +147,7 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 		Typ:    typ,
 		SentAt: now,
 	}
-	logrus.Infof("Email sent successfully")
+	logrus.Infof("Email sent successfully for events")
 
 	_, err = e.emailStatusRepo.CreateEmailStatus(ctx, emailStauts)
 	if err != nil {
@@ -160,4 +167,68 @@ func ParseTemplate(templateFileName string, data interface{}) (string, error) {
 		return "", err
 	}
 	return buf.String(), nil
+}
+
+func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
+	_, allImages := quote.AllQuotesImage()
+	s2 := rand.NewSource(int64(time.Now().Nanosecond()))
+	r2 := rand.New(s2)
+	ind := r2.Intn(len(allImages))
+	image := allImages[ind]
+	imagePath := "./" + image
+	logrus.Infof("Image path=%v", imagePath)
+
+	i := strings.LastIndex(imagePath, "/")
+	imageName := imagePath[i:]
+
+	now := time.Now()
+	typ := "quote-image"
+
+	found := e.emailStatusRepo.EmailSentForEvents(ctx, now, typ)
+
+	if found {
+		logrus.Infof("email is already sent for quote image")
+		return
+	}
+
+	subject := "Quote-Image for the day"
+
+	m := gomail.NewMessage()
+
+	// Set E-Mail sender
+	m.SetHeader("From", e.emailFrom)
+
+	m.SetHeader("To", e.emailToForImageQuotes...)
+
+	// Set E-Mail subject
+	m.SetHeader("Subject", subject)
+
+	// Set E-Mail body. You can set plain text or html with text/html
+	m.Embed(imagePath)
+	m.SetBody("text/html", fmt.Sprintf(`<img src="cid:%s" alt="जय श्री कृपालु जी महाराज" />`, imageName))
+
+	// Settings for SMTP server
+	d := gomail.NewDialer(e.emailServer, e.emailServerPort, e.emailFrom, e.emailFromPwd)
+
+	// This is only needed when SSL/TLS certificate is not valid on server.
+	// In production this should be set to false.
+	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+
+	// Now send E-Mail
+	if err := d.DialAndSend(m); err != nil {
+		logrus.Error("\nerror dialing and sending emails=", err)
+		return
+	}
+
+	emailStauts := model.EmailStatusGORM{
+		Status: "sent",
+		Typ:    typ,
+		SentAt: now,
+	}
+	logrus.Infof("Email sent successfully for quote-image")
+
+	_, err := e.emailStatusRepo.CreateEmailStatus(ctx, emailStauts)
+	if err != nil {
+		logrus.Errorf("error creating email status", err)
+	}
 }

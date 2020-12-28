@@ -48,14 +48,15 @@ func main() {
 		motivationalImageMaxSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MAX_SIZE", "2800:1700")
 		motivationalImageMinSize = env.GetStringWithDefault("MOTIVATIONAL_IMAGE_MIN_SIZE", "700:700")
 
-		emailServer     = env.GetStringWithDefault("EMAIL_SERVER", "smtp.gmail.com")
-		emailServerPort = env.GetIntWithDefault("EMAIL_SERVER_PORT", 587)
-		emailFrom       = env.GetStringWithDefault("EMAIL_FROM", "abc@gmail.com")
-		emailFromPwd    = env.GetStringWithDefault("EMAIL_FROM_PWD", "***")
-		emailToList     = strings.Split(env.GetStringWithDefault("EMAIL_TO", "abcdef@gmail.com, xyz@gmail.com"), ",")
+		emailServer          = env.GetStringWithDefault("EMAIL_SERVER", "smtp.gmail.com")
+		emailServerPort      = env.GetIntWithDefault("EMAIL_SERVER_PORT", 587)
+		emailFrom            = env.GetStringWithDefault("EMAIL_FROM", "abc@gmail.com")
+		emailFromPwd         = env.GetStringWithDefault("EMAIL_FROM_PWD", "***")
+		emailToForEvents     = strings.Split(env.GetStringWithDefault("EMAIL_TO_FOR_EVENTS", "abcdef@gmail.com, xyz@gmail.com"), ",")
+		emailToForImageQuote = strings.Split(env.GetStringWithDefault("EMAIL_TO_FOR_QUOTE_IMAGE", "abcdef@gmail.com, xyz@gmail.com"), ",")
 	)
 
-	emailToList = fp.MapStr(strings.TrimSpace, emailToList)
+	emailToForEvents = fp.MapStr(strings.TrimSpace, emailToForEvents)
 
 	logrus.WithField("new_log_level", logLevel).Info("Setting log level")
 	logrus.SetLevel(logLevel)
@@ -174,7 +175,16 @@ func main() {
 	ctx := context.Background()
 	// check every hour if email has already not been sent.
 	// send email of events lists
-	emailService := emailservice.NewEmailQuote(sqlite3Repo, infoEventSerive, emailServer, emailServerPort, emailFrom, emailFromPwd, emailToList)
+	emailService := emailservice.NewEmailQuote(
+		sqlite3Repo,
+		infoEventSerive,
+		emailServer,
+		emailServerPort,
+		emailFrom,
+		emailFromPwd,
+		emailToForEvents,
+		emailToForImageQuote)
+
 	c := cron.New()
 	// hourly
 	//c.AddFunc("@hourly", func() { emailService.SendEmailForEventDetail(ctx) })
@@ -183,6 +193,10 @@ func main() {
 	// every 5 minutes
 	c.AddFunc("*/5 * * * *", func() { emailService.SendEmailForEventDetail(ctx) })
 	c.Start()
+
+	cronForQuoteImage := cron.New()
+	cronForQuoteImage.AddFunc("*/10 * * * *", func() { emailService.SendEmailForQuoteImage(ctx) })
+	cronForQuoteImage.Start()
 
 	currentTime := time.Now()
 	currentTime = currentTime.Add(time.Duration(serverRunTimeInHour) * time.Hour)
