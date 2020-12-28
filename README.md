@@ -223,6 +223,8 @@ export EMAIL_SERVER="smtp.gmail.com"
 export EMAIL_SERVER_PORT=587
 export EMAIL_FROM="abc@gmail.com"
 export EMAIL_FROM_PWD="****"
-export EMAIL_TO="abc@gmail.com, xyz@gmail.com"
+export EMAIL_TO_FOR_EVENTS="abc@gmail.com, xyz@gmail.com"
+export EMAIL_TO_FOR_QUOTE_IMAGE="abc@gmail.com, xyz@gmail.com"
 
 ```
+Note: for smtp gmail. go to gmail acccount -> Search -> Less secure app access -> turn it on
