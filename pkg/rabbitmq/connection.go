@@ -37,7 +37,7 @@ func NewConnection(
 	}
 
 	if !strings.Contains(host, "amqp") {
-		return nil, fmt.Errorf("expected protocol=amqp", host)
+		return nil, fmt.Errorf("expected protocol=amqp, host=%v", host)
 	}
 
 	if len(strings.TrimSpace(exchangeName)) == 0 {
