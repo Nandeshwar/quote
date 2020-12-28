@@ -74,7 +74,7 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 
 	subject := "Quote: Events for the next 3 days. Radhe Krishna"
 	logrus.Debugf("email service started")
-	now := time.Now()
+	now := time.Now().UTC()
 	typ := "event-detail"
 	found := e.emailStatusRepo.EmailSentForEvents(ctx, now, typ)
 
@@ -181,7 +181,7 @@ func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
 	i := strings.LastIndex(imagePath, "/")
 	imageName := imagePath[i:]
 
-	now := time.Now()
+	now := time.Now().UTC()
 	typ := "quote-image"
 
 	found := e.emailStatusRepo.EmailSentForEvents(ctx, now, typ)
