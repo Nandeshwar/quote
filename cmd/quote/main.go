@@ -195,7 +195,7 @@ func main() {
 	c.Start()
 
 	cronForQuoteImage := cron.New()
-	cronForQuoteImage.AddFunc("*/10 * * * *", func() { emailService.SendEmailForQuoteImage(ctx) })
+	cronForQuoteImage.AddFunc("*/1 * * * *", func() { emailService.SendEmailForQuoteImage(ctx) })
 	cronForQuoteImage.Start()
 
 	currentTime := time.Now()

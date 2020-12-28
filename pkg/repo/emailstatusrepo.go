@@ -26,11 +26,12 @@ func (s SQLite3Repo) CreateEmailStatus(ctx context.Context, emailStatus model.Em
 func (s SQLite3Repo) EmailSentForEvents(ctx context.Context, sentAt time.Time, typ string) bool {
 	var emailStatus model.EmailStatusGORM
 	err := s.GORMDB.WithContext(ctx).
-		Where("type = ? and status = ? and DATE(sent_at)",
+		Where("type = ? and status = ? and DATE(sent_at) = ?",
 			typ,
 			"sent",
 			sentAt.Format(constants.DATE_FORMAT_EVENT_DATE)).Debug().First(&emailStatus).Error
 
+	logrus.Debugf("emailStatus=%v", emailStatus)
 	if err != nil {
 		logrus.Errorf("error=%v", err)
 		return false
