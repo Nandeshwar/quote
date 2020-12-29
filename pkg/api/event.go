@@ -1,11 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"quote/pkg/constants"
 	"quote/pkg/model"
+	"strconv"
 	"strings"
 	"time"
 
@@ -91,4 +93,97 @@ func displayEvents(filteredEvents []model.EventDetail, w http.ResponseWriter) {
 		fmt.Fprintf(w, fmt.Sprintf("</tr>"))
 	}
 	fmt.Fprintf(w, fmt.Sprintf("</table>"))
+}
+
+// swagger:operation GET /api/quote/v1/eventsByMonth/{month} EventDetail eventDetail
+// ---
+// description: get events by month
+// consumes:
+// - "application/json"
+// parameters:
+// - name: month
+//   description: get events by month
+//   in: path
+//   required: true
+//   default: Jan
+//   type: string
+// Responses:
+//   '200':
+//     description: Ok
+//   '400':
+//     description: Bad request
+//   '404':
+//     description: Not found
+//   '500':
+//     description: Internal server error
+func (s *Server) getEventByMonth(w http.ResponseWriter, r *http.Request) {
+	month := mux.Vars(r)["month"]
+
+	monthInt, err := strconv.Atoi(month)
+	if err != nil {
+		switch strings.ToLower(month) {
+		case "jan", "january":
+			monthInt = 1
+
+		case "feb", "february":
+			monthInt = 2
+
+		case "mar", "march":
+
+			monthInt = 3
+		case "apr", "april":
+			monthInt = 4
+
+		case "may":
+			monthInt = 5
+
+		case "jun":
+			monthInt = 6
+
+		case "jul", "july":
+			monthInt = 7
+
+		case "aug", "august":
+			monthInt = 8
+
+		case "oct", "october":
+			monthInt = 10
+
+		case "nov", "november":
+			monthInt = 11
+
+		case "dec", "december":
+			monthInt = 12
+		default:
+			monthInt = 0
+		}
+	}
+	if monthInt == 0 {
+		logrus.WithFields(logrus.Fields{
+			"month": month,
+			"error": "invalid month",
+		}).Errorf("expected month either 1-12 or Jan-Dec or January-December")
+		w.WriteHeader(http.StatusBadRequest)
+	}
+
+	events, err := s.eventDetailService.GetEventDetailByMonth(monthInt)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"month": month,
+			"error": err,
+		}).Errorf("error fetching records for the month")
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+
+	jsonBytes, err := json.Marshal(events)
+	if err != nil {
+		logrus.WithFields(logrus.Fields{
+			"month": month,
+			"error": err,
+		}).Errorf("error converting to json")
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonBytes)
+
 }

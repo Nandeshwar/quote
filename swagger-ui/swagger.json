@@ -2,6 +2,42 @@
   "swagger": "2.0",
   "info": {},
   "paths": {
+    "/api/quote/v1/eventsByMonth/{month}": {
+      "get": {
+        "description": "get events by month",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "EventDetail"
+        ],
+        "operationId": "eventDetail",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Jan",
+            "description": "get events by month",
+            "name": "month",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/api/quote/v1/info/{id}": {
       "get": {
         "description": "get INFO by id",
