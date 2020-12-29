@@ -12,7 +12,7 @@ services:
       - "1923:1923"
     environment:
       - LOG_LEVEL=INFO
-      - SERVER_RUN_DURATION_HOUR=12
+      - SERVER_RUN_DURATION_HOUR=120
       - DEVOTIONAL_IMAGE_MAX_SIZE=1200:900
       - HTTP_PORT=1922
       - SQLITE3_FILE=/db/quote.db

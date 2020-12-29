@@ -3,6 +3,7 @@ module quote
 go 1.12
 
 require (
+	github.com/360EntSecGroup-Skylar/excelize/v2 v2.3.1
 	github.com/Shopify/sarama v1.27.2
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang/mock v1.4.4
@@ -21,7 +22,7 @@ require (
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/streadway/amqp v1.0.0
 	golang.org/x/exp v0.0.0-20191227195350-da58074b4299
-	golang.org/x/image v0.0.0-20191214001246-9130b4cfad52
+	golang.org/x/image v0.0.0-20200922025426-e59bae62ef32
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
 	golang.org/x/sys v0.0.0-20201118182958-a01c418693c7 // indirect
 	golang.org/x/text v0.3.4 // indirect

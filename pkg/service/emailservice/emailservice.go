@@ -9,6 +9,8 @@ import (
 	gomail "gopkg.in/mail.v2"
 	"html/template"
 	"math/rand"
+	"os"
+	"quote/pkg/excel"
 	"quote/pkg/model"
 	"quote/pkg/service"
 	"quote/pkg/service/quote"
@@ -58,7 +60,20 @@ func NewEmailQuote(
 }
 
 func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
-	eventsFor7Days := make(map[int][]model.EventDetail, 7)
+
+	subject := "Quote: Events for the next 3 days. Radhe Krishna"
+	logrus.Debugf("email service started")
+	nowUTC := time.Now().UTC()
+	typ := "event-detail"
+	found := e.emailStatusRepo.EmailSentForEvents(ctx, time.Now().Local(), typ)
+
+	if found {
+		logrus.Infof("email is already sent for events")
+		return
+	}
+
+	eventsFor7DaysMap := make(map[int][]model.EventDetail, 7)
+	var EventsInFuture7days []model.EventDetail
 
 	for _, day := range fp.RangeInt(0, 7) {
 		today := time.Now()
@@ -69,27 +84,23 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 			logrus.Errorf("error while getting EventsInFuture, error=%v", err)
 		}
 
-		eventsFor7Days[day] = eventsInFuture
+		eventsFor7DaysMap[day] = eventsInFuture
+		EventsInFuture7days = append(EventsInFuture7days, eventsInFuture...)
+
 	}
 
-	subject := "Quote: Events for the next 3 days. Radhe Krishna"
-	logrus.Debugf("email service started")
-	now := time.Now().UTC()
-	typ := "event-detail"
-	found := e.emailStatusRepo.EmailSentForEvents(ctx, now, typ)
-
-	if found {
-		logrus.Infof("email is already sent for events")
-		return
-	}
-
-	todayEvents := eventsFor7Days[0]
-	tomorrowEvents := eventsFor7Days[1]
-	dayAfterTomorrowEvents := eventsFor7Days[2]
+	todayEvents := eventsFor7DaysMap[0]
+	tomorrowEvents := eventsFor7DaysMap[1]
+	dayAfterTomorrowEvents := eventsFor7DaysMap[2]
 
 	if len(todayEvents)+len(tomorrowEvents)+len(dayAfterTomorrowEvents) == 0 {
 		logrus.Infof("no events to notify")
 		return
+	}
+
+	excelFilePath, excelErr := excel.CreateExcelEventList("event_list.xlsx", "events next 7 days", EventsInFuture7days)
+	if excelErr != nil {
+		logrus.Errorf("error creating excel file=%v", excelErr)
 	}
 
 	type Data struct {
@@ -129,6 +140,10 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 	// Set E-Mail body. You can set plain text or html with text/html
 	m.SetBody("text/html", body)
 
+	if excelFilePath != "" {
+		m.Attach(excelFilePath)
+	}
+
 	// Settings for SMTP server
 	d := gomail.NewDialer(e.emailServer, e.emailServerPort, e.emailFrom, e.emailFromPwd)
 
@@ -145,14 +160,21 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 	emailStauts := model.EmailStatusGORM{
 		Status: "sent",
 		Typ:    typ,
-		SentAt: now,
+		SentAt: nowUTC,
 	}
 	logrus.Infof("Email sent successfully for events")
 
 	_, err = e.emailStatusRepo.CreateEmailStatus(ctx, emailStauts)
 	if err != nil {
-		logrus.Errorf("error creating email status", err)
+		logrus.Errorf("error creating email status. error=%v", err)
+		return
 	}
+
+	err = os.Remove(excelFilePath)
+	if err != nil {
+		logrus.Errorf("error deleting excel file=%s", excelFilePath)
+	}
+	logrus.Infof("excel file=%s deleted successfully", excelFilePath)
 
 	return
 }
@@ -181,10 +203,10 @@ func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
 	i := strings.LastIndex(imagePath, "/")
 	imageName := imagePath[i:]
 
-	now := time.Now().UTC()
+	nowUTC := time.Now().UTC()
 	typ := "quote-image"
 
-	found := e.emailStatusRepo.EmailSentForEvents(ctx, now, typ)
+	found := e.emailStatusRepo.EmailSentForEvents(ctx, time.Now().Local(), typ)
 
 	if found {
 		logrus.Infof("email is already sent for quote image")
@@ -223,12 +245,14 @@ func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
 	emailStauts := model.EmailStatusGORM{
 		Status: "sent",
 		Typ:    typ,
-		SentAt: now,
+		SentAt: nowUTC,
 	}
 	logrus.Infof("Email sent successfully for quote-image")
 
 	_, err := e.emailStatusRepo.CreateEmailStatus(ctx, emailStauts)
 	if err != nil {
-		logrus.Errorf("error creating email status", err)
+		logrus.Errorf("error creating email status. error=%v", err)
+		return
 	}
+
 }

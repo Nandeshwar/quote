@@ -37,7 +37,7 @@ func NewProducer(brokerList []string) sarama.AsyncProducer {
 	// Note: messages will only be returned here after all retry attempts are exhausted.
 	go func() {
 		for err := range producer.Errors() {
-			logrus.Errorf("Failed to write access log entry:", err)
+			logrus.Errorf("Failed to write access log entry=%v", err)
 		}
 	}()
 
