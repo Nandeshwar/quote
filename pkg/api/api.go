@@ -148,6 +148,7 @@ func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecret
 
 	putInfoHandler := http.HandlerFunc(s.putInfo)
 	getInfoHandler := http.HandlerFunc(s.getInfo)
+	getEventByMonthHandler := http.HandlerFunc(s.getEventByMonth)
 
 	aliceChain := alice.New(s.authenticationHandler)
 
@@ -158,6 +159,7 @@ func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecret
 	// info api using new relic and alice middleware
 	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/api/quote/v1/info/{id}", aliceChain.Then(getInfoHandler).ServeHTTP)).Methods(http.MethodGet)
 	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/api/quote/v1/info/{id}", aliceChain.Then(putInfoHandler).ServeHTTP)).Methods(http.MethodPut)
+	router.HandleFunc(newrelic.WrapHandleFunc(newrelicwrapper.NewRelicApplication, "/api/quote/v1/eventsByMonth/{month}", aliceChain.Then(getEventByMonthHandler).ServeHTTP)).Methods(http.MethodGet)
 
 	return s
 }

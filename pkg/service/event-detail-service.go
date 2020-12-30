@@ -16,6 +16,7 @@ type IEventDetail interface {
 	CreateNewEventDetail(form model.EventDetailForm) (int64, error)
 	GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error)
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
+	GetEventDetailByMonth(month int) ([]model.EventDetail, error)
 	GetEventDetailByID(ID int64) (model.EventDetail, error)
 	UpdateEventDetailByID(eventDetail model.EventDetail) error
 	GetEventDetailLinkIDs(link string) ([]int64, error)
@@ -178,6 +179,27 @@ func (s InfoEventService) GetEventDetailByMonthDay(month, day int) ([]model.Even
 	}
 
 	return aggregateEventDetailByURL(eventDetailList), nil
+}
+
+func (s InfoEventService) GetEventDetailByMonth(month int) ([]model.EventDetail, error) {
+	eventDetailList, err := s.EventDetailRepo.GetEventDetailByMonth(month)
+	if err != nil {
+		return nil, err
+	}
+
+	now := time.Now()
+
+	checkYearCurrent := func(event model.EventDetail) bool {
+
+		if event.Type == "different" && event.Year != now.Year() {
+			return false
+		}
+		return true
+	}
+
+	eventDetailListYearCurrent := model.FilterEventDetail(checkYearCurrent, eventDetailList)
+
+	return aggregateEventDetailByURL(eventDetailListYearCurrent), nil
 }
 
 func (s InfoEventService) EventsInFuture(t time.Time) ([]model.EventDetail, error) {

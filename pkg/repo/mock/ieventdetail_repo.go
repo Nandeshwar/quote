@@ -78,6 +78,21 @@ func (mr *MockIEventDetailRepoMockRecorder) GetEventDetailByMonthDay(month, day 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailByMonthDay", reflect.TypeOf((*MockIEventDetailRepo)(nil).GetEventDetailByMonthDay), month, day)
 }
 
+// GetEventDetailByMonth mocks base method
+func (m *MockIEventDetailRepo) GetEventDetailByMonth(month int) ([]model.EventDetail, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetEventDetailByMonth", month)
+	ret0, _ := ret[0].([]model.EventDetail)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetEventDetailByMonth indicates an expected call of GetEventDetailByMonth
+func (mr *MockIEventDetailRepoMockRecorder) GetEventDetailByMonth(month interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailByMonth", reflect.TypeOf((*MockIEventDetailRepo)(nil).GetEventDetailByMonth), month)
+}
+
 // GetEventDetailByID mocks base method
 func (m *MockIEventDetailRepo) GetEventDetailByID(ID int64) ([]model.EventDetail, error) {
 	m.ctrl.T.Helper()
