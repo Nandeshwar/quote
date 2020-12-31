@@ -67,25 +67,25 @@ func main() {
 
 	devotionalImageMaxWidth, devotionalImageMaxHeight, err := getImageSize(devotionalImageMaxSize, "DEVOTIONAL_IMAGE_MAX_SIZE")
 	if err != nil {
-		fmt.Errorf(err.Error())
+		logrus.Errorf(err.Error())
 		os.Exit(1)
 	}
 
 	devotionalImageMinWidth, devotionalImageMinHeight, err := getImageSize(devotionalImageMinSize, "DEVOTIONAL_IMAGE_MIN_SIZE")
 	if err != nil {
-		fmt.Errorf(err.Error())
+		logrus.Errorf(err.Error())
 		os.Exit(1)
 	}
 
 	motivationalImageMaxWidth, motivationalImageMaxHeight, err := getImageSize(motivationalImageMaxSize, "MOTIVATIONAL_IMAGE_MAX_SIZE")
 	if err != nil {
-		fmt.Errorf(err.Error())
+		logrus.Errorf(err.Error())
 		os.Exit(1)
 	}
 
 	motivationalImageMinWidth, motivationalImageMinHeight, err := getImageSize(motivationalImageMinSize, "MOTIVATIONAL_IMAGE_MIN_SIZE")
 	if err != nil {
-		fmt.Errorf(err.Error())
+		logrus.Errorf(err.Error())
 		os.Exit(1)
 	}
 
@@ -160,7 +160,7 @@ func main() {
 
 		eventsInFuture, err := infoEventSerive.EventsInFuture(futureTime)
 		if err != nil {
-			fmt.Errorf("error while getting EventsInFuture for tomorrow, error=%v", err)
+			logrus.Errorf("error while getting EventsInFuture for tomorrow, error=%v", err)
 		}
 		for _, event := range eventsInFuture {
 			event.DisplayEvent()
@@ -172,11 +172,13 @@ func main() {
 	//	image.DisplayImage("./image/competitionWithMySelf.jpg")
 	//}
 
+	emailStatusInMemory := emailservice.EmailStatusInMemory{}
 	ctx := context.Background()
 	// check every hour if email has already not been sent.
 	// send email of events lists
 	emailService := emailservice.NewEmailQuote(
 		sqlite3Repo,
+		emailStatusInMemory,
 		infoEventSerive,
 		emailServer,
 		emailServerPort,
@@ -195,7 +197,7 @@ func main() {
 	c.Start()
 
 	cronForQuoteImage := cron.New()
-	cronForQuoteImage.AddFunc("*/1 * * * *", func() { emailService.SendEmailForQuoteImage(ctx) })
+	cronForQuoteImage.AddFunc("*/5 * * * *", func() { emailService.SendEmailForQuoteImage(ctx) })
 	cronForQuoteImage.Start()
 
 	currentTime := time.Now()
