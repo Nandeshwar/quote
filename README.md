@@ -1,6 +1,26 @@
 # quote
 Display random quotes evertimes it is run:
 
+## install golang
+### install golang
+```
+https://golang.org/doc/install
+```
+
+### set path: vi ~/.bash_profile
+```
+export GOPATH=/Users/nandeshwar.sah/go
+export GOROOT=/usr/local/go
+
+export PATH=$PATH:/Users/nandeshwar.sah/go/bin
+export PATH=$PATH:/usr/local/go/bin
+export GOBIN=/usr/local/go/bin
+
+alias dc='docker-compose'
+alias dcup='docker-compose up -d'
+alias dcdown='docker-compose down'
+```
+
 ## How to run? 
 ```
 go run cmd/quote/main.go
@@ -228,3 +248,12 @@ export EMAIL_TO_FOR_QUOTE_IMAGE="abc@gmail.com, xyz@gmail.com"
 
 ```
 Note: for smtp gmail. go to gmail acccount -> Search -> Less secure app access -> turn it on
+
+
+#### To setup git repo
+```
+1. Add ssh public key in github
+2. git remote set-url origin git@github.com:Nandeshwar/quote.git
+3. git push origin <branch>
+```
+

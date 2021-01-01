@@ -5,8 +5,6 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/logic-building/functional-go/fp"
-	gomail "gopkg.in/mail.v2"
 	"html/template"
 	"math/rand"
 	"os"
@@ -16,6 +14,9 @@ import (
 	"quote/pkg/service/quote"
 	"strings"
 	"time"
+
+	"github.com/logic-building/functional-go/fp"
+	gomail "gopkg.in/mail.v2"
 
 	"github.com/sirupsen/logrus"
 
@@ -28,6 +29,7 @@ type IEmailQuote interface {
 
 type EmailQuote struct {
 	emailStatusRepo       repo.IEmailStatusRepo
+	emailStatusInMemory   EmailStatusInMemory
 	eventDetailService    service.IEventDetail
 	emailServer           string
 	emailServerPort       int
@@ -39,6 +41,7 @@ type EmailQuote struct {
 
 func NewEmailQuote(
 	sqlite3DB repo.SQLite3Repo,
+	emailStatusInMemory EmailStatusInMemory,
 	eventDetailService service.IEventDetail,
 	emailServer string,
 	emailServerPort int,
@@ -49,6 +52,7 @@ func NewEmailQuote(
 ) EmailQuote {
 	return EmailQuote{
 		emailStatusRepo:       sqlite3DB,
+		emailStatusInMemory:   emailStatusInMemory,
 		eventDetailService:    eventDetailService,
 		emailServer:           emailServer,
 		emailServerPort:       emailServerPort,
@@ -59,12 +63,21 @@ func NewEmailQuote(
 	}
 }
 
-func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
+func (e *EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 
 	subject := "Quote: Events for the next 3 days. Radhe Krishna"
 	logrus.Debugf("email service started")
 	nowUTC := time.Now().UTC()
 	typ := "event-detail"
+
+	if e.emailStatusInMemory.Exists(EmailStatus{
+		typ:    typ,
+		sentAt: time.Now().Local(),
+	}) {
+		logrus.Info("Record already exist in memory. Email-Quote already sent for the day")
+		return
+	}
+
 	found := e.emailStatusRepo.EmailSentForEvents(ctx, time.Now().Local(), typ)
 
 	if found {
@@ -176,6 +189,11 @@ func (e EmailQuote) SendEmailForEventDetail(ctx context.Context) {
 	}
 	logrus.Infof("excel file=%s deleted successfully", excelFilePath)
 
+	e.emailStatusInMemory.Add(EmailStatus{
+		typ:    typ,
+		sentAt: time.Now().Local(),
+	})
+
 	return
 }
 
@@ -191,7 +209,7 @@ func ParseTemplate(templateFileName string, data interface{}) (string, error) {
 	return buf.String(), nil
 }
 
-func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
+func (e *EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
 	_, allImages := quote.AllQuotesImage()
 	s2 := rand.NewSource(int64(time.Now().Nanosecond()))
 	r2 := rand.New(s2)
@@ -205,6 +223,14 @@ func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
 
 	nowUTC := time.Now().UTC()
 	typ := "quote-image"
+
+	if e.emailStatusInMemory.Exists(EmailStatus{
+		typ:    typ,
+		sentAt: time.Now().Local(),
+	}) {
+		logrus.Info("Record already exist in memory. Email-Quote already sent for the day")
+		return
+	}
 
 	found := e.emailStatusRepo.EmailSentForEvents(ctx, time.Now().Local(), typ)
 
@@ -249,10 +275,19 @@ func (e EmailQuote) SendEmailForQuoteImage(ctx context.Context) {
 	}
 	logrus.Infof("Email sent successfully for quote-image")
 
-	_, err := e.emailStatusRepo.CreateEmailStatus(ctx, emailStauts)
+	id, err := e.emailStatusRepo.CreateEmailStatus(ctx, emailStauts)
 	if err != nil {
 		logrus.Errorf("error creating email status. error=%v", err)
 		return
 	}
+
+	if id > 0 {
+		logrus.Info("Email status saved to database successfully for quote image")
+	}
+
+	e.emailStatusInMemory.Add(EmailStatus{
+		typ:    typ,
+		sentAt: time.Now().Local(),
+	})
 
 }
