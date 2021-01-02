@@ -36,7 +36,7 @@ func TestApi(t *testing.T) {
 				So(resp.StatusCode, ShouldEqual, http.StatusOK)
 				So(w.Body.String(), ShouldContainSubstring, `<head><meta http-equiv='refresh' content='300' /> </head>`)
 				So(w.Body.String(), ShouldContainSubstring, `<title>Quote</title>`)
-				So(w.Body.String(), ShouldContainSubstring, `<a href='http://localhost:1922/image-motivational/mother-teresa-we-have-today.jpg' target='_blank'><img src='image-motivational/mother-teresa-we-have-today.jpg' alt='Nandeshwar' style='width:0px;height:0px;'> </a>`)
+				So(w.Body.String(), ShouldContainSubstring, `image-motivational/mother-teresa-we-have-today.jpg' target='_blank'><img src='image-motivational/mother-teresa-we-have-today.jpg' alt='Nandeshwar' style='width:0px;height:0px;'> </a>`)
 			})
 
 			Convey("failure: POST is not allowed", func() {

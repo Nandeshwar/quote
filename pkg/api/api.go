@@ -12,9 +12,10 @@ package api
 import (
 	"context"
 	"fmt"
+	"quote/pkg/newrelicwrapper"
+
 	newrelic "github.com/newrelic/go-agent"
 	"github.com/newrelic/go-agent/_integrations/nrgrpc"
-	"quote/pkg/newrelicwrapper"
 
 	"log"
 	"net"
@@ -65,6 +66,7 @@ type Claims struct {
 }
 
 type Server struct {
+	httpPort  int
 	server    *http.Server
 	wg        sync.WaitGroup
 	imageSize ImageSize
@@ -107,6 +109,7 @@ func NewServer(httpPort int, grpcPort int, imageSize ImageSize, webSessionSecret
 		MaxHeaderBytes: 1000000,
 	}
 	s := &Server{
+		httpPort:  httpPort,
 		server:    server,
 		imageSize: imageSize,
 

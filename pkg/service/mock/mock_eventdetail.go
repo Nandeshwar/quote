@@ -78,6 +78,21 @@ func (mr *MockIEventDetailMockRecorder) GetEventDetailByTitleOrInfo(searchTxt in
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailByTitleOrInfo", reflect.TypeOf((*MockIEventDetail)(nil).GetEventDetailByTitleOrInfo), searchTxt)
 }
 
+// GetEventDetailByYearMonthDay mocks base method
+func (m *MockIEventDetail) GetEventDetailByYearMonthDay(year, month, day int) ([]model.EventDetail, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetEventDetailByYearMonthDay", year, month, day)
+	ret0, _ := ret[0].([]model.EventDetail)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetEventDetailByYearMonthDay indicates an expected call of GetEventDetailByYearMonthDay
+func (mr *MockIEventDetailMockRecorder) GetEventDetailByYearMonthDay(year, month, day interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEventDetailByYearMonthDay", reflect.TypeOf((*MockIEventDetail)(nil).GetEventDetailByYearMonthDay), year, month, day)
+}
+
 // GetEventDetailByMonthDay mocks base method
 func (m *MockIEventDetail) GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error) {
 	m.ctrl.T.Helper()

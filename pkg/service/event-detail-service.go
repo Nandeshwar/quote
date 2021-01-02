@@ -2,12 +2,13 @@ package service
 
 import (
 	"fmt"
-	"github.com/logic-building/functional-go/fp"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/logic-building/functional-go/fp"
 )
 
 //go:generate mockgen -destination "mock/mock_eventdetail.go" -source "event-detail-service.go" IEventDetail
@@ -15,6 +16,7 @@ type IEventDetail interface {
 	ValidateFormEvent(form model.EventDetailForm) error
 	CreateNewEventDetail(form model.EventDetailForm) (int64, error)
 	GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error)
+	GetEventDetailByYearMonthDay(year, month, day int) ([]model.EventDetail, error)
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
 	GetEventDetailByMonth(month int) ([]model.EventDetail, error)
 	GetEventDetailByID(ID int64) (model.EventDetail, error)
@@ -174,6 +176,15 @@ func aggregateEventDetailByURL(eventDetailList []model.EventDetail) []model.Even
 
 func (s InfoEventService) GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error) {
 	eventDetailList, err := s.EventDetailRepo.GetEventDetailByMonthDay(month, day)
+	if err != nil {
+		return nil, err
+	}
+
+	return aggregateEventDetailByURL(eventDetailList), nil
+}
+
+func (s InfoEventService) GetEventDetailByYearMonthDay(year, month, day int) ([]model.EventDetail, error) {
+	eventDetailList, err := s.EventDetailRepo.GetEventDetailByYearMonthDay(year, month, day)
 	if err != nil {
 		return nil, err
 	}
