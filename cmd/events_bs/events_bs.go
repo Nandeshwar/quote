@@ -25,7 +25,25 @@ func main() {
 	infoEventSerive := service.NewInfoEventService(sqlite3Repo)
 
 	//insertGitaJayanti(infoEventSerive)
-	insertRamNavami(infoEventSerive)
+	//insertRamNavami(infoEventSerive)
+	//insertSitaJiBirthday(infoEventSerive)
+	insertHanumanJiBirthday(infoEventSerive)
+}
+
+func insertHanumanJiBirthday(infoEventSerive service.InfoEventService) {
+	// insert 100 gita jayanti for 100 years in quote-database
+	apiHanumanBirthdday := "https://www.drikpanchang.com/festivals/hanuman-jayanti/hanuman-jayanti-date-time.html?year=2050"
+	title := "Hanuman Jayanti"
+	info := `Hanuman Ji appearance day - Hanuman ji Birthday - Hanuman Birthday`
+	findAndInsertEvents(2021, 1, infoEventSerive, apiHanumanBirthdday, title, info)
+}
+
+func insertSitaJiBirthday(infoEventSerive service.InfoEventService) {
+	// insert 100 gita jayanti for 100 years in quote-database
+	apiSitaBirthdday := "https://www.drikpanchang.com/festivals/sita-navami/sita-navami-date-time.html?year=2050"
+	title := "Sita Ji appearance day"
+	info := `Sita Ji appearance day - Sita ji Birthday - Sita Birthday`
+	findAndInsertEvents(2021, 100, infoEventSerive, apiSitaBirthdday, title, info)
 }
 
 func insertRamNavami(infoEventSerive service.InfoEventService) {
@@ -83,7 +101,7 @@ func findAndInsertEvents(startYear, yearsInFuture int, service service.InfoEvent
 			if err != nil {
 				fmt.Errorf("error creating event detail. id=%v, error=%v", id, err)
 			}
-			fmt.Printf("\neventdetail created successfully. id=%v", id)
+			fmt.Printf("\neventdetail created successfully. id=%v\n", id)
 		}
 		api = original
 	}
@@ -108,6 +126,8 @@ func parseDrinkPanchang(api string) (string, error) {
 	if readErr != nil {
 		return "", fmt.Errorf("readError=%v for api=%v", readErr, api)
 	}
+
+	fmt.Println(string(body))
 
 	// Friday, December 22, 2023
 	re := regexp.MustCompile("[A-Z][a-z]+, [A-Z][a-z]+ [0-9]+, [0-9][0-9][0-9][0-9]")
