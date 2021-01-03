@@ -30,7 +30,7 @@ func main() {
 	//insertSitaJiBirthday(infoEventSerive) // Inserted for 100 years
 	// insertHanumanJiBirthday(infoEventSerive) //  inserted for 100 years
 	//insertKrishnaJanmasthmi(infoEventSerive) // inserted for 100 years
-	insertRadhaAsthami(infoEventSerive) // inserted for 100 years
+	//insertRadhaAsthami(infoEventSerive) // inserted for 100 years
 
 	//parseDrinkPanchang("https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2022")
 }
