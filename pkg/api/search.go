@@ -2,11 +2,12 @@ package api
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"quote/pkg/model"
 	"strings"
 	"sync"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/logic-building/functional-go/fp"
 
@@ -118,7 +119,7 @@ func (s *Server) search(w http.ResponseWriter, r *http.Request) {
 
 		displayInfo(filteredInfo, w)
 		displayEvents(filteredEvents, w)
-		displayImage(foundImages, w)
+		displayImage(foundImages, w, s.httpPort)
 	}(infoCh, eventCh, imageCh)
 	w.WriteHeader(http.StatusOK)
 }
@@ -141,6 +142,7 @@ func searchIntelligence(searchStrList []string) []string {
 		"diwali":                    []string{"diwali", "deepawali", "dewali", "deewali", "diwaali"},
 		"govardhan":                 []string{"govardhan", "gobardhan", "govardhan pooja", "gobardhan pooja", "govardhan puja", "gobardhan puja"},
 		"Kripalu Ji Maharaj family": []string{"Kripalu Ji Maharaj family", "kripalu ji son", "kripalu ji duaghter", "kripalu ji family", "kripalu family", "maharaj ji family", "kripalu son", "kripalu daughter"},
+		"ram navami":                []string{"ram navami", "ram nawami", "ram appearance day", "ram appearance", "laxman appearance", "bharat appearance", "satrughan appearance", "ram ji birthday"},
 	}
 
 	newSearchStrList = append(newSearchStrList, searchStrList...)

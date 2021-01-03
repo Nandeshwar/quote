@@ -3,12 +3,13 @@ package repo
 import (
 	"database/sql"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"quote/pkg/constants"
 	"quote/pkg/model"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Regex for 1 and more white space
@@ -18,6 +19,7 @@ var space = regexp.MustCompile(`\s+`)
 type IEventDetailRepo interface {
 	CreateEventDetail(eventDetail model.EventDetail) (int64, error)
 	GetEventDetailByTitleOrInfo(searchTxt string) ([]model.EventDetail, error)
+	GetEventDetailByYearMonthDay(year, month, day int) ([]model.EventDetail, error)
 	GetEventDetailByMonthDay(month, day int) ([]model.EventDetail, error)
 	GetEventDetailByMonth(month int) ([]model.EventDetail, error)
 	GetEventDetailByID(ID int64) ([]model.EventDetail, error)
@@ -214,6 +216,59 @@ func (s SQLite3Repo) GetEventDetailByMonthDay(month, day int) ([]model.EventDeta
 	}).Debugf("fetching data from database")
 
 	rows, err := s.DB.Query(q, month, day)
+	if err != nil {
+		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
+	}
+
+	for rows.Next() {
+		var eventDetailDB model.EventDetail
+		err = rows.Scan(
+			&eventDetailDB.ID,
+			&eventDetailDB.Day,
+			&eventDetailDB.Month,
+			&eventDetailDB.Year,
+			&eventDetailDB.Title,
+			&eventDetailDB.Info,
+			&eventDetailDB.Type,
+			&eventDetailDB.CreationDate,
+			&eventDetailDB.UpdatedAt,
+			&eventDetailDB.URL)
+		if err != nil {
+			return nil, fmt.Errorf("error scanning result from db. query=%s, error=%v", query, err)
+		}
+		logrus.Debugf("data fetched from database=%v", eventDetailList)
+		eventDetailDB.EventDate = time.Date(eventDetailDB.Year, time.Month((eventDetailDB.Month)), eventDetailDB.Day, 0, 0, 0, 0, time.Local)
+		eventDetailList = append(eventDetailList, eventDetailDB)
+	}
+
+	return eventDetailList, nil
+}
+
+func (s SQLite3Repo) GetEventDetailByYearMonthDay(year, month, day int) ([]model.EventDetail, error) {
+	var eventDetailList []model.EventDetail
+	query := `SELECT e.id,
+					e.day,
+					e.month,
+					e.year,
+					e.title,
+					e.info,
+					e.type,
+					e.created_at,
+					e.updated_at,
+					l.link
+				FROM 
+					event_detail e, event_detail_link l
+				WHERE 
+					e.id = l.link_id AND e.year=? AND e.month=? AND e.day=?`
+	q := query
+	logrus.WithFields(logrus.Fields{
+		"Query": space.ReplaceAllString(query, " "),
+		"year":  year,
+		"month": month,
+		"day":   day,
+	}).Debugf("fetching data from database")
+
+	rows, err := s.DB.Query(q, year, month, day)
 	if err != nil {
 		return nil, fmt.Errorf("error querying db. query=%s, error=%v", query, err)
 	}

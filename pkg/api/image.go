@@ -24,7 +24,7 @@ func (s *Server) quotesDevotional(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "<head><meta http-equiv='refresh' content='300' /> </head>")
 	fmt.Fprintf(w, "<title>Quote</title>")
-	fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s' target='_blank'><img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'> </a>", imagePath, imagePath, width, height))
+	fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:%d/%s' target='_blank'><img src='%s' alt='Nandeshwar' style='width:%vpx;height:%vpx;'> </a>", s.httpPort, imagePath, imagePath, width, height))
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -57,12 +57,12 @@ func findImage(searchText string) []string {
 	return foundImageList
 }
 
-func displayImage(foundImages []string, w http.ResponseWriter) {
+func displayImage(foundImages []string, w http.ResponseWriter, httpPort int) {
 	fmt.Fprintf(w, "<h1>Images:</h1>")
 	fmt.Fprintf(w, "<h1>Click to view image:</h1>")
 	for ind, imagePath := range foundImages {
 		imagePathName := strings.Split(imagePath, "/")
-		fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:1922/%s'> %d. <img src='%s' alt='%s' style='width:%vpx;height:%vpx;'></a>", imagePath, ind+1, imagePath, imagePathName[1], 400, 25))
+		fmt.Fprintf(w, fmt.Sprintf("<a href='http://localhost:%d/%s'> %d. <img src='%s' alt='%s' style='width:%vpx;height:%vpx;'></a>", httpPort, imagePath, ind+1, imagePath, imagePathName[1], 400, 25))
 		fmt.Fprintf(w, "</br>")
 	}
 }
