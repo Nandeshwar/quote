@@ -28,7 +28,7 @@ func main() {
 	//insertGitaJayanti(infoEventSerive) // inserted for 100 years
 	//insertRamNavami(infoEventSerive) // Inserted for 100 years
 	//insertSitaJiBirthday(infoEventSerive) // Inserted for 100 years
-	//insertHanumanJiBirthday(infoEventSerive) // Not inserted yet
+	insertHanumanJiBirthday(infoEventSerive) // Not inserted yet
 	//insertKrishnaJanmasthmi(infoEventSerive) // Not inserted yet
 
 	//parseDrinkPanchang("https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2022")
@@ -120,7 +120,7 @@ func findAndInsertEvents(startYear, yearsInFuture int, service service.InfoEvent
 }
 
 func parseDrinkPanchang(api string) (string, error) {
-	time.Sleep(2 * time.Second)
+	//time.Sleep(2 * time.Second)
 	fmt.Println("Finding events BS")
 	req, err := http.NewRequest(http.MethodGet, api, nil)
 	if err != nil {
