@@ -28,8 +28,8 @@ func main() {
 	//insertGitaJayanti(infoEventSerive) // inserted for 100 years
 	//insertRamNavami(infoEventSerive) // Inserted for 100 years
 	//insertSitaJiBirthday(infoEventSerive) // Inserted for 100 years
-	insertHanumanJiBirthday(infoEventSerive) // Not inserted yet
-	//insertKrishnaJanmasthmi(infoEventSerive) // Not inserted yet
+	// insertHanumanJiBirthday(infoEventSerive) //  inserted for 100 years
+	//insertKrishnaJanmasthmi(infoEventSerive) // inserted for 100 years
 
 	//parseDrinkPanchang("https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2022")
 }
