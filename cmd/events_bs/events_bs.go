@@ -23,11 +23,23 @@ func main() {
 	}
 
 	infoEventSerive := service.NewInfoEventService(sqlite3Repo)
+	fmt.Println(infoEventSerive)
 
-	//insertGitaJayanti(infoEventSerive)
-	//insertRamNavami(infoEventSerive)
-	//insertSitaJiBirthday(infoEventSerive)
-	insertHanumanJiBirthday(infoEventSerive)
+	//insertGitaJayanti(infoEventSerive) // inserted for 100 years
+	//insertRamNavami(infoEventSerive) // Inserted for 100 years
+	//insertSitaJiBirthday(infoEventSerive) // Inserted for 100 years
+	//insertHanumanJiBirthday(infoEventSerive) // Not inserted yet
+	//insertKrishnaJanmasthmi(infoEventSerive) // Not inserted yet
+
+	//parseDrinkPanchang("https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2022")
+}
+
+func insertKrishnaJanmasthmi(infoEventSerive service.InfoEventService) {
+	// insert 100 gita jayanti for 100 years in quote-database
+	apiKrishna := "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2050"
+	title := "Krishna appearance day"
+	info := `Krishna Janmasthmi. Krishna birthday. Krishna Ji Birthday`
+	findAndInsertEvents(2021, 100, infoEventSerive, apiKrishna, title, info)
 }
 
 func insertHanumanJiBirthday(infoEventSerive service.InfoEventService) {
@@ -35,7 +47,7 @@ func insertHanumanJiBirthday(infoEventSerive service.InfoEventService) {
 	apiHanumanBirthdday := "https://www.drikpanchang.com/festivals/hanuman-jayanti/hanuman-jayanti-date-time.html?year=2050"
 	title := "Hanuman Jayanti"
 	info := `Hanuman Ji appearance day - Hanuman ji Birthday - Hanuman Birthday`
-	findAndInsertEvents(2021, 1, infoEventSerive, apiHanumanBirthdday, title, info)
+	findAndInsertEvents(2021, 100, infoEventSerive, apiHanumanBirthdday, title, info)
 }
 
 func insertSitaJiBirthday(infoEventSerive service.InfoEventService) {
@@ -108,6 +120,7 @@ func findAndInsertEvents(startYear, yearsInFuture int, service service.InfoEvent
 }
 
 func parseDrinkPanchang(api string) (string, error) {
+	time.Sleep(2 * time.Second)
 	fmt.Println("Finding events BS")
 	req, err := http.NewRequest(http.MethodGet, api, nil)
 	if err != nil {
@@ -127,7 +140,7 @@ func parseDrinkPanchang(api string) (string, error) {
 		return "", fmt.Errorf("readError=%v for api=%v", readErr, api)
 	}
 
-	fmt.Println(string(body))
+	//fmt.Println(string(body))
 
 	// Friday, December 22, 2023
 	re := regexp.MustCompile("[A-Z][a-z]+, [A-Z][a-z]+ [0-9]+, [0-9][0-9][0-9][0-9]")
