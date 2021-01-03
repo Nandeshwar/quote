@@ -30,8 +30,17 @@ func main() {
 	//insertSitaJiBirthday(infoEventSerive) // Inserted for 100 years
 	// insertHanumanJiBirthday(infoEventSerive) //  inserted for 100 years
 	//insertKrishnaJanmasthmi(infoEventSerive) // inserted for 100 years
+	insertRadhaAsthami(infoEventSerive) // inserted for 100 years
 
 	//parseDrinkPanchang("https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2022")
+}
+
+func insertRadhaAsthami(infoEventSerive service.InfoEventService) {
+	// insert 100 Radha Asthami  for 100 years in quote-database
+	apiRadha := "https://www.drikpanchang.com/festivals/radha-ashtami/radha-ashtami-date-time.html?year=2050"
+	title := "Radha ji appearance day"
+	info := `Radha ji appearance day. Radha ji birthday. radha birthday`
+	findAndInsertEvents(2021, 100, infoEventSerive, apiRadha, title, info)
 }
 
 func insertKrishnaJanmasthmi(infoEventSerive service.InfoEventService) {

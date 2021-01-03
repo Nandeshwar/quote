@@ -31,8 +31,8 @@ func main() {
 	go http.ListenAndServe(":8080", nil)
 
 	var (
-		httpPort = env.GetIntWithDefault("HTTP_PORT", 1922)
-		grpcPort = env.GetIntWithDefault("GRPC_PORT", 1923)
+		httpPort = env.GetIntWithDefault("HTTP_PORT", 19222)
+		grpcPort = env.GetIntWithDefault("GRPC_PORT", 19233)
 
 		logLevel = env.GetLogLevelWithDefault("LOG_LEVEL", logrus.InfoLevel)
 
