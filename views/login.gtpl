@@ -10,11 +10,11 @@
             <input type="submit" value="Login">
         </form>
 
-        <a target="_blank"  href="http://localhost:1922/quotes-devotional" > http://localhost:1922/quotes-devotional </a>
+        <a target="_blank"  href="http://localhost:{{.HTTPPort}}/quotes-devotional" > http://localhost:{{.HTTPPort}}/quotes-devotional </a>
         <br>
-        <a target="_blank" href="http://localhost:1922/quotes-motivational"> http://localhost:1922/quotes-motivational </a>
+        <a target="_blank" href="http://localhost:{{.HTTPPort}}/quotes-motivational"> http://localhost:{{.HTTPPort}}/quotes-motivational </a>
         <br>
-        <a target="_blank" href="http://localhost:1922/search/Kaiso|Hai"> http://localhost:1922/search/Kaiso|Hai (search criteria can be delimited by '|'
+        <a target="_blank" href="http://localhost:{{.HTTPPort}}/search/Kaiso|Hai"> http://localhost:{{.HTTPPort}}/search/Kaiso|Hai (search criteria can be delimited by '|'
 ) </a>
 
          {{range .Events}}

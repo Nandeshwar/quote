@@ -2,11 +2,12 @@ package api
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"html/template"
 	"net/http"
 	"quote/pkg/model"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
@@ -70,10 +71,12 @@ func (s Server) login(w http.ResponseWriter, r *http.Request) {
 			EventList []model.EventDetail
 		}
 		type Data struct {
-			Events []Event
+			Events   []Event
+			HTTPPort int
 		}
 		data := Data{
-			[]Event{
+			HTTPPort: s.httpPort,
+			Events: []Event{
 				{
 					Day:       fmt.Sprintf("Today,  %s", todayTime.Format("Monday Jan _2, 2006")),
 					EventList: eventsToday,
