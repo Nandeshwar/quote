@@ -22,10 +22,7 @@ require (
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/streadway/amqp v1.0.0
 	golang.org/x/exp v0.0.0-20191227195350-da58074b4299
-	golang.org/x/image v0.0.0-20200922025426-e59bae62ef32
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
-	golang.org/x/sys v0.0.0-20201118182958-a01c418693c7 // indirect
-	golang.org/x/text v0.3.4 // indirect
+	golang.org/x/image v0.5.0
 	google.golang.org/genproto v0.0.0-20201117123952-62d171c70ae1 // indirect
 	google.golang.org/grpc v1.33.2
 	google.golang.org/protobuf v1.25.0
